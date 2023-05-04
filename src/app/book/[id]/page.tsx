@@ -1,21 +1,16 @@
 import RawBook from "@/types/rawBook";
 import { axiosInstance } from "@/utils/axiosInstance";
 import * as cheerio from "cheerio";
-import SimilarBooks from "./similarBooks";
 
 async function fetch(id = 7235533) {
-  try {
-    const res = await axiosInstance(`/book/show/${id}`);
-    const $ = cheerio.load(res.data);
-    const rawData = $("script#__NEXT_DATA__").text();
+  const res = await axiosInstance(`/book/show/${id}`);
+  const $ = cheerio.load(res.data);
+  const rawData = $("script#__NEXT_DATA__").text();
 
-    const parsedRawData: any = JSON.parse(rawData);
-    const cleanedUpData = cleanUpTitle(parsedRawData);
+  const parsedRawData: any = JSON.parse(rawData);
+  const cleanedUpData = cleanUpTitle(parsedRawData);
 
-    return cleanedUpData;
-  } catch (err) {
-    throw new Error(err);
-  }
+  return cleanedUpData as RawBook;
 }
 
 export default async function Book({
@@ -25,7 +20,6 @@ export default async function Book({
     id: number;
   };
 }) {
-  console.log(params.id);
   const { imageUrl, title, description, genres, averageRating, authorName } =
     await fetch(params.id);
 
@@ -53,7 +47,6 @@ export default async function Book({
           </div>
         </div>
       </div>
-      {/* @ts-expect-error Server Component */}
       {/* <SimilarBooks /> */}
       {/* <pre>{JSON.stringify(cleanedUpData, null, 2)}</pre> */}
     </div>
@@ -72,11 +65,15 @@ function cleanUpTitle(rawProps: {
   const data = rawProps.props.pageProps.apolloState;
 
   // TODO: loop only once.
-  const book = Object.keys(data).find((item) => item.startsWith("Book:"));
+  const book = Object.keys(data).find((item) =>
+    item.startsWith("Book:")
+  ) as string;
   const contributor = Object.keys(data).find((item) =>
     item.startsWith("Contributor:")
-  );
-  const work = Object.keys(data).find((item) => item.startsWith("Work:"));
+  ) as string;
+  const work = Object.keys(data).find((item) =>
+    item.startsWith("Work:")
+  ) as string;
 
   const { name: authorName } = data[contributor];
   const { title, imageUrl, bookGenres, description } = data[book];

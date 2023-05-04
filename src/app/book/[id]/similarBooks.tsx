@@ -38,7 +38,7 @@ async function fetch(id = 2116675) {
 
     return formatedBooks;
   } catch (err) {
-    throw new Error(err);
+    console.error(err);
   }
 }
 
@@ -48,6 +48,8 @@ interface Props {
 
 export default async function SimilarBooks({ id }: Props) {
   const res = await fetch(id);
+
+  if (!res) return <div>yikes! there was an error, please try again.</div>;
 
   return (
     <div className="grid grid-cols-4 gap-3">

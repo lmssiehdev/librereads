@@ -15,7 +15,7 @@ function extractBookIdFromUrl(url: string): string {
 
 async function fetch(id = 7235533) {
   try {
-    const res = await axiosInstance(`/search?q=ayn+rand`);
+    const res = await axiosInstance(`/search?search?page=1&q=ayn+rand`);
     const $ = cheerio.load(res.data);
     const rawData = $("body").html();
 
@@ -70,7 +70,7 @@ function cleanUpTitle(rawProps: {
       };
     };
   };
-}): RawBook {
+}): RawBook | null {
   const data = rawProps.props.pageProps.apolloState;
 
   // TODO: loop only once.
@@ -79,6 +79,8 @@ function cleanUpTitle(rawProps: {
     item.startsWith("Contributor:")
   );
   const work = Object.keys(data).find((item) => item.startsWith("Work:"));
+
+  if (!book || !contributor || !work) return null;
 
   const { name: authorName } = data[contributor];
   const { title, imageUrl, bookGenres, description } = data[book];
