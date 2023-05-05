@@ -4,7 +4,7 @@ import * as cheerio from "cheerio";
 import BookInfo from "./getBook";
 import SimilarBooks from "./similarBooks";
 
-export async function fetchBookDetails(id = 7235533) {
+async function fetchBookDetails(id = 7235533) {
   const res = await axiosInstance(`/book/show/${id}`);
   const $ = cheerio.load(res.data);
   const rawData = $("script#__NEXT_DATA__").text();

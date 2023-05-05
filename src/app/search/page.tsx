@@ -51,7 +51,6 @@ export default async function Book({
 
   return (
     <div>
-      {JSON.stringify(searchParams)}
       <div className="grid gap-3 md:grid-cols-[repeat(auto-fill,185px)] grid-cols-[repeat(4,1fr)]">
         {searchReseult?.map(({ title, bookId, imageUrl }) => {
           return (
@@ -72,51 +71,4 @@ export default async function Book({
       </div>
     </div>
   );
-}
-
-function cleanUpTitle(rawProps: {
-  props: {
-    pageProps: {
-      apolloState: {
-        [key: string]: any;
-      };
-    };
-  };
-}): RawBook | null {
-  const data = rawProps.props.pageProps.apolloState;
-
-  // TODO: loop only once.
-  const book = Object.keys(data).find((item) => item.startsWith("Book:"));
-  const contributor = Object.keys(data).find((item) =>
-    item.startsWith("Contributor:")
-  );
-  const work = Object.keys(data).find((item) => item.startsWith("Work:"));
-
-  if (!book || !contributor || !work) return null;
-
-  const { name: authorName } = data[contributor];
-  const { title, imageUrl, bookGenres, description } = data[book];
-  const {
-    stats: { averageRating, ratingsCount, textReviewsCount },
-  } = data[work];
-
-  const genres = bookGenres.map(
-    ({ genre }: { genre: { name: string; webUrl: string } }) => {
-      const { name, webUrl } = genre;
-
-      return {
-        name,
-        webUrl,
-      };
-    }
-  );
-
-  return {
-    title,
-    imageUrl,
-    description,
-    ...{ averageRating, ratingsCount, textReviewsCount },
-    genres,
-    authorName,
-  };
 }
