@@ -8,17 +8,24 @@ export default function SearchInput() {
 
   return (
     <form
+      className="flex gap-3"
       onSubmit={(e) => {
         e.preventDefault();
         router.push(`/search?q=${searchTerm.replace(" ", "+")}`);
       }}
     >
       <input
+        className="w-full rounded-sm p-1"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         placeholder="search..."
       />
-      <button type="submit">Search</button>
+      <button
+        type="submit"
+        className="inline-block bg-purple-100 text-purple-600 px-4 py-1 rounded-sm"
+      >
+        Search
+      </button>
     </form>
   );
 }

@@ -1,6 +1,9 @@
 import { axiosInstance } from "@/utils/axiosInstance";
 import * as cheerio from "cheerio";
 import Link from "next/link";
+const jsdom = require("jsdom");
+
+const { JSDOM } = jsdom;
 
 interface SimilarBook {
   book: {
@@ -15,26 +18,29 @@ interface JSONSimilarBooks {
   similarBooks: Array<SimilarBook>;
 }
 
-async function fetch(id = 2116675) {
+async function fetch(id: number) {
   try {
-    const res = await axiosInstance(`/book/similar/${id}`);
+    const res = await axiosInstance(`/book/similar/${8134945}`);
     const $ = cheerio.load(res.data);
-    const rawData = $("[data-react-props]:not(:first-child)").data(
-      "reactProps"
-    ) as JSONSimilarBooks;
+    const rawHTML = $("body").html();
 
-    const formatedBooks = Object.values(rawData.similarBooks).map(
-      ({ book }) => {
-        const { imageUrl, bookId, avgRating, title } = book;
+    const dom = new JSDOM(rawHTML);
+    const rawData = dom.window.document
+      .querySelector("[data-react-props]:not(:first-child)")
+      .getAttribute("data-react-props");
 
-        return {
-          imageUrl,
-          bookId,
-          avgRating,
-          title,
-        };
-      }
-    );
+    const { similarBooks } = JSON.parse(rawData) as JSONSimilarBooks;
+
+    const formatedBooks = Object.values(similarBooks).map(({ book }) => {
+      const { imageUrl, bookId, avgRating, title } = book;
+
+      return {
+        imageUrl,
+        bookId,
+        avgRating,
+        title,
+      };
+    });
 
     return formatedBooks;
   } catch (err) {
@@ -52,25 +58,26 @@ export default async function SimilarBooks({ id }: Props) {
   if (!res) return <div>yikes! there was an error, please try again.</div>;
 
   return (
-    <div className="grid grid-cols-4 gap-3">
-      {res.map(({ bookId, title, imageUrl }) => {
-        return (
-          <div key={bookId} className="mx-auto">
-            <div className="h-[180px] w-[120px] mx-auto">
-              <img
-                className="inline-block h-full w-full"
-                src={imageUrl}
-                alt={`${title} book cover`}
-              />
+    <div>
+      <h3 className="py-2">Similar Books</h3>
+      <div className="grid grid-cols-4 gap-3">
+        {res.map(({ bookId, title, imageUrl }) => {
+          return (
+            <div key={bookId} className="mx-auto">
+              <div className="h-[180px] w-[120px] mx-auto">
+                <img
+                  className="inline-block h-full w-full"
+                  src={imageUrl}
+                  alt={`${title} book cover`}
+                />
+              </div>
+              <Link href={`/book/${bookId}`}>
+                <span className="text-sm text-center"> {title} </span>
+              </Link>
             </div>
-            ResponsiveImage src AverageRating__ratingValue span textContent
-            BookCard__authorName textContent BookCard__title textContent
-            <Link href={`/book/${bookId}`}>
-              <span className="text-sm text-center"> {title} </span>
-            </Link>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
 }

@@ -1,8 +1,10 @@
 import RawBook from "@/types/rawBook";
 import { axiosInstance } from "@/utils/axiosInstance";
 import * as cheerio from "cheerio";
+import BookInfo from "./getBook";
+import SimilarBooks from "./similarBooks";
 
-async function fetch(id = 7235533) {
+export async function fetchBookDetails(id = 7235533) {
   const res = await axiosInstance(`/book/show/${id}`);
   const $ = cheerio.load(res.data);
   const rawData = $("script#__NEXT_DATA__").text();
@@ -10,45 +12,24 @@ async function fetch(id = 7235533) {
   const parsedRawData: any = JSON.parse(rawData);
   const cleanedUpData = cleanUpTitle(parsedRawData);
 
-  return cleanedUpData as RawBook;
+  return cleanedUpData;
 }
 
-export default async function Book({
+export default async function BookPage({
   params,
 }: {
   params: {
     id: number;
   };
 }) {
-  const { imageUrl, title, description, genres, averageRating, authorName } =
-    await fetch(params.id);
+  const bookInfo = await fetchBookDetails(params.id);
 
   return (
     <div>
-      <div className="flex gap-3">
-        <div className="h-[260px] w-[180px] overflow-hidden rounded object-fill">
-          <img
-            className="h-full w-full inline-block"
-            src={imageUrl}
-            alt={`${title} cover image`}
-          />
-        </div>
-        <div className="flex-1">
-          <h1 className="text-lg font-bold">{title}</h1>
-          <h3>rating: {averageRating}</h3>
-          <p>author: {authorName} </p>
-          <p>{description.substring(0, 300)}</p>
-          <div className="flex gap-x-3 flex-wrap">
-            {genres.map(({ webUrl, name }) => (
-              <a className="text-purple-600" key={name} href={webUrl}>
-                {name}
-              </a>
-            ))}
-          </div>
-        </div>
-      </div>
-      {/* <SimilarBooks /> */}
-      {/* <pre>{JSON.stringify(cleanedUpData, null, 2)}</pre> */}
+      {/* @ts-expect-error Async Server Component */}
+      <BookInfo info={bookInfo} />
+      {/* @ts-expect-error Async Server Component */}
+      <SimilarBooks url={bookInfo.similarBooksUrl} />
     </div>
   );
 }
@@ -79,6 +60,7 @@ function cleanUpTitle(rawProps: {
   const { title, imageUrl, bookGenres, description } = data[book];
   const {
     stats: { averageRating, ratingsCount, textReviewsCount },
+    legacyId,
   } = data[work];
 
   const genres = bookGenres.map(
@@ -99,5 +81,6 @@ function cleanUpTitle(rawProps: {
     ...{ averageRating, ratingsCount, textReviewsCount },
     genres,
     authorName,
+    similarBooksUrl: legacyId || 8134945,
   };
 }

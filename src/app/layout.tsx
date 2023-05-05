@@ -1,3 +1,4 @@
+import Link from "next/link";
 import "./globals.css";
 import { Inter } from "next/font/google";
 
@@ -15,7 +16,44 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="min-h-screen">{children}</body>
+      <body className="flex flex-col min-h-screen max-w-screen-md mx-auto font-mono px-2">
+        <Navbar />
+        <div className="flex-1">{children}</div>
+        <Footer />
+      </body>
     </html>
   );
 }
+
+const Navbar = () => {
+  return (
+    <div className="py-2">
+      <nav className="flex justify-between items-center">
+        <h1 className="text-xl font-bold">
+          <Link href="/">LibreReads</Link>
+        </h1>
+        <ul className="flex gap-3 items-center">
+          <li>
+            <Link href="/search/">Search</Link>
+          </li>
+          <li>
+            <Link href="/search/">About</Link>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  );
+};
+
+const Footer = () => {
+  return (
+    <div className="text-center py-1">
+      <a
+        className="underline underline-offset-2"
+        href="https://github.com/lmssiehdev/librereads"
+      >
+        source code
+      </a>
+    </div>
+  );
+};

@@ -2,7 +2,6 @@ import RawBook from "@/types/rawBook";
 import { axiosInstance } from "@/utils/axiosInstance";
 import * as cheerio from "cheerio";
 import Link from "next/link";
-import { Fragment } from "react";
 
 const jsdom = require("jsdom");
 
@@ -53,7 +52,7 @@ export default async function Book({
   return (
     <div>
       {JSON.stringify(searchParams)}
-      <div className="grid gap-3 md:grid-cols-[repeat(auto-fill,185px)] grid-cols-[repeat(auto-fill,100px)]">
+      <div className="grid gap-3 md:grid-cols-[repeat(auto-fill,185px)] grid-cols-[repeat(4,1fr)]">
         {searchReseult?.map(({ title, bookId, imageUrl }) => {
           return (
             <div key={title} className="">
@@ -64,7 +63,7 @@ export default async function Book({
                   alt={`${title} book cover`}
                 />
               </div>
-              <Link className="text-center text-sm" href={`/book/${bookId}`}>
+              <Link className="text-center text-xs" href={`/book/${bookId}`}>
                 {title}
               </Link>
             </div>
