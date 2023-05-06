@@ -1,3 +1,4 @@
+import UseClient from "@/components/UseClient";
 import { axiosInstance } from "@/utils/axiosInstance";
 import * as cheerio from "cheerio";
 import Link from "next/link";
@@ -19,6 +20,7 @@ interface JSONSimilarBooks {
 }
 
 async function fetch(id: number) {
+  return null;
   try {
     const res = await axiosInstance(`/book/similar/${8134945}`);
     const $ = cheerio.load(res.data);
@@ -80,4 +82,8 @@ export default async function SimilarBooks({ id }: Props) {
       </div>
     </div>
   );
+}
+
+export function Wrapper({ id }: { id: number }) {
+  return <UseClient>{/* <SimilarBooks url={id} /> */}</UseClient>;
 }

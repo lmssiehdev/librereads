@@ -1,8 +1,6 @@
 import Link from "next/link";
 import "./globals.css";
-import { Inter } from "next/font/google";
-
-const inter = Inter({ subsets: ["latin"] });
+import NextTopLoader from "nextjs-toploader";
 
 export const metadata = {
   title: "Create Next App",
@@ -17,6 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="flex flex-col min-h-screen max-w-screen-md mx-auto font-mono px-2">
+        <NextTopLoader />
         <Navbar />
         <div className="flex-1">{children}</div>
         <Footer />

@@ -1,5 +1,5 @@
 "use client";
 
-export default function useClient({ children }: { children: React.ReactNode }) {
+export default function UseClient({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

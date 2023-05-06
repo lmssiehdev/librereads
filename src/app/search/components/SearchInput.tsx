@@ -11,7 +11,7 @@ export default function SearchInput() {
       className="flex gap-3"
       onSubmit={(e) => {
         e.preventDefault();
-        router.push(`/search?q=${searchTerm.replace(" ", "+")}`);
+        router.push(`/search?q=${searchTerm.replaceAll(" ", "+")}`);
       }}
     >
       <input

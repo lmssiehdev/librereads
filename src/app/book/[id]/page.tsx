@@ -2,7 +2,7 @@ import RawBook from "@/types/rawBook";
 import { axiosInstance } from "@/utils/axiosInstance";
 import * as cheerio from "cheerio";
 import BookInfo from "./getBook";
-import SimilarBooks from "./similarBooks";
+import { Wrapper } from "./similarBooks";
 
 async function fetchBookDetails(id = 7235533) {
   const res = await axiosInstance(`/book/show/${id}`);
@@ -29,7 +29,7 @@ export default async function BookPage({
       {/* @ts-expect-error Async Server Component */}
       <BookInfo info={bookInfo} />
       {/* @ts-expect-error Async Server Component */}
-      <SimilarBooks url={bookInfo.similarBooksUrl} />
+      <Wrapper id={bookInfo.similarBooksUrl} />
     </div>
   );
 }
