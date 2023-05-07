@@ -1,4 +1,3 @@
-import UseClient from "@/components/UseClient";
 import { axiosInstance } from "@/utils/axiosInstance";
 import * as cheerio from "cheerio";
 import Link from "next/link";
@@ -84,6 +83,6 @@ export default async function SimilarBooks({ id }: Props) {
   );
 }
 
-export function Wrapper({ id }: { id: number }) {
-  return <UseClient>{/* <SimilarBooks url={id} /> */}</UseClient>;
-}
+// export function Wrapper({ id }: { id: number }) {
+//   return <UseClient>{/* <SimilarBooks url={id} /> */}</UseClient>;
+// }
