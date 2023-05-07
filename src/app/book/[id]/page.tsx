@@ -89,7 +89,6 @@ export default async function BookPage({
     <div>
       {/* @ts-expect-error Async Server Component */}
       <BookInfo info={bookInfo} />
-      {/* @ts-expect-error Async Server Component */}
       {/* <Wrapper id={bookInfo.similarBooksUrl} /> */}
     </div>
   );
