@@ -43,14 +43,14 @@ const DialogDemo = ({ info }: { info: RawBook }) => {
             "fixed z-50",
             "w-[95vw] max-w-md rounded-lg p-4 md:w-full",
             "top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]",
-            "bg-white dark:bg-gray-800",
+            "bg-white",
             "focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75"
           )}
         >
-          <Dialog.Title className="text-sm font-medium text-gray-900 dark:text-gray-100">
+          <Dialog.Title className="text-sm font-medium text-gray-900">
             Edit profile
           </Dialog.Title>
-          <Dialog.Description className="mt-2 text-sm font-normal text-gray-700 dark:text-gray-400">
+          <Dialog.Description className="mt-2 text-sm font-normal text-gray-700">
             Make changes to your profile here. Click save when you{"'"}re done.
           </Dialog.Description>
           <div className="mt-2 space-y-2">
@@ -92,7 +92,7 @@ const DialogDemo = ({ info }: { info: RawBook }) => {
             asChild
           >
             <button className="IconButton" aria-label="Close">
-              <XMarkIcon className="h-4 w-4 text-gray-500 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-400" />
+              <XMarkIcon className="h-4 w-4 text-gray-500 hover:text-gray-700" />
             </button>
           </Dialog.Close>
         </Dialog.Content>
