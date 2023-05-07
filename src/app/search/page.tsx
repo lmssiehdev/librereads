@@ -1,7 +1,7 @@
-import RawBook from "@/types/rawBook";
+import { BookCard } from "@/components/BookCard";
 import { axiosInstance } from "@/utils/axiosInstance";
 import * as cheerio from "cheerio";
-import Link from "next/link";
+import { Fragment } from "react";
 
 const jsdom = require("jsdom");
 
@@ -50,25 +50,14 @@ export default async function Book({
   const searchReseult = await fetch(searchQuery);
 
   return (
-    <div>
-      <div className="grid gap-3 md:grid-cols-[repeat(auto-fill,185px)] grid-cols-[repeat(4,1fr)]">
-        {searchReseult?.map(({ title, bookId, imageUrl }) => {
-          return (
-            <div key={title} className="">
-              <div className="rounded overflow-hidden md:h-[260px] h-[160px]">
-                <img
-                  className="inline-block h-full w-full object-fill"
-                  src={imageUrl}
-                  alt={`${title} book cover`}
-                />
-              </div>
-              <Link className="text-center text-xs" href={`/book/${bookId}`}>
-                {title}
-              </Link>
-            </div>
-          );
-        })}
-      </div>
+    <div className="results">
+      {searchReseult?.map(({ title, bookId, imageUrl }) => {
+        return (
+          <div key={title} className="">
+            <BookCard {...{ title, bookId, imageUrl }} />
+          </div>
+        );
+      })}
     </div>
   );
 }

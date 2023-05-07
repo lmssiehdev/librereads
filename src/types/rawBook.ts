@@ -11,4 +11,5 @@ export default interface RawBook {
   }>;
   authorName: string;
   similarBooksUrl?: string;
+  bookId: number;
 }

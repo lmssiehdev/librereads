@@ -25,7 +25,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={clsx(
-          "flex flex-col min-h-screen max-w-screen-md mx-auto px-2 bg-[#f6f0e9] font-pockoto",
+          "flex flex-col min-h-screen max-w-screen-md !mx-auto px-2 bg-[#f6f0e9] font-pockoto",
           pockota.variable
         )}
       >
@@ -51,6 +51,9 @@ const Navbar = () => {
           </li>
           <li>
             <Link href="/search/">About</Link>
+          </li>
+          <li>
+            <Link href="/Library/">Library</Link>
           </li>
         </ul>
       </nav>
