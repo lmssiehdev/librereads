@@ -2,7 +2,6 @@ import RawBook from "@/types/rawBook";
 import { axiosInstance } from "@/utils/axiosInstance";
 import * as cheerio from "cheerio";
 import BookInfo from "./getBook";
-import { Wrapper } from "./similarBooks";
 
 const o: RawBook = {
   bookId: 100000,
