@@ -11,9 +11,13 @@ import clsx from "clsx";
 import React, { useState } from "react";
 
 const DialogDemo = ({ info }: { info: RawBook }) => {
+  const books = useBookStore((state) => state.books);
   const addBook = useBookStore((state) => state.addBook);
+
   const [open, setOpen] = React.useState(false);
-  const [v, setV] = useState<ReadingStatus | null>(null);
+  const [v, setV] = useState<ReadingStatus | null>(
+    () => books[info.bookId]?.status ?? null
+  );
 
   const optionsArray: ReadingStatus[] = ["Want To Read", "Reading", "Read"];
 
