@@ -13,6 +13,8 @@ const o: RawBook = {
   averageRating: 4.3,
   ratingsCount: 274760,
   textReviewsCount: 18906,
+  ratingsCountDist: [3281, 4914, 18791, 82957, 317258],
+
   genres: [
     {
       name: "Fantasy",
@@ -61,18 +63,14 @@ const o: RawBook = {
 
 async function fetchBookDetails(id = 7235533) {
   if (id === 7235533) return o;
-
   const res = await axiosInstance(`/book/show/${id}`);
   const $ = cheerio.load(res.data);
   const rawData = $("script#__NEXT_DATA__").text();
 
   const parsedRawData: any = JSON.parse(rawData);
-  const cleanedUpData = cleanUpTitle(parsedRawData);
+  const cleanedUpData = cleanUpTitle(parsedRawData, id);
 
-  return {
-    ...cleanedUpData,
-    bookId: id,
-  };
+  return cleanedUpData;
 }
 
 export default async function BookPage({
@@ -93,15 +91,18 @@ export default async function BookPage({
   );
 }
 
-function cleanUpTitle(rawProps: {
-  props: {
-    pageProps: {
-      apolloState: {
-        [key: string]: any;
+function cleanUpTitle(
+  rawProps: {
+    props: {
+      pageProps: {
+        apolloState: {
+          [key: string]: any;
+        };
       };
     };
-  };
-}): RawBook {
+  },
+  bookId: number
+): RawBook {
   const data = rawProps.props.pageProps.apolloState;
 
   // TODO: loop only once.
@@ -118,7 +119,7 @@ function cleanUpTitle(rawProps: {
   const { name: authorName } = data[contributor];
   const { title, imageUrl, bookGenres, description } = data[book];
   const {
-    stats: { averageRating, ratingsCount, textReviewsCount },
+    stats: { averageRating, ratingsCount, textReviewsCount, ratingsCountDist },
     legacyId,
   } = data[work];
 
@@ -137,11 +138,10 @@ function cleanUpTitle(rawProps: {
     title,
     imageUrl,
     description,
-    ...{ averageRating, ratingsCount, textReviewsCount },
+    ...{ averageRating, ratingsCount, textReviewsCount, ratingsCountDist },
     genres,
     authorName,
     similarBooksUrl: legacyId || 8134945,
-    // change me
-    bookId: 1000,
+    bookId,
   };
 }

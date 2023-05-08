@@ -5,6 +5,7 @@ export default interface RawBook {
   averageRating: number;
   ratingsCount: number;
   textReviewsCount: number;
+  ratingsCountDist: number[];
   genres: Array<{
     name: string;
     webUrl: string;
