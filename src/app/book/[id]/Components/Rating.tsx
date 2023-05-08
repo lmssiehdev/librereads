@@ -14,7 +14,7 @@ export default function Rating({
 }) {
   return (
     <div className="flex">
-      {Array(Math.round(5))
+      {Array(5)
         .fill(true)
         .map((_, index) => {
           return (

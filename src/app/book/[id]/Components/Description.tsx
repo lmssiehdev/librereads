@@ -25,7 +25,7 @@ export default function Description({ description }: { description: string }) {
         aria-label="Toggle Full Description"
         className="pb-3"
       >
-        <span className="flex gap-1 items-center">
+        <span className="flex gap-1 items-center underline underline-offset-8">
           {toggle ? (
             <>
               show less
