@@ -16,6 +16,7 @@ interface BookState {
 }
 
 export const o: RawBook = {
+  ratingsCountDist: [1029, 1212, 12222, 342554, 433434],
   bookId: 10000,
   title: "The Lies of Locke Lamora",
   imageUrl:
