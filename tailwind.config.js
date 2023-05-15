@@ -7,6 +7,7 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fluidTypography: {},
       fontFamily: {
         pockoto: ["var(--pockota-font)"],
       },
@@ -17,5 +18,6 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  variants: {},
+  plugins: [require("tailwind-fluid-typography")],
 };
