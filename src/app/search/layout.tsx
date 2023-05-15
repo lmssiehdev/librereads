@@ -6,7 +6,9 @@ export default function SearchLayout({
 }) {
   return (
     <>
-      <SearchInput />
+      <div className="pt-2 pb-4">
+        <SearchInput />
+      </div>
       {children}
     </>
   );

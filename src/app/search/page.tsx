@@ -50,10 +50,10 @@ export default async function Book({
   const searchReseult = await fetch(searchQuery);
 
   return (
-    <div className="results">
+    <div className="grid grid-cols-[repeat(auto-fit,minmax(145px,180px))] md:gap-x-1 md:gap-y-3 gap-x-3 gap-y-6">
       {searchReseult?.map(({ title, bookId, imageUrl }) => {
         return (
-          <div key={title} className="">
+          <div key={title}>
             <BookCard {...{ title, bookId, imageUrl }} />
           </div>
         );
