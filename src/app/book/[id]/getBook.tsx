@@ -76,7 +76,7 @@ export default async function BookInfo({ info }: Props) {
                     <div className="flex items-center h-4 w-full rounded bg-gray-200">
                       <span
                         style={{
-                          width: `${percentage}0%`,
+                          width: `${percentage}%`,
                         }}
                         className="bg-yellow-500 h-full rounded"
                       ></span>
