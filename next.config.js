@@ -3,6 +3,14 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
+  async rewrites() {
+    return [
+      {
+        source: "/book/show/:id",
+        destination: "/book/:id",
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {
