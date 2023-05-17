@@ -29,7 +29,7 @@ export default function RootLayout({
           pockota.variable
         )}
       >
-        <NextTopLoader />
+        <NextTopLoader color="#000" />
         <Navbar />
         <div className="flex-1 font-pockoto">{children}</div>
         <Footer />
@@ -40,10 +40,12 @@ export default function RootLayout({
 
 const Navbar = () => {
   return (
-    <div className="py-2">
+    <div className="py-4">
       <nav className="flex justify-between items-center">
         <h1 className="text-xl font-bold">
-          <Link href="/">LibreReads</Link>
+          <Link href="/">
+            LibreReads <span className="text-xs opacity-70">[Beta]</span>
+          </Link>
         </h1>
         <ul className="flex gap-3 items-center">
           <li>
@@ -53,7 +55,7 @@ const Navbar = () => {
             <Link href="/search/">About</Link>
           </li>
           <li>
-            <Link href="/Library/">Library</Link>
+            <Link href="/library/">Library</Link>
           </li>
         </ul>
       </nav>
@@ -63,7 +65,7 @@ const Navbar = () => {
 
 const Footer = () => {
   return (
-    <div className="text-center py-1">
+    <div className="text-center py-4">
       <a
         className="underline underline-offset-2"
         href="https://github.com/lmssiehdev/librereads"
