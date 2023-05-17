@@ -13,21 +13,24 @@ export default function Rating({
   info: RawBook;
 }) {
   return (
-    <div className="flex">
-      {Array(5)
-        .fill(true)
-        .map((_, index) => {
-          return (
-            <span key={index} className="">
-              <StarIcon
-                className={clsx("h-6 w-6", {
-                  "text-yellow-500": index + 1 < rating,
-                  "text-black/10": index + 1 > rating,
-                })}
-              />
-            </span>
-          );
-        })}
+    <div className="flex gap-1 items-center">
+      <div className="flex">
+        {Array(5)
+          .fill(true)
+          .map((_, index) => {
+            return (
+              <span key={index} className="">
+                <StarIcon
+                  className={clsx("h-6 w-6", {
+                    "text-yellow-500": index + 1 < rating,
+                    "text-black/10": index + 1 > rating,
+                  })}
+                />
+              </span>
+            );
+          })}
+      </div>
+      <span>{rating}</span>
     </div>
   );
 }

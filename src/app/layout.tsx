@@ -52,9 +52,6 @@ const Navbar = () => {
             <Link href="/search/">Search</Link>
           </li>
           <li>
-            <Link href="/search/">About</Link>
-          </li>
-          <li>
             <Link href="/library/">Library</Link>
           </li>
         </ul>
