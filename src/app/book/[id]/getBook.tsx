@@ -54,9 +54,9 @@ export default async function BookInfo({ info }: Props) {
           <div className="flex gap-x-3 flex-wrap">
             <span>Tags:</span>
             {genres.map(({ webUrl, name }) => (
-              <a className="text-purple-600" key={name} href={webUrl}>
+              <span className="text-purple-600" key={name}>
                 {name}
-              </a>
+              </span>
             ))}
           </div>
 

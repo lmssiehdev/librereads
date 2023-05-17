@@ -3,7 +3,7 @@ export default interface RawBook {
   imageUrl: string;
   description: string;
   averageRating: number;
-  ratingsCount: number;
+  ratingsCount: number | string;
   textReviewsCount: number;
   ratingsCountDist: number[];
   genres: Array<{
@@ -13,4 +13,7 @@ export default interface RawBook {
   authorName: string;
   similarBooksUrl?: string;
   bookId: number;
+  bookDetails?: {
+    pagesFormat: String;
+  };
 }

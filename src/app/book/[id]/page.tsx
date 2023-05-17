@@ -1,7 +1,7 @@
 import RawBook from "@/types/rawBook";
-import { axiosInstance } from "@/utils/axiosInstance";
 import * as cheerio from "cheerio";
 import BookInfo from "./getBook";
+import { fetchBookDetails } from "@/utils/scrapers/book";
 
 const o: RawBook = {
   bookId: 100000,
@@ -61,18 +61,6 @@ const o: RawBook = {
   similarBooksUrl: "2116675",
 };
 
-async function fetchBookDetails(id = 7235533) {
-  if (id === 7235533) return o;
-  const res = await axiosInstance(`/book/show/${id}`);
-  const $ = cheerio.load(res.data);
-  const rawData = $("script#__NEXT_DATA__").text();
-
-  const parsedRawData: any = JSON.parse(rawData);
-  const cleanedUpData = cleanUpTitle(parsedRawData, id);
-
-  return cleanedUpData;
-}
-
 export default async function BookPage({
   params,
 }: {
@@ -123,16 +111,18 @@ function cleanUpTitle(
     legacyId,
   } = data[work];
 
-  const genres = bookGenres.map(
-    ({ genre }: { genre: { name: string; webUrl: string } }) => {
-      const { name, webUrl } = genre;
+  const genres = Array.isArray(bookGenres)
+    ? bookGenres.map(
+        ({ genre }: { genre: { name: string; webUrl: string } }) => {
+          const { name, webUrl } = genre;
 
-      return {
-        name,
-        webUrl,
-      };
-    }
-  );
+          return {
+            name,
+            webUrl,
+          };
+        }
+      )
+    : [];
 
   return {
     title,
