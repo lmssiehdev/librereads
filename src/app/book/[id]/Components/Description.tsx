@@ -13,8 +13,8 @@ export default function Description({ description }: { description: string }) {
   return (
     <div>
       <div
-        className={clsx("overflow-hidden", {
-          "h-[170px]": !toggle,
+        className={clsx({
+          "overflow-hidden line-clamp-6": !toggle,
         })}
       >
         <p dangerouslySetInnerHTML={descriptionMarkup}></p>
