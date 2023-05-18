@@ -2,7 +2,9 @@ import RawBook from "@/types/rawBook";
 import { getErrorMessage } from "@/utils/misc";
 import * as cheerio from "cheerio";
 
-export async function fetchBookDetails(id = 7235533): Promise<RawBook | void> {
+export async function fetchBookDetails(
+  id = 7235533
+): Promise<Partial<RawBook> | void> {
   // if (id === 7235533) return o;
   try {
     const res = await fetch(`https://goodreads.com/book/show/${id}`, {
@@ -16,8 +18,7 @@ export async function fetchBookDetails(id = 7235533): Promise<RawBook | void> {
     const $ = cheerio.load(htmlString);
     // const rawData = $("script#__NEXT_DATA__").text();
     // const parsedRawData: any = JSON.parse(rawData);
-
-    const r: RawBook = {
+    const r: Partial<RawBook> = {
       title: $("[data-testid=bookTitle]").text(),
       imageUrl: $(".BookCover__image img").attr("src") as string,
       authorName: $(
@@ -52,6 +53,7 @@ export async function fetchBookDetails(id = 7235533): Promise<RawBook | void> {
         .map((t) => Number(t)),
       bookId: id,
     };
+    console.log(r);
     return r;
   } catch (e) {
     console.log(getErrorMessage(e));
