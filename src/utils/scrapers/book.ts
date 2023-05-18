@@ -12,12 +12,10 @@ export async function fetchBookDetails(
     }),
   });
 
-  console.log("done fetching");
   const htmlString = await res.text();
   const $ = cheerio.load(htmlString);
   // const rawData = $("script#__NEXT_DATA__").text();
   // const parsedRawData: any = JSON.parse(rawData);
-  const isError = $("[data-testid=errorText]").length !== 0;
 
   const r: Partial<RawBook> = {
     title: $("[data-testid=bookTitle]").text(),
@@ -55,7 +53,7 @@ export async function fetchBookDetails(
     bookId: id,
   };
 
-  if (r.title === "") {
-    fetchBookDetails(id);
-  } else return r;
+  if (r.title !== "") {
+    return r;
+  } else setTimeout(() => fetchBookDetails(id), 100);
 }
