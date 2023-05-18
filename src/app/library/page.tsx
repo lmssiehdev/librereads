@@ -25,31 +25,39 @@ export default function LibraryPage() {
   return (
     <div>
       <div>
-        {(Object.keys(t) as ReadingStatus[]).map((key) => {
-          return (
-            <>
-              {t[key].length > 0 ? (
+        {Object.keys(t).length > 0 ? (
+          <div className="py-10 text-center">
+            Start building your library. Add a book now!{" "}
+          </div>
+        ) : (
+          <div>
+            {(Object.keys(t) as ReadingStatus[]).map((key) => {
+              return (
                 <>
-                  <h3 className="text-lg pb-1 py-5"> {key} </h3>
+                  {t[key].length > 0 ? (
+                    <>
+                      <h3 className="text-lg pb-1 py-5"> {key} </h3>
 
-                  <div className="grid grid-cols-[repeat(auto-fit,minmax(145px,180px))] md:gap-x-1 md:gap-y-3 gap-x-3 gap-y-6">
-                    {t[key].map(({ info: { title, imageUrl, bookId } }) => {
-                      return (
-                        <div key={title} className="">
-                          <BookCard
-                            title={title}
-                            imageUrl={imageUrl}
-                            bookId={bookId}
-                          />
-                        </div>
-                      );
-                    })}
-                  </div>
+                      <div className="grid grid-cols-[repeat(auto-fit,minmax(145px,180px))] md:gap-x-1 md:gap-y-3 gap-x-3 gap-y-6">
+                        {t[key].map(({ info: { title, imageUrl, bookId } }) => {
+                          return (
+                            <div key={title} className="">
+                              <BookCard
+                                title={title}
+                                imageUrl={imageUrl}
+                                bookId={bookId}
+                              />
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </>
+                  ) : null}
                 </>
-              ) : null}
-            </>
-          );
-        })}
+              );
+            })}
+          </div>
+        )}
       </div>
       {/* <pre>{JSON.stringify(book, null, 2)}</pre> */}
     </div>
