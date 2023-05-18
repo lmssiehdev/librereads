@@ -16,9 +16,6 @@ dependencies:
   '@tailwindcss/line-clamp':
     specifier: ^0.4.4
     version: 0.4.4(tailwindcss@3.3.2)
-  '@types/cheerio':
-    specifier: ^0.22.31
-    version: 0.22.31
   '@types/jsdom':
     specifier: ^21.1.1
     version: 21.1.1
@@ -85,6 +82,11 @@ dependencies:
   zustand:
     specifier: ^4.3.8
     version: 4.3.8(react@18.2.0)
+
+devDependencies:
+  '@types/cheerio':
+    specifier: ^0.22.31
+    version: 0.22.31
 
 packages:
 
@@ -611,7 +613,7 @@ packages:
     resolution: {integrity: sha512-Kt7Cdjjdi2XWSfrZ53v4Of0wG3ZcmaegFXjMmz9tfNrZSkzzo36G0AL1YqSdcIA78Etjt6E609pt5h1xnQkPUw==}
     dependencies:
       '@types/node': 18.16.3
-    dev: false
+    dev: true
 
   /@types/jsdom@21.1.1:
     resolution: {integrity: sha512-cZFuoVLtzKP3gmq9eNosUL1R50U+USkbLtUQ1bYVgl/lKp0FZM7Cq4aIHAL8oIvQ17uSHi7jXPtfDOdjPwBE7A==}
@@ -627,7 +629,6 @@ packages:
 
   /@types/node@18.16.3:
     resolution: {integrity: sha512-OPs5WnnT1xkCBiuQrZA4+YAV4HEJejmHneyraIaxsbev5yCEr6KMwINNFP9wQeFIw8FWcoTqF3vQsa5CDaI+8Q==}
-    dev: false
 
   /@types/nprogress@0.2.0:
     resolution: {integrity: sha512-1cYJrqq9GezNFPsWTZpFut/d4CjpZqA0vhqDUPFWYKF1oIyBz5qnoYMzR+0C/T96t3ebLAC1SSnwrVOm5/j74A==}
