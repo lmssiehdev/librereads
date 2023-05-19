@@ -37,7 +37,7 @@ const DialogDemo = ({ info }: { info: RawBook }) => {
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger asChild>
         <Button className="w-full mt-2">
-          <span>{v ?? "Add to list"}</span>
+          <span>{v?.length === 0 ? "Add to list" : v}</span>
         </Button>
       </Dialog.Trigger>
       <Dialog.Portal>
