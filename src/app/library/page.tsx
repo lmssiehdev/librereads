@@ -25,7 +25,7 @@ export default function LibraryPage() {
   return (
     <div>
       <div>
-        {Object.keys(t).length > 0 ? (
+        {Object.keys(t).length < 0 ? (
           <div className="py-10 text-center">
             Start building your library. Add a book now!{" "}
           </div>
