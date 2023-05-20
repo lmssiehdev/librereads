@@ -12,6 +12,7 @@ export async function fetchBookDetails(
       headers: new Headers({
         "User-Agent": process.env.AXIOS_USERAGENT as string,
       }),
+      next: { tags: ["book"] },
     });
 
     const htmlString = await res.text();
