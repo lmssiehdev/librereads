@@ -37,7 +37,7 @@ const DialogDemo = ({ info }: { info: RawBook }) => {
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger asChild>
         <Button className="w-full mt-2">
-          <span>{v?.length === 0 ? "Add to list" : v}</span>
+          <span>{v ?? "Add to list"}</span>
         </Button>
       </Dialog.Trigger>
       <Dialog.Portal>
@@ -120,7 +120,9 @@ function Toggle({
       type="single"
       defaultValue={selectedValue}
       aria-label="Text alignment"
-      onValueChange={(value: ReadingStatus) => onValueChange(value)}
+      onValueChange={(value: ReadingStatus | "") =>
+        value !== "" && onValueChange(value)
+      }
     >
       {optionsArray.map((value) => {
         return (
