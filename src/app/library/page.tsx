@@ -38,7 +38,7 @@ export default function LibraryPage() {
                     <>
                       <h3 className="text-lg pb-1 py-5"> {key} </h3>
 
-                      <div className="grid grid-cols-[repeat(auto-fit,minmax(145px,180px))] md:gap-x-1 md:gap-y-3 gap-x-3 gap-y-6">
+                      <div className="grid grid-cols-[repeat(auto-fit,minmax(145px,180px))] justify-center md:gap-x-1 md:gap-y-3 gap-x-3 gap-y-6">
                         {t[key].map(({ info: { title, imageUrl, bookId } }) => {
                           return (
                             <div key={title} className="">

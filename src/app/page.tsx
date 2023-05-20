@@ -21,7 +21,7 @@ const features = [
     icon: <BellSlashIcon className="h-6 w-6" />,
     name: " A distraction-free environment",
     description:
-      "Start discovering books right away with no need to create an account or share personal information.",
+      " Effortlessly manage and organize your personal library without social distractions.",
   },
   {
     icon: <SparklesIcon className="h-6 w-6" />,
@@ -40,15 +40,15 @@ const features = [
 export default function Home() {
   return (
     <main className="min-h-screen">
-      <h2 className="text-center fluid-2xl sm:fluid-4xl my-12 sm:my-16 leading-[1.2]">
+      <h2 className="text-center fluid-2xl sm:fluid-4xl my-12 leading-[1.2]">
         Goodreads, reimagined.
         <br />
         Private, minimal, simple.
       </h2>
-      <div className="my-4 sm:my-8 max-w-md mx-auto ">
+      <div className="my-12 max-w-md mx-auto ">
         <SearchInput />
       </div>
-      <div>
+      <div className="max-w-[300px] mx-auto sm:max-w-full mb-20">
         <h3 className="text-2xl py-4">Features</h3>
         <div className="grid sm:grid-cols-2 grid-cols-1 gap-10 sm:gap-8">
           {features.map((feature) => {
