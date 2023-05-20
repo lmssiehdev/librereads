@@ -1,5 +1,6 @@
 import { axiosInstance } from "@/utils/axiosInstance";
 import * as cheerio from "cheerio";
+import Image from "next/image";
 import Link from "next/link";
 const jsdom = require("jsdom");
 
@@ -66,10 +67,12 @@ export default async function SimilarBooks({ id }: Props) {
           return (
             <div key={bookId} className="mx-auto">
               <div className="h-[180px] w-[120px] mx-auto">
-                <img
+                <Image
                   className="inline-block h-full w-full"
                   src={imageUrl}
                   alt={`${title} book cover`}
+                  height={260}
+                  width={200}
                 />
               </div>
               <Link href={`/book/${bookId}`}>

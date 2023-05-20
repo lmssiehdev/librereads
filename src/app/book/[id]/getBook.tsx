@@ -2,6 +2,7 @@ import RawBook from "@/types/rawBook";
 import Rating from "./Components/Rating";
 import Select from "./Components/StateSelect";
 import Description from "./Components/Description";
+import Image from "next/image";
 
 function calculatePercentages(arr: number[]) {
   const totalSum = arr.reduce((sum, num) => sum + num, 0);
@@ -34,10 +35,12 @@ export default async function BookInfo({ info }: Props) {
       <div className="flex flex-col items-center sm:items-start sm:flex-row gap-4 md:gap-8">
         <div className="max-w-fit sm:w-auto">
           <div className="h-[260px] w-[180px] overflow-hidden rounded object-fill">
-            <img
+            <Image
               className="h-full w-full inline-block "
               src={imageUrl}
               alt={`${title} cover image`}
+              height={260}
+              width={200}
             />
           </div>
           <Select info={info} />
