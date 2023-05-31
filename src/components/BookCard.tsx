@@ -13,12 +13,11 @@ export function BookCard({
   return (
     <>
       <div className="rounded overflow-hidden h-[260px]">
-        <Image
+        <img
           className="inline-block h-full w-full object-fill"
           src={imageUrl}
           alt={`${title} book cover`}
-          height={260}
-          width={200}
+          loading="lazy"
         />
       </div>
       <Link className="text-center text-xs" href={`/book/${bookId}`}>

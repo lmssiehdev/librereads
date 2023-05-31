@@ -35,12 +35,11 @@ export default async function BookInfo({ info }: Props) {
       <div className="flex flex-col items-center sm:items-start sm:flex-row gap-4 md:gap-8">
         <div className="max-w-fit sm:w-auto">
           <div className="h-[260px] w-[180px] overflow-hidden rounded object-fill">
-            <Image
+            <img
               className="h-full w-full inline-block "
               src={imageUrl}
               alt={`${title} cover image`}
-              height={260}
-              width={200}
+              loading="lazy"
             />
           </div>
           <Select info={info} />

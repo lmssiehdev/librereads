@@ -67,12 +67,11 @@ export default async function SimilarBooks({ id }: Props) {
           return (
             <div key={bookId} className="mx-auto">
               <div className="h-[180px] w-[120px] mx-auto">
-                <Image
+                <img
                   className="inline-block h-full w-full"
                   src={imageUrl}
                   alt={`${title} book cover`}
-                  height={260}
-                  width={200}
+                  loading="lazy"
                 />
               </div>
               <Link href={`/book/${bookId}`}>
