@@ -8,7 +8,7 @@ export default async function getAuthor({
     id: string;
   };
 }) {
-  const result = await fetchAuthorDetails();
+  const result = await fetchAuthorDetails(params.id);
 
   if (!result) return <div>{"author doesn't exist"}</div>;
 
