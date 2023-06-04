@@ -2,6 +2,7 @@ export interface RawAuthor {
   author: {
     name: string;
     image: string;
+    description: string;
   };
   books: Array<{
     bookTitle: string;

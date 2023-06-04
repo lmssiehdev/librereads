@@ -15,10 +15,13 @@ export async function fetchAuthorDetails(id = "432.Ayn_Rand") {
     const htmlString = await res.text();
     const $ = cheerio.load(htmlString);
 
-    const r: Partial<RawAuthor> = {
+    const r: RawAuthor = {
       author: {
         image: $(" .authorLeftContainer > a img").attr("src") as string,
         name: $("h1.authorName span").text(),
+        description: $(
+          ".aboutAuthorInfo #freeTextContainerauthor432"
+        ).html() as string,
       },
       books: Array.from($("table.stacked tbody tr")).map((node) => {
         const ele = $(node);
