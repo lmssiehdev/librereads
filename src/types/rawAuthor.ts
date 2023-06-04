@@ -6,5 +6,6 @@ export interface RawAuthor {
   books: Array<{
     bookTitle: string;
     bookCover: string;
+    bookRating: string;
   }>;
 }

@@ -22,7 +22,10 @@ export default async function getAuthor({
               <div>
                 <img src={bookCover} alt={`${bookTitle} cover image`} />
               </div>
-              <div>{bookTitle}</div>
+              <div>
+                <div>{bookTitle}</div>
+                <span className="text-xs text-slate-500"> {bookRating}</span>
+              </div>
             </div>
           );
         })}

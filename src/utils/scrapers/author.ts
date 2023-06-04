@@ -25,11 +25,12 @@ export async function fetchAuthorDetails(id = "432.Ayn_Rand") {
         return {
           bookTitle: ele.find(".bookTitle span").text(),
           bookCover: ele.find("img.bookCover").attr("src") as string,
+          bookRating: ele.find(".minirating").text(),
         } as const;
       }),
     };
 
-    if (r.name !== "") return r;
+    if (r.author.name !== "") return r;
     fetchAuthorDetails(id);
   } catch (e) {
     console.log(getErrorMessage);
