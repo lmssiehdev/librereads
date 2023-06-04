@@ -43,16 +43,15 @@ export async function fetchBookDetails(
         webUrl: "",
       })),
       description: $("[data-testid=description] .Formatted").html() as string,
-      ratingsCountDist: [
-        "443 (54%)",
-        "235 (29%)",
-        "106 (13%)",
-        "20 (2%)",
-        "2 (<1%)",
-      ]
+      ratingsCountDist: Array.from(
+        $(".ReviewsSectionStatistics__histogram .RatingsHistogram__labelTotal")
+      )
+        .map((item) => $(item).text())
         .reverse()
-        .map((t) => t.split(" ")[1].split("").filter(Number).join(""))
-        .map((t) => Number(t)),
+        .map((t) => {
+          const [reviews, percentage] = t.split(" ");
+          return { reviews, percentage };
+        }),
       bookId: id,
     };
     if (r.title !== "") return r;

@@ -5,7 +5,7 @@ export default interface RawBook {
   averageRating: number;
   ratingsCount: number | string;
   textReviewsCount: number;
-  ratingsCountDist: number[];
+  ratingsCountDist: Array<Record<"percentage" | "reviews", string>>;
   genres: Array<{
     name: string;
     webUrl: string;
