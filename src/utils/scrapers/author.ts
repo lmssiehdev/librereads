@@ -1,6 +1,6 @@
 import { RawAuthor } from "@/types/rawAuthor";
 import * as cheerio from "cheerio";
-import { getErrorMessage } from "@/utils/misc";
+import { changeGoodreadsImageSize, getErrorMessage } from "@/utils/misc";
 
 export async function fetchAuthorDetails(id = "432.Ayn_Rand") {
   try {
@@ -20,14 +20,17 @@ export async function fetchAuthorDetails(id = "432.Ayn_Rand") {
         image: $(" .authorLeftContainer > a img").attr("src") as string,
         name: $("h1.authorName span").text(),
         description: $(
-          ".aboutAuthorInfo #freeTextContainerauthor432"
+          ".aboutAuthorInfo [id^=freeTextContainerauthor]"
         ).html() as string,
       },
       books: Array.from($("table.stacked tbody tr")).map((node) => {
         const ele = $(node);
         return {
           bookTitle: ele.find(".bookTitle span").text(),
-          bookCover: ele.find("img.bookCover").attr("src") as string,
+          bookCover: changeGoodreadsImageSize(
+            ele.find("img.bookCover")?.attr("src") as string,
+            200
+          ),
           bookRating: ele.find(".minirating").text(),
         } as const;
       }),

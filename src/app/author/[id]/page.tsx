@@ -16,7 +16,7 @@ export default async function getAuthor({
   return (
     <>
       <div className="my-10">
-        <div className="flex gap-10 my-10">
+        <div className="flex flex-col md:flex-row gap-10 my-10">
           <div>
             <img src={author.image} alt={`${author.name} profile picture`} />
           </div>
@@ -25,19 +25,32 @@ export default async function getAuthor({
             <Description description={author.description} />
           </div>
         </div>
-        {books?.map(({ bookCover, bookTitle, bookRating }) => {
-          return (
-            <div key={bookCover} className="flex gap-3">
-              <div>
-                <img src={bookCover} alt={`${bookTitle} cover image`} />
-              </div>
-              <div>
-                <div>{bookTitle}</div>
-                <span className="text-xs text-slate-500"> {bookRating}</span>
-              </div>
-            </div>
-          );
-        })}
+        <div>
+          <h2 className="text-xl my-8">{`${author.name}'s books`}</h2>
+
+          <div className="flex flex-col gap-2">
+            {books?.map(({ bookCover, bookTitle, bookRating }) => {
+              return (
+                <div key={bookCover} className="flex gap-3">
+                  <div className="h-[150px] max-w-[100px] w-full flex-1">
+                    <img
+                      className="w-full h-full inline-block object-fill"
+                      src={bookCover}
+                      alt={`${bookTitle} cover image`}
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <div>{bookTitle}</div>
+                    <span className="text-xs text-slate-500">
+                      {" "}
+                      {bookRating}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
     </>
   );
