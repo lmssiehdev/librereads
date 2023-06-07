@@ -3,15 +3,21 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
+
   async rewrites() {
     return [
       {
         source: "/book/show/:id",
         destination: "/book/:id",
       },
+      {
+        source: "/list/show/:id",
+        destination: "/list/:id",
+      },
     ];
   },
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         hostname: "images-na.ssl-images-amazon.com",
