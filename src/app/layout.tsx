@@ -4,6 +4,7 @@ import NextTopLoader from "nextjs-toploader";
 
 import localFont from "next/font/local";
 import clsx from "clsx";
+import { StarIcon } from "@heroicons/react/24/solid";
 
 const pockota = localFont({
   src: "../../public/fonts/Pockota-Regular.ttf",
@@ -62,12 +63,14 @@ const Navbar = () => {
 
 const Footer = () => {
   return (
-    <div className="text-center py-4">
+    <div className="text-center py-40 pb-10">
       <a
-        className="underline underline-offset-2"
+        target="_blank"
+        className="underline underline-offset-2 flex justify-center items-center gap-1 "
         href="https://github.com/lmssiehdev/librereads"
       >
-        source code
+        <StarIcon className="h-5 w-5" />
+        star us on github
       </a>
     </div>
   );
