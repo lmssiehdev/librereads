@@ -76,8 +76,7 @@ export default function SearchInput() {
   const searchTypeArr: SelectOptions[] = ["book", "list"];
 
   const handleSearchRedirect = () => {
-    const formatedSearchTerm = searchTerm.replaceAll(" ", "+");
-    const url = `search/${searchType}/${formatedSearchTerm}`;
+    const url = `search/${searchType}/${searchTerm}`;
     router.push(url);
   };
   return (

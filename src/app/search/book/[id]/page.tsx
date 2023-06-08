@@ -6,7 +6,7 @@ type searchResult = Awaited<ReturnType<typeof fetchSearchResult>>;
 async function fetchSearchResult(searchQuery = "") {
   try {
     const res = await fetch(
-      `https://goodreads.com/search?search?page=1&q=${searchQuery}&search_type=book`,
+      `https://goodreads.com/search?page=1&q=${searchQuery}`,
       {
         method: "GET",
         headers: new Headers({
