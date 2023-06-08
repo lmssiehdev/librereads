@@ -13,6 +13,7 @@ import React, { useState } from "react";
 const DialogDemo = ({ info }: { info: RawBook }) => {
   const books = useBookStore((state) => state.books);
   const addBook = useBookStore((state) => state.addBook);
+  const removeBook = useBookStore((state) => state.removeBook);
 
   const [open, setOpen] = React.useState(false);
   const [v, setV] = useState<ReadingStatus | null>(
@@ -24,6 +25,7 @@ const DialogDemo = ({ info }: { info: RawBook }) => {
   const updateBookState = (value: ReadingStatus | "Remove") => {
     if (value === "Remove") {
       setV(null);
+      removeBook(info.bookId);
       setOpen(false);
       return;
     }
