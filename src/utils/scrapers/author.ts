@@ -27,6 +27,7 @@ export async function fetchAuthorDetails(id = "432.Ayn_Rand") {
         const ele = $(node);
         return {
           bookTitle: ele.find(".bookTitle span").text(),
+          bookId: ele.find(".bookTitle").attr("href") as string,
           bookCover: changeGoodreadsImageSize(
             ele.find("img.bookCover")?.attr("src") as string,
             200

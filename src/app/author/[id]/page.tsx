@@ -1,5 +1,6 @@
 import Description from "@/app/book/[id]/Components/Description";
 import { fetchAuthorDetails } from "@/utils/scrapers/author";
+import Link from "next/link";
 
 export default async function getAuthor({
   params,
@@ -29,7 +30,7 @@ export default async function getAuthor({
           <h2 className="text-xl my-8">{`${author.name}'s books`}</h2>
 
           <div className="flex flex-col gap-2">
-            {books?.map(({ bookCover, bookTitle, bookRating }) => {
+            {books?.map(({ bookCover, bookTitle, bookRating, bookId }) => {
               return (
                 <div key={bookCover} className="flex gap-3">
                   <div className="h-[150px] max-w-[100px] w-full flex-1">
@@ -40,11 +41,10 @@ export default async function getAuthor({
                     />
                   </div>
                   <div className="flex-1">
-                    <div>{bookTitle}</div>
-                    <span className="text-xs text-slate-500">
-                      {" "}
-                      {bookRating}
-                    </span>
+                    <div>
+                      <Link href={`${bookId}/`}>{bookTitle}</Link>
+                    </div>
+                    <span className="text-xs text-slate-500">{bookRating}</span>
                   </div>
                 </div>
               );

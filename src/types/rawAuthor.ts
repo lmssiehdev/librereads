@@ -8,5 +8,6 @@ export interface RawAuthor {
     bookTitle: string;
     bookCover: string;
     bookRating: string;
+    bookId: string;
   }>;
 }
