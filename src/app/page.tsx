@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Inter } from "next/font/google";
-import SearchInput from "./search/components/SearchInput";
+import SearchInput from "@/components/SearchInput";
 import {
   BellSlashIcon,
   EyeSlashIcon,
