@@ -14,6 +14,14 @@ const nextConfig = {
         source: "/list/show/:id",
         destination: "/list/:id",
       },
+      {
+        source: "/search/book",
+        destination: "/search/",
+      },
+      {
+        source: "/search/list",
+        destination: "/search/",
+      },
     ];
   },
   images: {

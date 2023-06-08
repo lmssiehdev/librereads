@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "NODE_OPTIONS='--inspect' next dev",
+    "dev": "cross-env NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -11,6 +11,7 @@
   "dependencies": {
     "@heroicons/react": "^2.0.17",
     "@radix-ui/react-dialog": "^1.0.3",
+    "@radix-ui/react-select": "^1.2.2",
     "@radix-ui/react-toggle": "^1.0.2",
     "@radix-ui/react-toggle-group": "^1.0.3",
     "@tailwindcss/line-clamp": "^0.4.4",
@@ -38,6 +39,7 @@
     "zustand": "^4.3.8"
   },
   "devDependencies": {
-    "@types/cheerio": "^0.22.31"
+    "@types/cheerio": "^0.22.31",
+    "cross-env": "^7.0.3"
   }
 }
