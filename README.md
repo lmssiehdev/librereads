@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Librereads
 
-## Getting Started
+A free & open source Goodreads front-end.
 
-First, run the development server:
+Inspired by projects like [nitter](https://github.com/zedeus/nitter), [libremdb](https://github.com/zyachel/libremdb) and many others.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+|                                                                                                 |                                                                                              |
+| ----------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| <img src="./public/img/preview_desktop.jpg" title="screenshot (desktop screen)" width="1500" /> | <img src="./public/img/preview_mobile.jpg" title="screenshot (mobile screen)" width="400" /> |
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Instances
 
-[http://localhost:3000/api/hello](http://localhost:3000/api/hello) is an endpoint that uses [Route Handlers](https://beta.nextjs.org/docs/routing/route-handlers). This endpoint can be edited in `app/api/hello/route.ts`.
+| Instance URL                             | Country | Provider | Notes                                  |
+| ---------------------------------------- | :-----: | -------- | -------------------------------------- |
+| [[biblioreads.ml](https://librereads.vercel.app/)](https://librereads.vercel.app/) |  :us:   | Vercel   | Run by [me](https://github.com/lmssiehdev) |
+|
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+---
 
-## Learn More
+### **Similar projects**
 
-To learn more about Next.js, take a look at the following resources:
+- [BiblioReads](https://github.com/nesaku/BiblioReads/)  
+  BiblioReads is an Alternative Private Goodreads Front-End.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+### **License**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Licensed under the [GNU AGPLv3](https://www.gnu.org/licenses/agpl-3.0.en.html). Please see [LICENSE.txt](./LICENSE.txt) for more information.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+---
+
+### **Disclaimer**
+
+Librereads does not host any content. All content on Librereads is sourced from Goodreads. Librereads is not affiliated with Goodreads. Goodreads is a trademark of Amazon Technologies, Inc.
