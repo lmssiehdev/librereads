@@ -36,11 +36,16 @@ export default async function ListPage({
                   </picture>
                 </div>
                 <div>
-                  <Link href={`/book${bookId}`} className="text-lg">
+                  <Link href={`/book/${bookId}`} className="text-lg">
                     {bookTitle}
                   </Link>
                   <div>
-                    by <span className=" text-slate-700">{bookAuthor}</span>
+                    <span className=" text-slate-700">
+                      by:
+                      <Link href={`/author/${bookAuthor.id}`}>
+                        <span className="opacity-60"> {bookAuthor.name} </span>
+                      </Link>
+                    </span>
                   </div>
                   <span className="text-xs text-slate-600"> {bookRating} </span>
                 </div>

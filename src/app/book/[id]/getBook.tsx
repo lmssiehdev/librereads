@@ -3,6 +3,7 @@ import Rating from "./Components/Rating";
 import Select from "./Components/StateSelect";
 import Description from "./Components/Description";
 import Image from "next/image";
+import Link from "next/link";
 
 function calculatePercentages(arr: number[]) {
   const totalSum = arr.reduce((sum, num) => sum + num, 0);
@@ -24,6 +25,7 @@ export default async function BookInfo({ info }: Props) {
     genres,
     averageRating,
     authorName,
+    authorId,
     similarBooksUrl,
     ratingsCountDist,
   } = info;
@@ -44,7 +46,9 @@ export default async function BookInfo({ info }: Props) {
         </div>
         <div className="flex-1">
           <h1 className="text-lg font-bold">{title}</h1>
-          <p className="opacity-60">by: {authorName} </p>
+          <Link href={`/author/${authorId}`}>
+            <p className="opacity-60">by: {authorName} </p>
+          </Link>
           <div className="py-2">
             <Rating rating={averageRating} info={info} />
           </div>

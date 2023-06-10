@@ -5,6 +5,9 @@ export interface rawList {
     bookCover: string;
     bookRating: string;
     bookId: string;
-    bookAuthor: string;
+    bookAuthor: {
+      name: string;
+      id: string;
+    };
   }>;
 }
