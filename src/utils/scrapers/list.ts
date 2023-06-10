@@ -30,7 +30,12 @@ export async function fetchListDetails(id: string) {
             70
           ),
           bookTitle: $listItem.find("a.bookTitle span").text(),
-          bookAuthor: $listItem.find("a.authorName span").text(),
+          bookAuthor: {
+            name: $listItem.find("a.authorName span").text(),
+            id: getIdFromUrl(
+              $listItem.find("a.authorName").attr("href") as string
+            ),
+          },
           bookRating: $listItem.find(".minirating").text(),
           bookId: getIdFromUrl(
             $listItem.find("a.bookTitle").attr("href") as string

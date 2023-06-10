@@ -1,11 +1,12 @@
 import RawBook from "@/types/rawBook";
 import * as cheerio from "cheerio";
-import { getErrorMessage } from "@/utils/misc";
+import { getErrorMessage, getIdFromUrl } from "@/utils/misc";
 
 export async function fetchBookDetails(
   id = 7235533
 ): Promise<Partial<RawBook> | void> {
   try {
+    console.log("fetching book with the id", id);
     const res = await fetch(`https://goodreads.com/book/show/${id}`, {
       method: "GET",
       headers: new Headers({
@@ -23,6 +24,9 @@ export async function fetchBookDetails(
       authorName: $(
         ".ContributorLinksList .ContributorLink [data-testid=name]"
       ).text(),
+      authorId: getIdFromUrl(
+        $(".ContributorLinksList .ContributorLink").attr("href") as string
+      ),
       averageRating: Number(
         $(".BookPageMetadataSection .RatingStatistics__rating").text()
       ),
