@@ -25,9 +25,9 @@ export default function LibraryPage() {
   return (
     <div>
       <div>
-        {Object.keys(t).length < 0 ? (
+        {Object.keys(book).length <= 0 ? (
           <div className="py-10 text-center">
-            Start building your library. Add a book now!{" "}
+            Start building your library. Add a book now!
           </div>
         ) : (
           <div>
@@ -59,7 +59,6 @@ export default function LibraryPage() {
           </div>
         )}
       </div>
-      {/* <pre>{JSON.stringify(book, null, 2)}</pre> */}
     </div>
   );
 }
