@@ -1,10 +1,5 @@
-import { axiosInstance } from "@/utils/axiosInstance";
 import * as cheerio from "cheerio";
-import Image from "next/image";
 import Link from "next/link";
-const jsdom = require("jsdom");
-
-const { JSDOM } = jsdom;
 
 interface SimilarBook {
   book: {
@@ -19,17 +14,16 @@ interface JSONSimilarBooks {
   similarBooks: Array<SimilarBook>;
 }
 
-async function fetch(id: number) {
-  return null;
+async function fetchSimilarBooks(id: number = 8134945) {
   try {
-    const res = await axiosInstance(`/book/similar/${8134945}`);
-    const $ = cheerio.load(res.data);
+    const response = await fetch(`https://goodreads.com/book/similar/${id}`);
+    const data = await response.text();
+    const $ = cheerio.load(data);
     const rawHTML = $("body").html();
 
-    const dom = new JSDOM(rawHTML);
-    const rawData = dom.window.document
-      .querySelector("[data-react-props]:not(:first-child)")
-      .getAttribute("data-react-props");
+    const rawData = $("[data-react-props]:not(:first-child)").attr(
+      "data-react-props"
+    ) as string;
 
     const { similarBooks } = JSON.parse(rawData) as JSONSimilarBooks;
 
@@ -44,6 +38,7 @@ async function fetch(id: number) {
       };
     });
 
+    console.log(formatedBooks);
     return formatedBooks;
   } catch (err) {
     console.error(err);
@@ -55,33 +50,35 @@ interface Props {
 }
 
 export default async function SimilarBooks({ id }: Props) {
-  const res = await fetch(id);
+  const res = await fetchSimilarBooks(id);
 
   if (!res) return <div>yikes! there was an error, please try again.</div>;
 
   return (
-    <div>
-      <h3 className="py-2">Similar Books</h3>
-      <div className="grid grid-cols-4 gap-3">
-        {res.map(({ bookId, title, imageUrl }) => {
-          return (
-            <div key={bookId} className="mx-auto">
-              <div className="h-[180px] w-[120px] mx-auto">
+    <>
+      {res.map(({ bookId, title, imageUrl }) => {
+        return (
+          <div key={bookId} className="mx-auto">
+            <div className="h-[180px] w-[120px] mx-auto">
+              <picture>
                 <img
                   className="inline-block h-full w-full"
                   src={imageUrl}
                   alt={`${title} book cover`}
                   loading="lazy"
                 />
-              </div>
-              <Link href={`/book/${bookId}`}>
-                <span className="text-sm text-center"> {title} </span>
-              </Link>
+              </picture>
             </div>
-          );
-        })}
-      </div>
-    </div>
+            <Link
+              className="my-2 text-sm text-center line-clamp-2"
+              href={`/book/${bookId}`}
+            >
+              {title}
+            </Link>
+          </div>
+        );
+      })}
+    </>
   );
 }
 

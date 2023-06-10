@@ -5,7 +5,6 @@ import { getErrorMessage } from "@/utils/misc";
 export async function fetchBookDetails(
   id = 7235533
 ): Promise<Partial<RawBook> | void> {
-  // if (id === 7235533) return o;
   try {
     const res = await fetch(`https://goodreads.com/book/show/${id}`, {
       method: "GET",
@@ -17,8 +16,6 @@ export async function fetchBookDetails(
 
     const htmlString = await res.text();
     const $ = cheerio.load(htmlString);
-    // const rawData = $("script#__NEXT_DATA__").text();
-    // const parsedRawData: any = JSON.parse(rawData);
 
     const r: Partial<RawBook> = {
       title: $("[data-testid=bookTitle]").text(),
@@ -54,8 +51,17 @@ export async function fetchBookDetails(
         }),
       bookId: id,
     };
-    if (r.title !== "") return r;
-    fetchBookDetails(id);
+    if (r.title !== "") {
+      const rawData = $("script#__NEXT_DATA__").text();
+      const parsedRawData: any = JSON.parse(rawData);
+      const nextState = parsedRawData.props.pageProps.apolloState;
+      const key = Object.keys(nextState).filter((key) => key.includes("Work"));
+
+      const similarBooksUrl = nextState[key[0]]?.legacyId;
+
+      return { ...r, similarBooksUrl } as RawBook;
+    }
+    return await fetchBookDetails(id);
   } catch (e) {
     console.log(getErrorMessage);
   }

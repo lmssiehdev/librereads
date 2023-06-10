@@ -26,5 +26,5 @@ module.exports = {
     },
   },
   variants: {},
-  plugins: [require("tailwind-fluid-typography")],
+  plugins: [require("tailwind-fluid-typography"), require("tailwind-children")],
 };
