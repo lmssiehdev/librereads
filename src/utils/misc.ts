@@ -3,13 +3,27 @@ export function getErrorMessage(error: unknown) {
   return String(error);
 }
 
+/**
+ * Changes the size of a Goodreads image URL by modifying the image size parameter.
+ * @param imageUrl - The original Goodreads image URL.
+ * @param size - The desired size for the image.
+ * @returns The modified Goodreads image URL with the specified size.
+ */
 export function changeGoodreadsImageSize(imageUrl: string, size: number) {
   const regex = /(_S)([XY]\d+)(_\.)/;
   return imageUrl.replace(regex, `$1X${size}$3`);
 }
 
-export function getIdFromUrl(url: string) {
-  const cleanUrl = url.split("?")[0];
+/**
+ * Extracts the book ID from a Goodreads book URL.
+ * @param url - The Goodreads book URL.
+ * @returns The book ID extracted from the URL.
+ *
+ * Regular expression tests: [Regex Tests](https://regexr.com/7f893)
+ */
+export function getIdFromUrl(url: string): string {
+  const regex = /(\d+)/;
+  const match = url.match(regex);
 
-  return cleanUrl.substring(cleanUrl.lastIndexOf("/"), cleanUrl.length);
+  return match ? match[0] : "";
 }
