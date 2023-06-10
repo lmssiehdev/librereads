@@ -1,10 +1,10 @@
 import Link from "next/link";
-import "./globals.css";
 import NextTopLoader from "nextjs-toploader";
+import "./globals.css";
 
-import localFont from "next/font/local";
+import { ArrowUpRightIcon } from "@heroicons/react/24/solid";
 import clsx from "clsx";
-import { StarIcon } from "@heroicons/react/24/solid";
+import localFont from "next/font/local";
 
 const pockota = localFont({
   src: "../../public/fonts/Pockota-Regular.ttf",
@@ -69,8 +69,8 @@ const Footer = () => {
         className="underline underline-offset-2 flex justify-center items-center gap-1 "
         href="https://github.com/lmssiehdev/librereads"
       >
-        <StarIcon className="h-5 w-5" />
-        star us on github
+        send feedback
+        <ArrowUpRightIcon className="h-4 w-4" />
       </a>
     </div>
   );
