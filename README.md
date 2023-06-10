@@ -6,15 +6,15 @@ Inspired by projects like [nitter](https://github.com/zedeus/nitter), [libremdb]
 
 |                                                                                                 |                                                                                              |
 | ----------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| <img src="./public/img/preview_desktop.jpg" title="screenshot (desktop screen)" width="1500" /> | <img src="./public/img/preview_mobile.jpg" title="screenshot (mobile screen)" width="400" /> |
+| <img src="https://raw.githubusercontent.com/lmssiehdev/librereads/main/public/img/preview_desktop.png" title="screenshot (desktop screen)" width="1200" /> | <img src="https://raw.githubusercontent.com/lmssiehdev/librereads/main/public/img/preview_mobile.png" title="screenshot (mobile screen)" width="400" /> |
 
 
 ## Instances
 
 | Instance URL                             | Country | Provider | Notes                                  |
 | ---------------------------------------- | :-----: | -------- | -------------------------------------- |
-| [[biblioreads.ml](https://librereads.vercel.app/)](https://librereads.vercel.app/) |  :us:   | Vercel   | Run by [me](https://github.com/lmssiehdev) |
-|
+| [[https://librereads.vercel.app/](https://librereads.vercel.app/) |  :us:   | Vercel   | Run by [me](https://github.com/lmssiehdev) |
+
 
 ---
 
