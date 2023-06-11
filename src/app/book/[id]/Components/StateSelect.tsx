@@ -54,11 +54,11 @@ const DialogDemo = ({ info }: { info: RawBook }) => {
           )}
         >
           <Dialog.Title className="text-sm font-medium text-gray-900">
-            Edit profile
+            Edit shelf
           </Dialog.Title>
-          <Dialog.Description className="mt-2 text-sm font-normal text-gray-700">
+          {/* <Dialog.Description className="mt-2 text-sm font-normal text-gray-700">
             Make changes to your profile here. Click save when you{"'"}re done.
-          </Dialog.Description>
+          </Dialog.Description> */}
           <div className="mt-2 space-y-2">
             <Toggle
               /* @ts-expect-error */
