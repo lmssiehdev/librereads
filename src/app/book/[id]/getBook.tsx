@@ -24,8 +24,7 @@ export default async function BookInfo({ info }: Props) {
     description,
     genres,
     averageRating,
-    authorName,
-    authorId,
+    authors,
     similarBooksUrl,
     ratingsCountDist,
   } = info;
@@ -46,9 +45,24 @@ export default async function BookInfo({ info }: Props) {
         </div>
         <div className="flex-1">
           <h1 className="text-lg font-bold">{title}</h1>
-          <Link href={`/author/${authorId}`}>
-            <p className="opacity-60">by: {authorName} </p>
-          </Link>
+          <div className="flex gap-1">
+            by:{" "}
+            {authors.map(({ id, name }, index) => {
+              return (
+                <>
+                  <Link
+                    key={id}
+                    href={`/author/${id}`}
+                    className="inline opacity-60"
+                  >
+                    <span>{name}</span>
+                    {index + 1 < authors.length && ","}
+                  </Link>
+                </>
+              );
+            })}
+          </div>
+
           <div className="py-2">
             <Rating rating={averageRating} info={info} />
           </div>

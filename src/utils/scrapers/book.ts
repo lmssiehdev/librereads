@@ -21,11 +21,14 @@ export async function fetchBookDetails(
     const r: Partial<RawBook> = {
       title: $("[data-testid=bookTitle]").text(),
       imageUrl: $(".BookCover__image img").attr("src") as string,
-      authorName: $(
-        ".ContributorLinksList .ContributorLink [data-testid=name]"
-      ).text(),
-      authorId: getIdFromUrl(
-        $(".ContributorLinksList .ContributorLink").attr("href") as string
+      authors: Array.from($(".ContributorLinksList .ContributorLink")).map(
+        (ele) => {
+          const authorEle = $(ele);
+          return {
+            name: authorEle.find("[data-testid=name]").text(),
+            id: getIdFromUrl(authorEle.attr("href") as string),
+          };
+        }
       ),
       averageRating: Number(
         $(".BookPageMetadataSection .RatingStatistics__rating").text()

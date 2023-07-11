@@ -10,8 +10,10 @@ export default interface RawBook {
     name: string;
     webUrl: string;
   }>;
-  authorName: string;
-  authorId: string;
+  authors: Array<{
+    name: string;
+    id: string;
+  }>;
   similarBooksUrl?: string;
   bookId: number;
   bookDetails?: {
