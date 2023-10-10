@@ -22,6 +22,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  redirect("https://github.com/lmssiehdev/librereads");
+
   return (
     <html lang="en">
       <body
