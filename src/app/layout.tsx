@@ -5,6 +5,7 @@ import "./globals.css";
 import { ArrowUpRightIcon } from "@heroicons/react/24/solid";
 import clsx from "clsx";
 import localFont from "next/font/local";
+import { redirect } from "next/navigation";
 
 const pockota = localFont({
   src: "../../public/fonts/Pockota-Regular.ttf",
