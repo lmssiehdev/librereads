@@ -11,6 +11,7 @@ export default async function BookPage({
     id: number;
   };
 }) {
+  return null;
   const bookInfo = await fetchBookDetails(params.id);
 
   return (
