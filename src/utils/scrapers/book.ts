@@ -5,6 +5,7 @@ import { getErrorMessage, getIdFromUrl } from "@/utils/misc";
 export async function fetchBookDetails(
   id = 7235533
 ): Promise<Partial<RawBook> | void> {
+  return null
   try {
     console.log("fetching book with the id", id);
     const res = await fetch(`https://goodreads.com/book/show/${id}`, {
