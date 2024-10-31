@@ -1,13 +1,13 @@
 export interface rawList {
-  title: string;
-  books: Array<{
-    bookTitle: string;
-    bookCover: string;
-    bookRating: string;
-    bookId: string;
-    bookAuthor: {
-      name: string;
-      id: string;
-    };
-  }>;
+	title: string;
+	books: Array<{
+		bookTitle: string;
+		bookCover: string;
+		bookRating: string;
+		bookId: string;
+		bookAuthor: {
+			name: string;
+			id: string;
+		};
+	}>;
 }

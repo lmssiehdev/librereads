@@ -1,12 +1,12 @@
 export default function RootLayout({
-  children,
+	children,
 }: {
-  children: React.ReactNode;
+	children: React.ReactNode;
 }) {
-  return (
-    <div className="max-w-screen-md mx-auto">
-      {children}
-      {/* @ts-ignore */}
-    </div>
-  );
+	return (
+		<div className="max-w-screen-md mx-auto">
+			{children}
+			{/* @ts-ignore */}
+		</div>
+	);
 }

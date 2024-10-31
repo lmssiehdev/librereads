@@ -1,6 +1,6 @@
 export function getErrorMessage(error: unknown) {
-  if (error instanceof Error) return error.message;
-  return String(error);
+	if (error instanceof Error) return error.message;
+	return String(error);
 }
 
 /**
@@ -10,8 +10,8 @@ export function getErrorMessage(error: unknown) {
  * @returns The modified Goodreads image URL with the specified size.
  */
 export function changeGoodreadsImageSize(imageUrl: string, size: number) {
-  const regex = /(_S)([XY]\d+)(_\.)/;
-  return imageUrl.replace(regex, `$1X${size}$3`);
+	const regex = /(_S)([XY]\d+)(_\.)/;
+	return imageUrl.replace(regex, `$1X${size}$3`);
 }
 
 /**
@@ -22,8 +22,8 @@ export function changeGoodreadsImageSize(imageUrl: string, size: number) {
  * Regular expression tests: [Regex Tests](https://regexr.com/7f893)
  */
 export function getIdFromUrl(url: string): string {
-  const regex = /(\d+)/;
-  const match = url.match(regex);
+	const regex = /(\d+)/;
+	const match = url.match(regex);
 
-  return match ? match[0] : "";
+	return match ? match[0] : "";
 }
