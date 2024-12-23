@@ -3,11 +3,16 @@ import Star from "../../../components/icons/star.astro";
 import Layout from "../../../layouts/Layout.astro";
 import { fetchAuthorDetails } from "../../../utils/scrapers/author";
 
+Astro.response.headers.set(
+  "Cache-Control",
+  `s-maxage=86400, stale-while-revalidate`
+);
+
 const { id: authorId } = Astro.params;
 
 if (!authorId) {
-	Astro.redirect("/");
-	return;
+  Astro.redirect("/");
+  return;
 }
 
 const result = await fetchAuthorDetails(authorId);

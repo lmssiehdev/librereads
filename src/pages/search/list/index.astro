@@ -7,6 +7,11 @@ type Params = {
 import { type ListData, fetchSearchResult } from "../../../utils/query";
 import Layout from "../_layout.astro";
 
+Astro.response.headers.set(
+  "Cache-Control",
+  `s-maxage=86400, stale-while-revalidate`
+);
+
 const searchTerm = Astro.url.searchParams.get("q");
 const page = Number(Astro.url.searchParams.get("page")) || 1;
 
