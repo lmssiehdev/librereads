@@ -1,14 +1,14 @@
 ---
 export const prerender = false;
 import SearchInput from "../../components/search-input.astro";
-import Layout from "../../layouts/Layout.astro";
+import MainLayout from "../../layouts/Layout.astro";
 import { cn } from "../../utils/misc";
 
 const searchTerm = Astro.url.searchParams.get("q") || "";
-const onSearchBooksPage = Astro.url.pathname === "/search/book";
+const onSearchBooksPage = Astro.url.pathname.includes("/search/book");
 ---
 
-<Layout>
+<MainLayout>
   <div class="my-2 flex gap-2 items-center">
     <a
       class={cn({
@@ -29,4 +29,4 @@ const onSearchBooksPage = Astro.url.pathname === "/search/book";
     placeholder={onSearchBooksPage ? "The name of the wind..." : "Fiction..."}
   />
   <slot />
-</Layout>
+</MainLayout>
