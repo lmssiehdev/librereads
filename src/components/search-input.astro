@@ -1,0 +1,32 @@
+---
+import MagnifyingGlass from "./icons/magnifying-glass.astro";
+
+interface Props {
+  redirectUrl: string;
+  initialValue?: string;
+}
+const { redirectUrl, initialValue } = Astro.props;
+---
+
+<form action={redirectUrl} method="get">
+  <div class="flex-1 flex gap-2 items-center">
+    <div class="relative flex-1">
+      <div
+        class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+      >
+        <MagnifyingGlass class="h-5 w-5 text-[#655d52]" />
+      </div>
+      <input
+        value={initialValue}
+        name="q"
+        class="block w-full rounded p-2 pl-12 bg-[#655d52]/10 text-[#655d52] border focus:outline-none focus-visible:ring-2 focus-visible:ring-[#655d52] focus-visible:ring-opacity-75 focus-visible:ring-offset-1 font-pockoto"
+        placeholder="the name of the wind..."
+      />
+    </div>
+    <button
+      type="submit"
+      class="flex gap-1 items-center select-none justify-center rounded-sm border border-transparent focus:outline-none focus-visible:ring focus-visible:ring-opacity-75 hover:bg-[#655d52]/20 bg-[#655d52]/10 text-[#655d52] focus-visible:ring-[#655d52] font-medium px-4 py-2"
+      >Search</button
+    >
+  </div>
+</form>

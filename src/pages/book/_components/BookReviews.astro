@@ -1,0 +1,106 @@
+---
+import { queryClient } from "../../../utils/graphql";
+import {
+  getReviewsQuery,
+  type GetReviews,
+} from "../../../utils/query/getReviews";
+import {
+  getSimilarBooks,
+  type GetSimilarBooksSchema,
+} from "../../../utils/query/getSimilarBook";
+
+interface Props {
+  bookId: string;
+  ratingsCountDist: number[];
+}
+
+const { ratingsCountDist, boooId } = Astro.props;
+
+function calculatePercentages(arr: number[]) {
+  const totalSum = arr.reduce((sum, num) => sum + num, 0);
+  const percentages = arr.map((num) => ({
+    reviews: num,
+    percentage: (Math.round((num / totalSum) * 10000) / 100).toFixed(),
+  }));
+  return percentages;
+}
+
+const percentages = calculatePercentages(ratingsCountDist);
+
+// const result = await queryClient<GetReviews>(getReviewsQuery, {
+//   filters: {
+//     resourceType: "WORK",
+//     resourceId: "kca://work/amzn1.gr.work.v1.H-uiZxbMDAHsxOpFwGVKGQ",
+//   },
+//   pagination: {
+//     limit: 4,
+//   },
+// });
+---
+
+<div>
+  <h3 class="text-xl pb-4">Community Reviews:</h3>
+  <div class="flex flex-col gap-y-4">
+    {
+      percentages.reverse().map(({ percentage, reviews }, index) => {
+        const percentageNumber = percentage
+          .split("")
+          .filter((t) => Number(t) === 0 || Number(t))
+          .join("");
+
+        return (
+          <div class="grid grid-cols-[2.5rem_auto_5.5rem] md:grid-cols-[4rem_auto_7rem]items-center text-[#655d52] gap-4">
+            <span class="md:text-sm text-xs text-left">
+              {percentages.length - index} star
+            </span>
+            <div class="flex items-center h-4 w-full rounded bg-gray-200">
+              <span
+                style={{
+                  width: `${percentageNumber}%`,
+                }}
+                class="bg-yellow-500 h-full rounded"
+              />
+            </div>
+            <span class="md:text-sm text-xs text-right">
+              {reviews} {`(${percentage}%)`}
+            </span>
+          </div>
+        );
+      })
+    }
+  </div>
+  <!-- {
+    reviews.edges.map(({ node }) => {
+      const { name, textReviewsCount, imageUrlSquare } = node.creator;
+      const { rating, lastRevisionAt, text } = node;
+      return (
+        <div class="[&:not(:last-child)]:border-b pb-5 border-gray-400 my-10">
+          <div class="flex gap-2">
+            <div class="rounded-full size-10 overflow-hidden">
+              <img src={imageUrlSquare} class="w-full h-full" />
+            </div>
+            <div class="flex-1">
+              <div class="">
+                <div>{name}</div>
+                <span class="text-sm text-black text-opacity-70">
+                  {textReviewsCount} reviews
+                </span>
+              </div>
+              <div class="flex justify-between">
+                <div>{rating}</div>
+                <span class="text-sm text-black text-opacity-70">
+                  {new Date(lastRevisionAt).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </span>
+              </div>
+            </div>
+          </div>
+          <p class="line-clamp-3" set:html={text} />
+        </div>
+      );
+    })
+  } -->
+</div>

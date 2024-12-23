@@ -1,0 +1,31 @@
+---
+import { cn } from "../utils/misc";
+import Star from "./icons/star.astro";
+
+interface Props {
+  payload: {
+    imageUrl: string;
+    authorName: string;
+    averageRating: number;
+    title: string;
+  };
+  class?: string;
+}
+
+const { payload, class: className = "" } = Astro.props;
+const { imageUrl, title, authorName, averageRating } = payload;
+---
+
+<div>
+  <div class="flex-1 h-[250px] max-w-[200px] w-full overflow-hidden rounded">
+    <img src={imageUrl} alt={title} class="w-full h-full object-fill" />
+  </div>
+  <div class="my-2">
+    <div>{title}</div>
+    <div class="text-sm text-black text-opacity-70">{authorName}</div>
+    <div class="flex gap-1 items-center">
+      <Star class="size-3.5 text-yellow-400" />
+      <div class="text-sm">{averageRating}</div>
+    </div>
+  </div>
+</div>

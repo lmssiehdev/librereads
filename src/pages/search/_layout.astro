@@ -1,0 +1,13 @@
+---
+export const prerender = false;
+import Layout from "../../layouts/Layout.astro";
+import SearchInput from "../../components/search-input.astro";
+
+const searchTerm = Astro.url.searchParams.get("q") || "";
+---
+
+<Layout>
+  <div>Search books</div>
+  <SearchInput redirectUrl="/search/book" initialValue={searchTerm} />
+  <slot />
+</Layout>

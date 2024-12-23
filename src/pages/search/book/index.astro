@@ -1,0 +1,79 @@
+---
+export const prerender = false;
+type Params = {
+  id: string;
+};
+
+import Star from "../../../components/icons/star.astro";
+import { type BookData } from "../../../utils/query";
+import { fetchSearchResult } from "../../../utils/query";
+import Layout from "../_layout.astro";
+
+const searchTerm = Astro.url.searchParams.get("q") || "";
+const page = Number(Astro.url.searchParams.get("page")) || 1;
+const result = await fetchSearchResult<BookData>(searchTerm, "books", page)!;
+---
+
+<Layout>
+  <div>
+    {result.searchCount}
+  </div>
+  {
+    result.rows.map(
+      ({ title, authorName, imageUrl, authorId, bookId, ratings }) => {
+        const [rating, count] = ratings;
+        return (
+          <div class="flex gap-4 my-1">
+            <div class="h-[150px] max-w-[100px] w-full overflow-hidden rounded">
+              <img
+                src={imageUrl}
+                alt={title}
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div>
+              <a href={`/book/${bookId}`} class="text-lg-1">
+                {title}
+              </a>
+              <a
+                href={`/author/show/${authorId}`}
+                class="text-black/70 text-sm block"
+              >
+                by {authorName}
+              </a>
+              <div class="flex text-xs pt-1 text-black/70">
+                <span class="flex gap-1">
+                  <Star class="size-3.5 text-yellow-400" /> {rating} avg rating
+                </span>
+                {"  — "}
+                {count} ratings
+              </div>
+            </div>
+          </div>
+        );
+      }
+    )
+  }
+  <div class="ml-auto flex gap-2 items-center">
+    {
+      result.hasPreviousPage && (
+        <a
+          href={`/search/book?q=${searchTerm}&page=${page - 1}`}
+          class="py-1 px-2 hover:underline underline-offset-4 rounded"
+        >
+          Previous
+        </a>
+      )
+    }
+    {
+      result.hasNextPage && (
+        <a
+          href={`/search/book?q=${searchTerm}&page=${page + 1}`}
+          class="py-1 px-2 hover:underline underline-offset-4 rounded "
+        >
+          Next
+        </a>
+      )
+    }
+  </div>
+</Layout>

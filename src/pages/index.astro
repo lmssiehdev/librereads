@@ -1,11 +1,21 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import SearchInput from "../components/search-input.astro";
+import Welcome from "../components/Welcome.astro";
+import Layout from "../layouts/Layout.astro";
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
 <Layout>
-	<Welcome />
+  <main class="min-h-screen">
+    <h2 class="text-center fluid-2xl sm:fluid-4xl my-12 leading-[1.2]">
+      Goodreads, reimagined.
+      <br />
+      Private, minimal, simple.
+    </h2>
+    <div class="my-12 max-w-md mx-auto">
+      <SearchInput redirectUrl="/search/book" />
+    </div>
+  </main>
 </Layout>

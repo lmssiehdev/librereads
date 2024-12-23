@@ -1,0 +1,102 @@
+---
+import Star from "../../../components/icons/star.astro";
+import Layout from "../../../layouts/Layout.astro";
+import { fetchAuthorDetails } from "../../../utils/scrapers/author";
+
+const { id: authorId } = Astro.params;
+
+if (!authorId) {
+  Astro.redirect("/");
+  return;
+}
+
+const result = await fetchAuthorDetails(authorId);
+const { author, books, series } = result!;
+
+// TODO:
+// [] Find More Books
+// [] Find More Series
+---
+
+<Layout>
+  <div>
+    <div class="flex flex-col md:flex-row gap-10 my-10">
+      <div>
+        <img src={author.image} alt={`${author.name} profile picture`} />
+      </div>
+      <div class="flex-1">
+        <h1 class="text-3xl mb-5">{author.name}</h1>
+        <!-- <Description description={author.description} /> -->
+      </div>
+    </div>
+    <div class="my-14">
+      <h2 class="text-xl mb-4">{`${author.name}'s books`}</h2>
+
+      <div class="flex flex-col gap-2">
+        {
+          books?.map(({ bookCover, bookTitle, bookRating, bookId }) => {
+            return (
+              <div class="flex gap-3">
+                <div class="h-[150px] max-w-[100px] w-full flex-1">
+                  <img
+                    class="w-full h-full inline-block object-fill"
+                    src={bookCover}
+                    alt={`${bookTitle} cover image`}
+                  />
+                </div>
+                <div class="flex-1">
+                  <div>
+                    <a href={`${bookId}/`}>{bookTitle}</a>
+                  </div>
+                  <div class="flex gap-1 items-center text-black/70 text-xs">
+                    <Star class="size-3.5 text-yellow-400" />
+                    <span class="text-xs text-black/70">{bookRating}</span>
+                  </div>
+                </div>
+              </div>
+            );
+          })
+        }
+      </div>
+    </div>
+    <div class="my-14">
+      <h2 class="text-xl mb-4">{`${author.name}'s series`}</h2>
+      {
+        series.map(
+          ({
+            title,
+            webUrl,
+            rating,
+            numberOfBooksInSeries,
+            covers,
+            author,
+          }) => {
+            return (
+              <div class="my-4 flex justify-between">
+                <div class="flex-1">
+                  <div>
+                    <span>{title}</span>
+                    {/* <a href={webUrl}>{title}</a> */}
+                    <span>{numberOfBooksInSeries}</span>
+                  </div>
+                  {/* <div class="text-sm text-black/70">
+                    by <a href={author.url}>{author.name}</a>
+                  </div> */}
+                  <div class="flex gap-1 items-center text-black/70 text-xs">
+                    <Star class="size-3.5 text-yellow-400" />
+                    <div>{rating}</div>
+                  </div>
+                </div>
+                <div class="flex gap-0.5 w-fit">
+                  {covers.map(({ url, title }) => {
+                    return <img src={url} alt={`${title}`} />;
+                  })}
+                </div>
+              </div>
+            );
+          }
+        )
+      }
+    </div>
+  </div>
+</Layout>

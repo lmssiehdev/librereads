@@ -1,0 +1,236 @@
+---
+import { queryClient } from "../../../utils/graphql";
+import {
+  getBookListsOfBook,
+  type GetBookListsOfBook,
+} from "../../../utils/query/getBookListsOfBook";
+
+interface Props {
+  bookId: string;
+}
+
+const { bookId } = Astro.props;
+
+// const result = await queryClient<GetBookListsOfBook>(getBookListsOfBook, {
+//   id: bookId,
+//   limit: 4,
+// });
+
+// const listData = result?.getBookListsOfBook?.edges!;
+const listData = [
+  {
+    node: {
+      id: 50,
+      title: "The Best Epic Fantasy (fiction)",
+      userListVotesCount: 26795,
+      listBooksCount: 3852,
+      books: {
+        edges: [
+          {
+            node: {
+              imageUrl:
+                "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1562726234i/13496.jpg",
+              title: "A Game of Thrones",
+              __typename: "Book",
+            },
+            __typename: "BookListBookEdge",
+          },
+          {
+            node: {
+              imageUrl:
+                "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1656625315i/30.jpg",
+              title:
+                "J.R.R. Tolkien 4-Book Boxed Set: The Hobbit and The Lord of the Rings",
+              __typename: "Book",
+            },
+            __typename: "BookListBookEdge",
+          },
+          {
+            node: {
+              imageUrl:
+                "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1704917687i/186074.jpg",
+              title: "The Name of the Wind",
+              __typename: "Book",
+            },
+            __typename: "BookListBookEdge",
+          },
+        ],
+        __typename: "BookListBooksConnection",
+      },
+      __typename: "BookList",
+    },
+    __typename: "BookListEdge",
+  },
+  {
+    node: {
+      id: 88,
+      title: "Best Fantasy Books of the 21st Century",
+      userListVotesCount: 10089,
+      listBooksCount: 3046,
+      books: {
+        edges: [
+          {
+            node: {
+              imageUrl:
+                "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1704917687i/186074.jpg",
+              title: "The Name of the Wind",
+              __typename: "Book",
+            },
+            __typename: "BookListBookEdge",
+          },
+          {
+            node: {
+              imageUrl:
+                "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1663805647i/136251.jpg",
+              title: "Harry Potter and the Deathly Hallows",
+              __typename: "Book",
+            },
+            __typename: "BookListBookEdge",
+          },
+          {
+            node: {
+              imageUrl:
+                "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1452624392i/1215032.jpg",
+              title: "The Wise Man’s Fear",
+              __typename: "Book",
+            },
+            __typename: "BookListBookEdge",
+          },
+        ],
+        __typename: "BookListBooksConnection",
+      },
+      __typename: "BookList",
+    },
+    __typename: "BookListEdge",
+  },
+  {
+    node: {
+      id: 871,
+      title: "Most Interesting Magic System",
+      userListVotesCount: 8821,
+      listBooksCount: 2544,
+      books: {
+        edges: [
+          {
+            node: {
+              imageUrl:
+                "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1617768316i/68428.jpg",
+              title: "Mistborn: The Final Empire",
+              __typename: "Book",
+            },
+            __typename: "BookListBookEdge",
+          },
+          {
+            node: {
+              imageUrl:
+                "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1704917687i/186074.jpg",
+              title: "The Name of the Wind",
+              __typename: "Book",
+            },
+            __typename: "BookListBookEdge",
+          },
+          {
+            node: {
+              imageUrl:
+                "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1474154022i/3.jpg",
+              title: "Harry Potter and the Sorcerer's Stone",
+              __typename: "Book",
+            },
+            __typename: "BookListBookEdge",
+          },
+        ],
+        __typename: "BookListBooksConnection",
+      },
+      __typename: "BookList",
+    },
+    __typename: "BookListEdge",
+  },
+  {
+    node: {
+      id: 1,
+      title: "Best Books Ever",
+      userListVotesCount: 267679,
+      listBooksCount: 125132,
+      books: {
+        edges: [
+          {
+            node: {
+              imageUrl:
+                "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1586722975i/2767052.jpg",
+              title: "The Hunger Games",
+              __typename: "Book",
+            },
+            __typename: "BookListBookEdge",
+          },
+          {
+            node: {
+              imageUrl:
+                "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1546910265i/2.jpg",
+              title: "Harry Potter and the Order of the Phoenix",
+              __typename: "Book",
+            },
+            __typename: "BookListBookEdge",
+          },
+          {
+            node: {
+              imageUrl:
+                "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1320399351i/1885.jpg",
+              title: "Pride and Prejudice",
+              __typename: "Book",
+            },
+            __typename: "BookListBookEdge",
+          },
+        ],
+        __typename: "BookListBooksConnection",
+      },
+      __typename: "BookList",
+    },
+    __typename: "BookListEdge",
+  },
+];
+---
+
+<div>
+  <div class="text-xl mb-4">Lists with this book</div>
+  <div class="grid grid-cols-2 gap-5">
+    {
+      listData.map(({ node }) => {
+        const { title, listBooksCount, userListVotesCount, id, books } = node;
+        const url = `/lists/${id}`;
+        return (
+          <div>
+            <a href={url} class="flex gap-2  overflow-hidden rounded">
+              {books.edges.map(({ node }) => {
+                const { imageUrl, title } = node;
+                return (
+                  <div class="flex-1z h-[200px] max-w-[130px] w-full">
+                    <img
+                      src={imageUrl}
+                      alt={title}
+                      class="w-full h-full object-cover"
+                    />
+                  </div>
+                );
+              })}
+            </a>
+            <div class="my-2">
+              <a href={url} class="hover:underline underline-offset-4">
+                {title}
+              </a>
+              <div class="text-sm text-black opacity-70">
+                <span>{listBooksCount} books</span>
+                {" • "}
+                <span>{userListVotesCount} voters</span>
+              </div>
+            </div>
+          </div>
+        );
+      })
+    }
+  </div>
+  <div>
+    <a href={`/list/book/${bookId}`} class="underline underline-offset-4">
+      All lists with this book, from our members
+    </a>
+  </div>
+</div>

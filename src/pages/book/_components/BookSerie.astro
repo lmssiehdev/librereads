@@ -1,0 +1,167 @@
+---
+import { intersection } from "astro:schema";
+import { queryClient } from "../../../utils/graphql";
+import {
+  getWorksForSeries,
+  type GetWorkForSeries,
+} from "../../../utils/query/getWorksForSeries";
+import Star from "../../../components/icons/star.astro";
+
+interface Props {
+  payload: {
+    seriesId: string;
+    seriesWebUrl: string;
+    seriesTitle: string;
+  };
+}
+
+const {
+  payload: { seriesId, seriesTitle, seriesWebUrl },
+} = Astro.props;
+
+// const series = await queryClient<GetWorkForSeries>(getWorksForSeries, {
+//   getWorksForSeriesInput: {
+//     id: seriesId,
+//     isPrimary: true,
+//   },
+//   pagination: {
+//     limit: 4,
+//   },
+// });
+
+// const seriesData = series?.getWorksForSeries?.edges!;
+
+const seriesData = [
+  {
+    seriesPlacement: "1",
+    isPrimary: true,
+    node: {
+      stats: {
+        averageRating: 4.52,
+        ratingsCount: 1008807,
+        __typename: "BookOrWorkStats",
+      },
+      bestBook: {
+        id: "kca://book/amzn1.gr.book.v1.iUoduJh08Drcwhc9Kt94qg",
+        legacyId: 186074,
+        title: "The Name of the Wind",
+        imageUrl:
+          "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1704917687i/186074.jpg",
+        webUrl:
+          "https://www.goodreads.com/book/show/186074.The_Name_of_the_Wind",
+        primaryContributorEdge: {
+          node: {
+            id: "kca://author/amzn1.gr.author.v1.OK_X6rOc-ss75X962O9SPw",
+            name: "Patrick Rothfuss",
+            __typename: "Contributor",
+          },
+          __typename: "BookContributorEdge",
+        },
+        __typename: "Book",
+      },
+      __typename: "Work",
+    },
+    __typename: "SeriesWorksEdge",
+  },
+  {
+    seriesPlacement: "2",
+    isPrimary: true,
+    node: {
+      stats: {
+        averageRating: 4.55,
+        ratingsCount: 582046,
+        __typename: "BookOrWorkStats",
+      },
+      bestBook: {
+        id: "kca://book/amzn1.gr.book.v1.yc1VSaL44Cp7vbSICVj1JQ",
+        legacyId: 1215032,
+        title: "The Wise Man’s Fear",
+        imageUrl:
+          "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1452624392i/1215032.jpg",
+        webUrl:
+          "https://www.goodreads.com/book/show/1215032.The_Wise_Man_s_Fear",
+        primaryContributorEdge: {
+          node: {
+            id: "kca://author/amzn1.gr.author.v1.OK_X6rOc-ss75X962O9SPw",
+            name: "Patrick Rothfuss",
+            __typename: "Contributor",
+          },
+          __typename: "BookContributorEdge",
+        },
+        __typename: "Book",
+      },
+      __typename: "Work",
+    },
+    __typename: "SeriesWorksEdge",
+  },
+  {
+    seriesPlacement: "3",
+    isPrimary: true,
+    node: {
+      stats: {
+        averageRating: 3.55,
+        ratingsCount: 5287,
+        __typename: "BookOrWorkStats",
+      },
+      bestBook: {
+        id: "kca://book/amzn1.gr.book.v1.cSq-GZUDmv5WvYirOq17vQ",
+        legacyId: 10394348,
+        title: "Doors of Stone",
+        imageUrl: "",
+        webUrl: "https://www.goodreads.com/book/show/10394348-doors-of-stone",
+        primaryContributorEdge: {
+          node: {
+            id: "kca://author/amzn1.gr.author.v1.OK_X6rOc-ss75X962O9SPw",
+            name: "Patrick Rothfuss",
+            __typename: "Contributor",
+          },
+          __typename: "BookContributorEdge",
+        },
+        __typename: "Book",
+      },
+      __typename: "Work",
+    },
+    __typename: "SeriesWorksEdge",
+  },
+];
+---
+
+<div>
+  <div class="text-lg mb-4">
+    {seriesTitle} Series
+  </div>
+  <div class="grid grid-cols-4 gap-4">
+    {
+      seriesData.map((work) => {
+        const { stats, bestBook } = work.node;
+        const seriesPlacement = work.seriesPlacement;
+        const authorName = bestBook.primaryContributorEdge.node.name;
+        return (
+          <div>
+            <div class="flex-1 h-[250px] max-w-[200px] w-full overflow-hidden rounded">
+              <img
+                src={bestBook.imageUrl}
+                alt={bestBook.title}
+                class="w-full h-full object-fill"
+              />
+            </div>
+            <div class="my-2">
+              <div class="text-black opacity-50">#{seriesPlacement}</div>
+              <a href={`/book/${bestBook.legacyId}`}>{bestBook.title}</a>
+              <div class="text-sm text-black text-opacity-70">{authorName}</div>
+              <div class="flex gap-1 items-center">
+                <Star class="size-3.5 text-yellow-400" />
+                <div class="text-sm">{stats.averageRating}</div>
+              </div>
+            </div>
+          </div>
+        );
+      })
+    }
+  </div>
+  <div>
+    <a class="underline underline-offset-4" href={seriesWebUrl}>
+      All books in this series
+    </a>
+  </div>
+</div>

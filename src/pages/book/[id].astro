@@ -1,0 +1,139 @@
+---
+import Star from "../../components/icons/star.astro";
+import Layout from "../../layouts/Layout.astro";
+import { queryClient } from "../../utils/graphql";
+import { cn } from "../../utils/misc";
+import {
+  getBookByLegacyId,
+  type GetBookByLegacyIdSchema,
+} from "../../utils/query/getBookByLegacyId";
+import BookLists from "./_components/BookLists.astro";
+import BookReviews from "./_components/BookReviews.astro";
+import BooksByAuthor from "./_components/BooksByAuthor.astro";
+import BookSerie from "./_components/BookSerie.astro";
+import SimilarBooks from "./_components/SimilarBooks.astro";
+
+const { id } = Astro.params;
+const bookInfo = await queryClient<GetBookByLegacyIdSchema>(getBookByLegacyId, {
+  legacyBookId: id,
+});
+
+if (!bookInfo) {
+  Astro.redirect("/404");
+  return;
+}
+
+const goodreadsGraphqlId = bookInfo?.getBookByLegacyId?.id;
+const authorName =
+  bookInfo.getBookByLegacyId.primaryContributorEdge?.node?.name;
+const authorId = bookInfo?.getBookByLegacyId?.primaryContributorEdge?.node?.id;
+const data = bookInfo.getBookByLegacyId;
+
+const hasSeries = bookInfo.getBookByLegacyId.bookSeries.length > 0;
+const seriesPayload = hasSeries
+  ? {
+      seriesTitle: bookInfo.getBookByLegacyId.bookSeries[0].series.title,
+      seriesId: bookInfo.getBookByLegacyId.bookSeries[0].series.id,
+      seriesWebUrl: bookInfo.getBookByLegacyId.bookSeries[0].series.webUrl,
+    }
+  : null;
+---
+
+<Layout>
+  <div class="flex gap-4">
+    <div class="flex-1 h-[250px] max-w-[175px] w-full overflow-hidden rounded">
+      <img
+        src={data.imageUrl}
+        alt={data.title}
+        class="w-full h-full object-fill"
+      />
+    </div>
+    <div class="flex-1">
+      <div class="text-3xl">
+        <div class="text-sm text-black text-opacity-70">
+          {
+            hasSeries && (
+              <>
+                #{bookInfo.getBookByLegacyId.bookSeries[0].userPosition}
+                {bookInfo.getBookByLegacyId.bookSeries[0].series.title}
+              </>
+            )
+          }
+        </div>
+        <h1>{data.title}</h1>
+      </div>
+      <a
+        href=`/author/show/${data.primaryContributorEdge.node.legacyId}`
+        class="text-black text-opacity-70"
+      >
+        {data.primaryContributorEdge.node.name}
+      </a>
+      <div class="my-1">
+        <div class="flex gap-1.5 mb-1">
+          <div class="flex items-center gap-0.5">
+            {
+              Array.from({ length: 5 }).map((_, i) => {
+                return (
+                  <Star
+                    class={cn("size-5", [
+                      data.work.stats.averageRating < i + 1
+                        ? "text-inherit"
+                        : "text-yellow-400",
+                    ])}
+                  />
+                );
+              })
+            }
+          </div>
+          <span class="text-xl">
+            {data.work.stats.averageRating}
+          </span>
+        </div>
+        <div class="text-sm text-black text-opacity-70">
+          <span>
+            {data.work.stats.ratingsCount.toLocaleString("en-US")} ratings
+          </span>
+          <span>
+            {data.work.stats.textReviewsCount.toLocaleString("en-US")} reviews
+          </span>
+        </div>
+      </div>
+      <div class="my-2">
+        Genres:
+        {
+          data.bookGenres.map(({ genre }) => {
+            return (
+              <a href="genre.webUrl" class="underline mx-1">
+                {genre.name}
+              </a>
+            );
+          })
+        }
+      </div>
+      <div class="line-clamp-4" set:html={data.descriptionStripped} />
+      <div class="text-slate-500">
+        {data.details.numPages} Pages
+      </div>
+      <div class="my-8">
+        <BookReviews
+          bookId={goodreadsGraphqlId}
+          ratingsCountDist={data.work.stats.ratingsCountDist}
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- 
+  <div>
+    <SimilarBooks bookId={id} />
+  </div>
+  <div class="my-5">
+    <BooksByAuthor authorId={authorId} authorName={authorName} />
+  </div>
+  <div class="my-5">
+    {seriesPayload && <BookSerie payload={seriesPayload} />}
+  </div>
+  <div class="my-5">
+    <BookLists bookId={id} />
+  </div> -->
+</Layout>
