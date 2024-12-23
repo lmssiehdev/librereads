@@ -24,7 +24,7 @@ const onSearchBooksPage = Astro.url.pathname.includes("/search/book");
     >
   </div>
   <SearchInput
-    redirectUrl="/search/book"
+    redirectUrl={`/search/${onSearchBooksPage ? "book" : "list"}`}
     initialValue={searchTerm}
     placeholder={onSearchBooksPage ? "The name of the wind..." : "Fiction..."}
   />
