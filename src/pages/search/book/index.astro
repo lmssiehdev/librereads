@@ -1,7 +1,7 @@
 ---
 export const prerender = false;
 type Params = {
-  id: string;
+	id: string;
 };
 
 import Star from "../../../components/icons/star.astro";
@@ -9,13 +9,22 @@ import { type BookData } from "../../../utils/query";
 import { fetchSearchResult } from "../../../utils/query";
 import Layout from "../_layout.astro";
 
-const searchTerm = Astro.url.searchParams.get("q") || "";
+const searchTerm = Astro.url.searchParams.get("q");
 const page = Number(Astro.url.searchParams.get("page")) || 1;
-const result = await fetchSearchResult<BookData>(searchTerm, "books", page)!;
+const result = (
+	searchTerm !== null
+		? await fetchSearchResult<BookData>(searchTerm, "books", page)!
+		: undefined
+) as BookData | undefined;
 ---
 
 <Layout>
-  <div>
+  {
+    result == undefined ? (
+  <></>
+    ): (
+      <>
+        <div class="mt-6 mb-2">
     {result.searchCount}
   </div>
   {
@@ -76,4 +85,7 @@ const result = await fetchSearchResult<BookData>(searchTerm, "books", page)!;
       )
     }
   </div>
+      </>
+    )
+  }
 </Layout>

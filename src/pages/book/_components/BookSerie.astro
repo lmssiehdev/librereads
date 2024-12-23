@@ -1,22 +1,16 @@
 ---
-import { intersection } from "astro:schema";
-import { queryClient } from "../../../utils/graphql";
-import {
-  getWorksForSeries,
-  type GetWorkForSeries,
-} from "../../../utils/query/getWorksForSeries";
 import Star from "../../../components/icons/star.astro";
 
 interface Props {
-  payload: {
-    seriesId: string;
-    seriesWebUrl: string;
-    seriesTitle: string;
-  };
+	payload: {
+		seriesId: string;
+		seriesWebUrl: string;
+		seriesTitle: string;
+	};
 }
 
 const {
-  payload: { seriesId, seriesTitle, seriesWebUrl },
+	payload: { seriesId, seriesTitle, seriesWebUrl },
 } = Astro.props;
 
 // const series = await queryClient<GetWorkForSeries>(getWorksForSeries, {
@@ -32,97 +26,97 @@ const {
 // const seriesData = series?.getWorksForSeries?.edges!;
 
 const seriesData = [
-  {
-    seriesPlacement: "1",
-    isPrimary: true,
-    node: {
-      stats: {
-        averageRating: 4.52,
-        ratingsCount: 1008807,
-        __typename: "BookOrWorkStats",
-      },
-      bestBook: {
-        id: "kca://book/amzn1.gr.book.v1.iUoduJh08Drcwhc9Kt94qg",
-        legacyId: 186074,
-        title: "The Name of the Wind",
-        imageUrl:
-          "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1704917687i/186074.jpg",
-        webUrl:
-          "https://www.goodreads.com/book/show/186074.The_Name_of_the_Wind",
-        primaryContributorEdge: {
-          node: {
-            id: "kca://author/amzn1.gr.author.v1.OK_X6rOc-ss75X962O9SPw",
-            name: "Patrick Rothfuss",
-            __typename: "Contributor",
-          },
-          __typename: "BookContributorEdge",
-        },
-        __typename: "Book",
-      },
-      __typename: "Work",
-    },
-    __typename: "SeriesWorksEdge",
-  },
-  {
-    seriesPlacement: "2",
-    isPrimary: true,
-    node: {
-      stats: {
-        averageRating: 4.55,
-        ratingsCount: 582046,
-        __typename: "BookOrWorkStats",
-      },
-      bestBook: {
-        id: "kca://book/amzn1.gr.book.v1.yc1VSaL44Cp7vbSICVj1JQ",
-        legacyId: 1215032,
-        title: "The Wise Man’s Fear",
-        imageUrl:
-          "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1452624392i/1215032.jpg",
-        webUrl:
-          "https://www.goodreads.com/book/show/1215032.The_Wise_Man_s_Fear",
-        primaryContributorEdge: {
-          node: {
-            id: "kca://author/amzn1.gr.author.v1.OK_X6rOc-ss75X962O9SPw",
-            name: "Patrick Rothfuss",
-            __typename: "Contributor",
-          },
-          __typename: "BookContributorEdge",
-        },
-        __typename: "Book",
-      },
-      __typename: "Work",
-    },
-    __typename: "SeriesWorksEdge",
-  },
-  {
-    seriesPlacement: "3",
-    isPrimary: true,
-    node: {
-      stats: {
-        averageRating: 3.55,
-        ratingsCount: 5287,
-        __typename: "BookOrWorkStats",
-      },
-      bestBook: {
-        id: "kca://book/amzn1.gr.book.v1.cSq-GZUDmv5WvYirOq17vQ",
-        legacyId: 10394348,
-        title: "Doors of Stone",
-        imageUrl: "",
-        webUrl: "https://www.goodreads.com/book/show/10394348-doors-of-stone",
-        primaryContributorEdge: {
-          node: {
-            id: "kca://author/amzn1.gr.author.v1.OK_X6rOc-ss75X962O9SPw",
-            name: "Patrick Rothfuss",
-            __typename: "Contributor",
-          },
-          __typename: "BookContributorEdge",
-        },
-        __typename: "Book",
-      },
-      __typename: "Work",
-    },
-    __typename: "SeriesWorksEdge",
-  },
+	{
+		seriesPlacement: "1",
+		isPrimary: true,
+		node: {
+			stats: {
+				averageRating: 4.52,
+				ratingsCount: 1008807,
+				__typename: "BookOrWorkStats",
+			},
+			bestBook: {
+				id: "kca://book/amzn1.gr.book.v1.iUoduJh08Drcwhc9Kt94qg",
+				legacyId: 186074,
+				title: "The Name of the Wind",
+				imageUrl:
+					"https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1704917687i/186074.jpg",
+				webUrl:
+					"https://www.goodreads.com/book/show/186074.The_Name_of_the_Wind",
+				primaryContributorEdge: {
+					node: {
+						id: "kca://author/amzn1.gr.author.v1.OK_X6rOc-ss75X962O9SPw",
+						name: "Patrick Rothfuss",
+						__typename: "Contributor",
+					},
+					__typename: "BookContributorEdge",
+				},
+				__typename: "Book",
+			},
+			__typename: "Work",
+		},
+		__typename: "SeriesWorksEdge",
+	},
+	{
+		seriesPlacement: "2",
+		isPrimary: true,
+		node: {
+			stats: {
+				averageRating: 4.55,
+				ratingsCount: 582046,
+				__typename: "BookOrWorkStats",
+			},
+			bestBook: {
+				id: "kca://book/amzn1.gr.book.v1.yc1VSaL44Cp7vbSICVj1JQ",
+				legacyId: 1215032,
+				title: "The Wise Man’s Fear",
+				imageUrl:
+					"https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1452624392i/1215032.jpg",
+				webUrl:
+					"https://www.goodreads.com/book/show/1215032.The_Wise_Man_s_Fear",
+				primaryContributorEdge: {
+					node: {
+						id: "kca://author/amzn1.gr.author.v1.OK_X6rOc-ss75X962O9SPw",
+						name: "Patrick Rothfuss",
+						__typename: "Contributor",
+					},
+					__typename: "BookContributorEdge",
+				},
+				__typename: "Book",
+			},
+			__typename: "Work",
+		},
+		__typename: "SeriesWorksEdge",
+	},
+	{
+		seriesPlacement: "3",
+		isPrimary: true,
+		node: {
+			stats: {
+				averageRating: 3.55,
+				ratingsCount: 5287,
+				__typename: "BookOrWorkStats",
+			},
+			bestBook: {
+				id: "kca://book/amzn1.gr.book.v1.cSq-GZUDmv5WvYirOq17vQ",
+				legacyId: 10394348,
+				title: "Doors of Stone",
+				imageUrl: "",
+				webUrl: "https://www.goodreads.com/book/show/10394348-doors-of-stone",
+				primaryContributorEdge: {
+					node: {
+						id: "kca://author/amzn1.gr.author.v1.OK_X6rOc-ss75X962O9SPw",
+						name: "Patrick Rothfuss",
+						__typename: "Contributor",
+					},
+					__typename: "BookContributorEdge",
+				},
+				__typename: "Book",
+			},
+			__typename: "Work",
+		},
+		__typename: "SeriesWorksEdge",
+	},
 ];
 ---
 

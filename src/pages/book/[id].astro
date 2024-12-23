@@ -4,39 +4,39 @@ import Layout from "../../layouts/Layout.astro";
 import { queryClient } from "../../utils/graphql";
 import { cn } from "../../utils/misc";
 import {
-  getBookByLegacyId,
-  type GetBookByLegacyIdSchema,
+	type GetBookByLegacyIdSchema,
+	getBookByLegacyId,
 } from "../../utils/query/getBookByLegacyId";
 import BookLists from "./_components/BookLists.astro";
 import BookReviews from "./_components/BookReviews.astro";
-import BooksByAuthor from "./_components/BooksByAuthor.astro";
 import BookSerie from "./_components/BookSerie.astro";
+import BooksByAuthor from "./_components/BooksByAuthor.astro";
 import SimilarBooks from "./_components/SimilarBooks.astro";
 
 const { id } = Astro.params;
 const bookInfo = await queryClient<GetBookByLegacyIdSchema>(getBookByLegacyId, {
-  legacyBookId: id,
+	legacyBookId: id,
 });
 
 if (!bookInfo) {
-  Astro.redirect("/404");
-  return;
+	Astro.redirect("/404");
+	return;
 }
 
 const goodreadsGraphqlId = bookInfo?.getBookByLegacyId?.id;
 const authorName =
-  bookInfo.getBookByLegacyId.primaryContributorEdge?.node?.name;
+	bookInfo.getBookByLegacyId.primaryContributorEdge?.node?.name;
 const authorId = bookInfo?.getBookByLegacyId?.primaryContributorEdge?.node?.id;
 const data = bookInfo.getBookByLegacyId;
 
 const hasSeries = bookInfo.getBookByLegacyId.bookSeries.length > 0;
 const seriesPayload = hasSeries
-  ? {
-      seriesTitle: bookInfo.getBookByLegacyId.bookSeries[0].series.title,
-      seriesId: bookInfo.getBookByLegacyId.bookSeries[0].series.id,
-      seriesWebUrl: bookInfo.getBookByLegacyId.bookSeries[0].series.webUrl,
-    }
-  : null;
+	? {
+			seriesTitle: bookInfo.getBookByLegacyId.bookSeries[0].series.title,
+			seriesId: bookInfo.getBookByLegacyId.bookSeries[0].series.id,
+			seriesWebUrl: bookInfo.getBookByLegacyId.bookSeries[0].series.webUrl,
+		}
+	: null;
 ---
 
 <Layout>

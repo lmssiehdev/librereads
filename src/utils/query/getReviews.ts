@@ -77,39 +77,39 @@ export const getReviewsQuery = `
 export type GetReviews = z.infer<typeof getReviewsSchema>;
 
 const getReviewsSchema = z.object({
-  getReviews: z.object({
-    totalCount: z.number(),
-    edges: z.array(
-      z.object({
-        node: z.object({
-          __typename: z.string(),
-          id: z.string(),
-          creator: z.object({
-            id: z.number(),
-            imageUrlSquare: z.string(),
-            isAuthor: z.boolean(),
-            textReviewsCount: z.number(),
-            name: z.string(),
-            webUrl: z.string(),
-            contributor: z.null(),
-            __typename: z.string(),
-          }),
-          recommendFor: z.null(),
-          updatedAt: z.number(),
-          createdAt: z.number(),
-          spoilerStatus: z.boolean(),
-          lastRevisionAt: z.number(),
-          text: z.string(),
-          rating: z.number(),
-        }),
-        __typename: z.string(),
-      })
-    ),
-    pageInfo: z.object({
-      prevPageToken: z.string(),
-      nextPageToken: z.string(),
-      __typename: z.string(),
-    }),
-    __typename: z.string(),
-  }),
+	getReviews: z.object({
+		totalCount: z.number(),
+		edges: z.array(
+			z.object({
+				node: z.object({
+					__typename: z.string(),
+					id: z.string(),
+					creator: z.object({
+						id: z.number(),
+						imageUrlSquare: z.string(),
+						isAuthor: z.boolean(),
+						textReviewsCount: z.number(),
+						name: z.string(),
+						webUrl: z.string(),
+						contributor: z.null(),
+						__typename: z.string(),
+					}),
+					recommendFor: z.null(),
+					updatedAt: z.number(),
+					createdAt: z.number(),
+					spoilerStatus: z.boolean(),
+					lastRevisionAt: z.number(),
+					text: z.string(),
+					rating: z.number(),
+				}),
+				__typename: z.string(),
+			}),
+		),
+		pageInfo: z.object({
+			prevPageToken: z.string(),
+			nextPageToken: z.string(),
+			__typename: z.string(),
+		}),
+		__typename: z.string(),
+	}),
 });

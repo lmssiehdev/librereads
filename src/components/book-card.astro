@@ -3,13 +3,13 @@ import { cn } from "../utils/misc";
 import Star from "./icons/star.astro";
 
 interface Props {
-  payload: {
-    imageUrl: string;
-    authorName: string;
-    averageRating: number;
-    title: string;
-  };
-  class?: string;
+	payload: {
+		imageUrl: string;
+		authorName: string;
+		averageRating: number;
+		title: string;
+	};
+	class?: string;
 }
 
 const { payload, class: className = "" } = Astro.props;

@@ -1,28 +1,28 @@
 ---
 import { queryClient } from "../../../utils/graphql";
 import {
-  getReviewsQuery,
-  type GetReviews,
+	type GetReviews,
+	getReviewsQuery,
 } from "../../../utils/query/getReviews";
 import {
-  getSimilarBooks,
-  type GetSimilarBooksSchema,
+	type GetSimilarBooksSchema,
+	getSimilarBooks,
 } from "../../../utils/query/getSimilarBook";
 
 interface Props {
-  bookId: string;
-  ratingsCountDist: number[];
+	bookId: string;
+	ratingsCountDist: number[];
 }
 
 const { ratingsCountDist, boooId } = Astro.props;
 
 function calculatePercentages(arr: number[]) {
-  const totalSum = arr.reduce((sum, num) => sum + num, 0);
-  const percentages = arr.map((num) => ({
-    reviews: num,
-    percentage: (Math.round((num / totalSum) * 10000) / 100).toFixed(),
-  }));
-  return percentages;
+	const totalSum = arr.reduce((sum, num) => sum + num, 0);
+	const percentages = arr.map((num) => ({
+		reviews: num,
+		percentage: (Math.round((num / totalSum) * 10000) / 100).toFixed(),
+	}));
+	return percentages;
 }
 
 const percentages = calculatePercentages(ratingsCountDist);

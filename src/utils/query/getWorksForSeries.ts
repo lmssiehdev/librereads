@@ -57,39 +57,39 @@ export const getWorksForSeries = `
 export type GetWorkForSeries = z.infer<typeof getWorkForSeriesSchema>;
 
 const getWorkForSeriesSchema = z.object({
-  getWorksForSeries: z.object({
-    __typename: z.string(),
-    edges: z.array(
-      z.object({
-        __typename: z.string(),
-        seriesPlacement: z.string(),
-        isPrimary: z.boolean(),
-        node: z.object({
-          __typename: z.string(),
-          id: z.string(),
-          stats: z.object({
-            __typename: z.string(),
-            averageRating: z.number(),
-            ratingsCount: z.number(),
-          }),
-          bestBook: z.object({
-            __typename: z.string(),
-            id: z.string(),
-            legacyId: z.number(),
-            title: z.string(),
-            imageUrl: z.string(),
-            webUrl: z.string(),
-            primaryContributorEdge: z.object({
-              __typename: z.string(),
-              node: z.object({
-                __typename: z.string(),
-                id: z.string(),
-                name: z.string(),
-              }),
-            }),
-          }),
-        }),
-      })
-    ),
-  }),
+	getWorksForSeries: z.object({
+		__typename: z.string(),
+		edges: z.array(
+			z.object({
+				__typename: z.string(),
+				seriesPlacement: z.string(),
+				isPrimary: z.boolean(),
+				node: z.object({
+					__typename: z.string(),
+					id: z.string(),
+					stats: z.object({
+						__typename: z.string(),
+						averageRating: z.number(),
+						ratingsCount: z.number(),
+					}),
+					bestBook: z.object({
+						__typename: z.string(),
+						id: z.string(),
+						legacyId: z.number(),
+						title: z.string(),
+						imageUrl: z.string(),
+						webUrl: z.string(),
+						primaryContributorEdge: z.object({
+							__typename: z.string(),
+							node: z.object({
+								__typename: z.string(),
+								id: z.string(),
+								name: z.string(),
+							}),
+						}),
+					}),
+				}),
+			}),
+		),
+	}),
 });

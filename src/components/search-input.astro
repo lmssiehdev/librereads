@@ -2,10 +2,11 @@
 import MagnifyingGlass from "./icons/magnifying-glass.astro";
 
 interface Props {
-  redirectUrl: string;
-  initialValue?: string;
+	redirectUrl: string;
+	initialValue?: string;
+	placeholder?: string;
 }
-const { redirectUrl, initialValue } = Astro.props;
+const { redirectUrl, initialValue, placeholder } = Astro.props;
 ---
 
 <form action={redirectUrl} method="get">
@@ -20,7 +21,7 @@ const { redirectUrl, initialValue } = Astro.props;
         value={initialValue}
         name="q"
         class="block w-full rounded p-2 pl-12 bg-[#655d52]/10 text-[#655d52] border focus:outline-none focus-visible:ring-2 focus-visible:ring-[#655d52] focus-visible:ring-opacity-75 focus-visible:ring-offset-1 font-pockoto"
-        placeholder="the name of the wind..."
+        placeholder={placeholder}
       />
     </div>
     <button

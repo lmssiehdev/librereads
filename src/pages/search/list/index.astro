@@ -1,74 +1,77 @@
 ---
 export const prerender = false;
 type Params = {
-  id: string;
+	id: string;
 };
 
-import { fetchSearchResult, type ListData } from "../../../utils/query";
+import { type ListData, fetchSearchResult } from "../../../utils/query";
 import Layout from "../_layout.astro";
 
-const searchTerm = Astro.url.searchParams.get("q") || "";
+const searchTerm = Astro.url.searchParams.get("q");
 const page = Number(Astro.url.searchParams.get("page")) || 1;
 
-const result = (await fetchSearchResult(searchTerm, "lists", page)) as ListData;
+const result: ListData | undefined =
+	searchTerm !== null
+		? await fetchSearchResult<ListData>(searchTerm, "lists", page)
+		: undefined;
 ---
 
 <Layout>
-  <div>
-    {result.searchCount}
-  </div>
-  <div class="mx-auto">
-    {
-      result.rows.map(({ title, booksInList, list }) => {
-        return (
-          <div class="my-4 max-w-[500px] w-full">
-            <div class="flex gap-1 w-full">
-              {list.map(({ bookUrl, bookCover }) => {
-                return (
-                  <a
-                    href={bookUrl}
-                    class="h-[150px] max-w-[100px] w-full overflow-hidden rounded"
-                  >
-                    <img
-                      src={bookCover}
-                      alt={title}
-                      class="w-full h-full object-cover"
-                    />
-                  </a>
-                );
-              })}
-            </div>
-            <div class="my-1">
-              <div>{title}</div>
-              <div class="text-black text-opacity-70 text-sm">
-                {booksInList}
+  {
+    searchTerm == null ? (
+      <></>
+    ) : (
+      <>
+        <div>{result?.searchCount}</div>
+        <div class="mx-auto">
+          {result?.rows.map(({ title, booksInList, list }) => {
+            return (
+              <div class="my-4 max-w-[500px] w-full">
+                <div class="flex gap-1 w-full">
+                  {list.map(({ bookUrl, bookCover }) => {
+                    return (
+                      <a
+                        href={bookUrl}
+                        class="h-[150px] max-w-[100px] w-full overflow-hidden rounded"
+                      >
+                        <img
+                          src={bookCover}
+                          alt={title}
+                          class="w-full h-full object-cover"
+                        />
+                      </a>
+                    );
+                  })}
+                </div>
+                <div class="my-1">
+                  <div>{title}</div>
+                  <div class="text-black text-opacity-70 text-sm">
+                    {booksInList}
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        );
-      })
-    }
-  </div>
-  <div class="ml-auto flex gap-2 items-center">
-    {
-      result.hasPreviousPage && (
-        <a
-          href={`/search/list?q=${searchTerm}&page=${page - 1}`}
-          class="py-1 px-2 hover:underline underline-offset-4 rounded"
-        >
-          Previous
-        </a>
-      )
-    }
-    {
-      result.hasNextPage && (
-        <a
-          href={`/search/list?q=${searchTerm}&page=${page + 1}`}
-          class="py-1 px-2 hover:underline underline-offset-4 rounded "
-        >
-          Next
-        </a>
-      )
-    }
-  </div>
+            );
+          })}
+        </div>
+        <div class="ml-auto flex gap-2 items-center">
+          {result?.hasPreviousPage && (
+            <a
+              href={`/search/list?q=${searchTerm}&page=${page - 1}`}
+              class="py-1 px-2 hover:underline underline-offset-4 rounded"
+            >
+              Previous
+            </a>
+          )}
+          {result?.hasNextPage && (
+            <a
+              href={`/search/list?q=${searchTerm}&page=${page + 1}`}
+              class="py-1 px-2 hover:underline underline-offset-4 rounded "
+            >
+              Next
+            </a>
+          )}
+        </div>
+      </>
+    )
+  }
 </Layout>

@@ -1,13 +1,32 @@
 ---
 export const prerender = false;
-import Layout from "../../layouts/Layout.astro";
 import SearchInput from "../../components/search-input.astro";
+import Layout from "../../layouts/Layout.astro";
+import { cn } from "../../utils/misc";
 
 const searchTerm = Astro.url.searchParams.get("q") || "";
+const onSearchBooksPage = Astro.url.pathname === "/search/book";
 ---
 
 <Layout>
-  <div>Search books</div>
-  <SearchInput redirectUrl="/search/book" initialValue={searchTerm} />
+  <div class="my-2 flex gap-2 items-center">
+    <a
+      class={cn({
+        "underline underline-offset-4": onSearchBooksPage,
+      })}
+      href="/search/book">Search books</a
+    >
+    <a
+      class={cn({
+        "underline underline-offset-4": !onSearchBooksPage,
+      })}
+      href="/search/list">Search lists</a
+    >
+  </div>
+  <SearchInput
+    redirectUrl="/search/book"
+    initialValue={searchTerm}
+    placeholder={onSearchBooksPage ? "The name of the wind..." : "Fiction..."}
+  />
   <slot />
 </Layout>

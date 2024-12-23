@@ -2,13 +2,13 @@
 import Star from "../../../components/icons/star.astro";
 import { queryClient } from "../../../utils/graphql";
 import {
-  getWorksByContributor,
-  type GetWorksByContributor,
+	type GetWorksByContributor,
+	getWorksByContributor,
 } from "../../../utils/query/getWorksByContributor";
 
 interface Props {
-  authorId: string;
-  authorName: string;
+	authorId: string;
+	authorName: string;
 }
 
 const { authorId, authorName } = Astro.props;
@@ -26,130 +26,130 @@ const { authorId, authorName } = Astro.props;
 // );
 // const workByTheAuthorData = workByTheAuthor?.getWorksByContributor?.edges!;
 const workByTheAuthorData = [
-  {
-    node: {
-      id: "kca://work/amzn1.gr.work.v1.H-uiZxbMDAHsxOpFwGVKGQ",
-      stats: {
-        averageRating: 4.52,
-        ratingsCount: 1008807,
-        __typename: "BookOrWorkStats",
-      },
-      bestBook: {
-        id: "kca://book/amzn1.gr.book.v1.iUoduJh08Drcwhc9Kt94qg",
-        legacyId: 186074,
-        title: "The Name of the Wind",
-        imageUrl:
-          "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1704917687i/186074.jpg",
-        webUrl:
-          "https://www.goodreads.com/book/show/186074.The_Name_of_the_Wind",
-        primaryContributorEdge: {
-          node: {
-            id: "kca://author/amzn1.gr.author.v1.OK_X6rOc-ss75X962O9SPw",
-            name: "Patrick Rothfuss",
-            isGrAuthor: true,
-            __typename: "Contributor",
-          },
-          __typename: "BookContributorEdge",
-        },
-        __typename: "Book",
-      },
-      __typename: "Work",
-    },
-    __typename: "ContributorWorksEdge",
-  },
-  {
-    node: {
-      id: "kca://work/amzn1.gr.work.v1.lmaHiRbSI5W5EVViZJlnqQ",
-      stats: {
-        averageRating: 4.55,
-        ratingsCount: 582046,
-        __typename: "BookOrWorkStats",
-      },
-      bestBook: {
-        id: "kca://book/amzn1.gr.book.v1.yc1VSaL44Cp7vbSICVj1JQ",
-        legacyId: 1215032,
-        title: "The Wise Man’s Fear",
-        imageUrl:
-          "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1452624392i/1215032.jpg",
-        webUrl:
-          "https://www.goodreads.com/book/show/1215032.The_Wise_Man_s_Fear",
-        primaryContributorEdge: {
-          node: {
-            id: "kca://author/amzn1.gr.author.v1.OK_X6rOc-ss75X962O9SPw",
-            name: "Patrick Rothfuss",
-            isGrAuthor: true,
-            __typename: "Contributor",
-          },
-          __typename: "BookContributorEdge",
-        },
-        __typename: "Book",
-      },
-      __typename: "Work",
-    },
-    __typename: "ContributorWorksEdge",
-  },
-  {
-    node: {
-      id: "kca://work/amzn1.gr.work.v1.etRxmYhEXbW3jWChD4Bt2g",
-      stats: {
-        averageRating: 3.87,
-        ratingsCount: 152245,
-        __typename: "BookOrWorkStats",
-      },
-      bestBook: {
-        id: "kca://book/amzn1.gr.book.v1.5V1UH4i_BU3EaMA0_xb-sQ",
-        legacyId: 21535271,
-        title: "The Slow Regard of Silent Things",
-        imageUrl:
-          "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1398466695i/21535271.jpg",
-        webUrl:
-          "https://www.goodreads.com/book/show/21535271-the-slow-regard-of-silent-things",
-        primaryContributorEdge: {
-          node: {
-            id: "kca://author/amzn1.gr.author.v1.OK_X6rOc-ss75X962O9SPw",
-            name: "Patrick Rothfuss",
-            isGrAuthor: true,
-            __typename: "Contributor",
-          },
-          __typename: "BookContributorEdge",
-        },
-        __typename: "Book",
-      },
-      __typename: "Work",
-    },
-    __typename: "ContributorWorksEdge",
-  },
-  {
-    node: {
-      id: "kca://work/amzn1.gr.work.v3.xn3BP0KKkQHtPdqT",
-      stats: {
-        averageRating: 4.05,
-        ratingsCount: 24894,
-        __typename: "BookOrWorkStats",
-      },
-      bestBook: {
-        id: "kca://book/amzn1.gr.book.v3.MJeNNmz53ggFFWKc",
-        legacyId: 157265081,
-        title: "The Narrow Road Between Desires",
-        imageUrl:
-          "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1716011662i/157265081.jpg",
-        webUrl:
-          "https://www.goodreads.com/book/show/157265081-the-narrow-road-between-desires",
-        primaryContributorEdge: {
-          node: {
-            id: "kca://author/amzn1.gr.author.v1.OK_X6rOc-ss75X962O9SPw",
-            name: "Patrick Rothfuss",
-            isGrAuthor: true,
-            __typename: "Contributor",
-          },
-          __typename: "BookContributorEdge",
-        },
-        __typename: "Book",
-      },
-      __typename: "Work",
-    },
-    __typename: "ContributorWorksEdge",
-  },
+	{
+		node: {
+			id: "kca://work/amzn1.gr.work.v1.H-uiZxbMDAHsxOpFwGVKGQ",
+			stats: {
+				averageRating: 4.52,
+				ratingsCount: 1008807,
+				__typename: "BookOrWorkStats",
+			},
+			bestBook: {
+				id: "kca://book/amzn1.gr.book.v1.iUoduJh08Drcwhc9Kt94qg",
+				legacyId: 186074,
+				title: "The Name of the Wind",
+				imageUrl:
+					"https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1704917687i/186074.jpg",
+				webUrl:
+					"https://www.goodreads.com/book/show/186074.The_Name_of_the_Wind",
+				primaryContributorEdge: {
+					node: {
+						id: "kca://author/amzn1.gr.author.v1.OK_X6rOc-ss75X962O9SPw",
+						name: "Patrick Rothfuss",
+						isGrAuthor: true,
+						__typename: "Contributor",
+					},
+					__typename: "BookContributorEdge",
+				},
+				__typename: "Book",
+			},
+			__typename: "Work",
+		},
+		__typename: "ContributorWorksEdge",
+	},
+	{
+		node: {
+			id: "kca://work/amzn1.gr.work.v1.lmaHiRbSI5W5EVViZJlnqQ",
+			stats: {
+				averageRating: 4.55,
+				ratingsCount: 582046,
+				__typename: "BookOrWorkStats",
+			},
+			bestBook: {
+				id: "kca://book/amzn1.gr.book.v1.yc1VSaL44Cp7vbSICVj1JQ",
+				legacyId: 1215032,
+				title: "The Wise Man’s Fear",
+				imageUrl:
+					"https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1452624392i/1215032.jpg",
+				webUrl:
+					"https://www.goodreads.com/book/show/1215032.The_Wise_Man_s_Fear",
+				primaryContributorEdge: {
+					node: {
+						id: "kca://author/amzn1.gr.author.v1.OK_X6rOc-ss75X962O9SPw",
+						name: "Patrick Rothfuss",
+						isGrAuthor: true,
+						__typename: "Contributor",
+					},
+					__typename: "BookContributorEdge",
+				},
+				__typename: "Book",
+			},
+			__typename: "Work",
+		},
+		__typename: "ContributorWorksEdge",
+	},
+	{
+		node: {
+			id: "kca://work/amzn1.gr.work.v1.etRxmYhEXbW3jWChD4Bt2g",
+			stats: {
+				averageRating: 3.87,
+				ratingsCount: 152245,
+				__typename: "BookOrWorkStats",
+			},
+			bestBook: {
+				id: "kca://book/amzn1.gr.book.v1.5V1UH4i_BU3EaMA0_xb-sQ",
+				legacyId: 21535271,
+				title: "The Slow Regard of Silent Things",
+				imageUrl:
+					"https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1398466695i/21535271.jpg",
+				webUrl:
+					"https://www.goodreads.com/book/show/21535271-the-slow-regard-of-silent-things",
+				primaryContributorEdge: {
+					node: {
+						id: "kca://author/amzn1.gr.author.v1.OK_X6rOc-ss75X962O9SPw",
+						name: "Patrick Rothfuss",
+						isGrAuthor: true,
+						__typename: "Contributor",
+					},
+					__typename: "BookContributorEdge",
+				},
+				__typename: "Book",
+			},
+			__typename: "Work",
+		},
+		__typename: "ContributorWorksEdge",
+	},
+	{
+		node: {
+			id: "kca://work/amzn1.gr.work.v3.xn3BP0KKkQHtPdqT",
+			stats: {
+				averageRating: 4.05,
+				ratingsCount: 24894,
+				__typename: "BookOrWorkStats",
+			},
+			bestBook: {
+				id: "kca://book/amzn1.gr.book.v3.MJeNNmz53ggFFWKc",
+				legacyId: 157265081,
+				title: "The Narrow Road Between Desires",
+				imageUrl:
+					"https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1716011662i/157265081.jpg",
+				webUrl:
+					"https://www.goodreads.com/book/show/157265081-the-narrow-road-between-desires",
+				primaryContributorEdge: {
+					node: {
+						id: "kca://author/amzn1.gr.author.v1.OK_X6rOc-ss75X962O9SPw",
+						name: "Patrick Rothfuss",
+						isGrAuthor: true,
+						__typename: "Contributor",
+					},
+					__typename: "BookContributorEdge",
+				},
+				__typename: "Book",
+			},
+			__typename: "Work",
+		},
+		__typename: "ContributorWorksEdge",
+	},
 ];
 ---
 

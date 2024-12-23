@@ -43,32 +43,32 @@ export const getBookListsOfBook = `
 export type GetBookListsOfBook = z.infer<typeof getBookListsOfBookSchema>;
 
 const getBookListsOfBookSchema = z.object({
-  getBookListsOfBook: z.object({
-    edges: z.array(
-      z.object({
-        node: z.object({
-          id: z.number(),
-          title: z.string(),
-          userListVotesCount: z.number(),
-          listBooksCount: z.number(),
-          books: z.object({
-            edges: z.array(
-              z.object({
-                node: z.object({
-                  imageUrl: z.string(),
-                  title: z.string(),
-                  __typename: z.string(),
-                }),
-                __typename: z.string(),
-              })
-            ),
-            __typename: z.string(),
-          }),
-          __typename: z.string(),
-        }),
-        __typename: z.string(),
-      })
-    ),
-    __typename: z.string(),
-  }),
+	getBookListsOfBook: z.object({
+		edges: z.array(
+			z.object({
+				node: z.object({
+					id: z.number(),
+					title: z.string(),
+					userListVotesCount: z.number(),
+					listBooksCount: z.number(),
+					books: z.object({
+						edges: z.array(
+							z.object({
+								node: z.object({
+									imageUrl: z.string(),
+									title: z.string(),
+									__typename: z.string(),
+								}),
+								__typename: z.string(),
+							}),
+						),
+						__typename: z.string(),
+					}),
+					__typename: z.string(),
+				}),
+				__typename: z.string(),
+			}),
+		),
+		__typename: z.string(),
+	}),
 });
