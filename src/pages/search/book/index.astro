@@ -5,30 +5,31 @@ import { fetchSearchResult } from "../../../utils/query";
 import Layout from "../_layout.astro";
 
 Astro.response.headers.set(
-  "Cache-Control",
-  `s-maxage=86400, stale-while-revalidate`
+	"Cache-Control",
+	"s-maxage=86400, stale-while-revalidate",
 );
 
 const searchTerm = Astro.url.searchParams.get("q");
 const page = Number(Astro.url.searchParams.get("page")) || 1;
 const result = (
 	searchTerm !== null
+		// biome-ignore lint/style/noNonNullAssertion: <explanation>
 		? await fetchSearchResult<BookData>(searchTerm, "books", page)!
 		: undefined
 ) as BookData | undefined;
 ---
 
-<Layout>
+<Layout metadata={ result?.seo! }>
   {
     result == undefined ? (
   <></>
     ): (
       <>
-        <div class="mt-6 mb-2">
+  <div class="mt-6 mb-2">
     {result.searchCount}
   </div>
   {
-    result.rows.map(
+    result?.rows.map(
       ({ title, authorName, imageUrl, authorId, bookId, ratings }) => {
         const [rating, count] = ratings;
         return (

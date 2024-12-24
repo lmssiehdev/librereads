@@ -1,3 +1,14 @@
+---
+import type { Metadata } from "../types";
+
+interface Props {
+  metadata?: Metadata;
+}
+
+const { metadata = { title: "LibreReads", description: "" } } = Astro.props;
+const { title, description } = metadata;
+---
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -5,28 +16,40 @@
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <title>Astro Basics</title>
+    <title>{title}</title>
+    <meta name="description" content={description} />
   </head>
   <body
     class="flex flex-col min-h-screen max-w-screen-md !mx-auto px-2 bg-[#f6f0e9] font-pockoto"
   >
-    <div class="py-4">
-      <nav class="flex justify-between items-center">
-        <h1 class="text-xl font-bold">
-          <a href="/">
-            LibreReads <span class="text-xs opacity-70">[Beta]</span>
-          </a>
-        </h1>
-        <ul class="flex gap-3 items-center">
-          <li>
-            <a class="hover:underline underline-offset-4" href="/search/book/"
-              >Search</a
-            >
-          </li>
-        </ul>
-      </nav>
+    <div class="flex-1">
+      <div class="py-4">
+        <nav class="flex justify-between items-center">
+          <h1 class="text-xl font-bold">
+            <a href="/">
+              LibreReads <span class="text-xs opacity-70">[Beta]</span>
+            </a>
+          </h1>
+          <ul class="flex gap-3 items-center">
+            <li>
+              <a class="hover:underline underline-offset-4" href="/search/book/"
+                >Search</a
+              >
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <slot />
     </div>
-    <slot />
+    <footer class="mt-10 py-2 border-t-2 border-black">
+      <div class="flex justify-between">
+        <span>Built with ❤️</span>
+        <a
+          class="hover:underline underline-offset-4"
+          href="https://github.com/lmssiehdev/librereads-astro">source code</a
+        >
+      </div>
+    </footer>
   </body>
 </html>
 

@@ -3,11 +3,6 @@ import Star from "../../../components/icons/star.astro";
 import Layout from "../../../layouts/Layout.astro";
 import { fetchAuthorDetails } from "../../../utils/scrapers/author";
 
-Astro.response.headers.set(
-  "Cache-Control",
-  `s-maxage=86400, stale-while-revalidate`
-);
-
 const { id: authorId } = Astro.params;
 
 if (!authorId) {
@@ -16,14 +11,25 @@ if (!authorId) {
 }
 
 const result = await fetchAuthorDetails(authorId);
-const { author, books, series } = result!;
+
+Astro.response.headers.set(
+  "Cache-Control",
+  "s-maxage=86400, stale-while-revalidate"
+);
+
+// biome-ignore lint/style/noNonNullAssertion: <explanation>
+const { author, books, series, seo } = result!;
 
 // TODO:
-// [] Find More Books
+// [] Find More Books 
 // [] Find More Series
 ---
 
-<Layout>
+<Layout metadata={seo}>
+  {
+    books.length === 0 ? (
+      <>couldn't fint author</>
+    ) : (
   <div>
     <div class="flex flex-col md:flex-row gap-10 my-10">
       <div>
@@ -104,4 +110,6 @@ const { author, books, series } = result!;
       }
     </div>
   </div>
+  )
+}
 </Layout>

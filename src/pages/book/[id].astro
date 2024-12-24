@@ -11,7 +11,7 @@ import BookReviews from "./_components/BookReviews.astro";
 
 Astro.response.headers.set(
   "Cache-Control",
-  `s-maxage=86400, stale-while-revalidate`
+  "s-maxage=86400, stale-while-revalidate"
 );
 
 const { id } = Astro.params;
@@ -38,9 +38,14 @@ const seriesPayload = hasSeries
       seriesWebUrl: bookInfo.getBookByLegacyId.bookSeries[0].series.webUrl,
     }
   : null;
+
+const metadata = {
+  title: `${data.title} by ${authorName}`,
+  description: `${data.descriptionStripped.substring(0, 153).trim()}...`,
+};
 ---
 
-<Layout>
+<Layout metadata={metadata}>
   <div class="flex gap-4">
     <div class="flex-1 h-[250px] max-w-[175px] w-full overflow-hidden rounded">
       <img
@@ -67,7 +72,7 @@ const seriesPayload = hasSeries
         href=`/author/show/${data.primaryContributorEdge.node.legacyId}`
         class="text-black text-opacity-70"
       >
-        {data.primaryContributorEdge.node.name}
+        {authorName}
       </a>
       <div class="my-1">
         <div class="flex gap-1.5 mb-1">

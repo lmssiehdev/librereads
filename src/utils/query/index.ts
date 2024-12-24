@@ -26,14 +26,14 @@ export async function fetchSearchResult<T extends BookData | ListData>(
 		const document = dom.window.document;
 		const extractFunction =
 			searchType === "lists" ? extractListsData : extractBookData;
-		return extractFunction(document) as T;
+		return extractFunction(document, searchQuery) as T;
 	} catch (err) {
 		console.error(err);
 		return [] as unknown as T;
 	}
 }
 
-function extractBookData(document: Document) {
+function extractBookData(document: Document, searchQuery: string) {
 	const rows = document.querySelectorAll("tbody tr");
 	const hasNextPage =
 		document.querySelector(".next_page") != null &&
@@ -47,59 +47,76 @@ function extractBookData(document: Document) {
 			?.textContent?.trim()
 			.split("(")[0] || "";
 
+	const searchResult = Array.from(rows).map((element) => {
+		const title =
+			element.querySelector(".bookTitle span")?.textContent?.trim() || "";
+		const authorName =
+			element.querySelector(".authorName span")?.textContent?.trim() || "";
+		const authorId =
+			extractIdFromUrl(
+				element.querySelector(".authorName")?.getAttribute("href") || "",
+			) || "";
+
+		const bookCover = element.querySelector(".bookCover");
+		const imageUrl = bookCover
+			?.getAttribute("src")
+			?.replace(/\._.*?\.jpg/g, ".jpg");
+
+		const bookTitleLink = element.querySelector(".bookTitle");
+		const bookIdMatch = bookTitleLink
+			?.getAttribute("href")
+			?.match(/\/book\/show\/(\d+)/);
+		const bookId = bookIdMatch ? bookIdMatch[1] : undefined;
+		const ratings =
+			element
+				.querySelector(".minirating")
+				?.textContent?.trim()
+				.toLocaleLowerCase()
+				.split(" — ")
+				.map((v) =>
+					v
+						.split("")
+						.filter((v) => !"abcdefghijklmnopqrstuvwxyz".includes(v))
+						.join("")
+						.trim(),
+				) ?? [];
+
+		return {
+			title,
+			authorName,
+			authorId,
+			imageUrl: imageUrl || undefined,
+			bookId: bookId ? Number(bookId) : undefined,
+			ratings,
+		};
+	});
+
+	console.log(searchResult);
 	return {
+		seo: {
+			title: document.title,
+			description: `
+        Search results for ${searchQuery}: ${searchResult
+					// .slice(0, 3)
+					.map(({ title }) => `${title} `)
+					.join(", ")}
+          .substring(0, 153)
+          .trim()
+        }...`,
+		},
 		hasNextPage,
 		hasPreviousPage,
 		searchCount,
-		rows: Array.from(rows).map((element) => {
-			const title =
-				element.querySelector(".bookTitle span")?.textContent?.trim() || "";
-			const authorName =
-				element.querySelector(".authorName span")?.textContent?.trim() || "";
-			const authorId =
-				extractIdFromUrl(
-					element.querySelector(".authorName")?.getAttribute("href") || "",
-				) || "";
-
-			const bookCover = element.querySelector(".bookCover");
-			const imageUrl = bookCover
-				?.getAttribute("src")
-				?.replace(/\._.*?\.jpg/g, ".jpg");
-
-			const bookTitleLink = element.querySelector(".bookTitle");
-			const bookIdMatch = bookTitleLink
-				?.getAttribute("href")
-				?.match(/\/book\/show\/(\d+)/);
-			const bookId = bookIdMatch ? bookIdMatch[1] : undefined;
-			const ratings =
-				element
-					.querySelector(".minirating")
-					?.textContent?.trim()
-					.toLocaleLowerCase()
-					.split(" — ")
-					.map((v) =>
-						v
-							.split("")
-							.filter((v) => !"abcdefghijklmnopqrstuvwxyz".includes(v))
-							.join("")
-							.trim(),
-					) ?? [];
-
-			return {
-				title,
-				authorName,
-				authorId,
-				imageUrl: imageUrl || undefined,
-				bookId: bookId ? Number(bookId) : undefined,
-				ratings,
-			};
-		}),
+		rows: searchResult,
 	};
 }
-function extractListsData(document: Document) {
+function extractListsData(document: Document, searchQuery: string) {
 	const rows = document.querySelectorAll("tbody tr");
 	const searchCount =
-		document.querySelector(".searchSubNavContainer")?.textContent?.trim() || "";
+		document
+			.querySelector(".searchSubNavContainer")
+			?.textContent?.trim()
+			.split("(")[0] || "";
 	const hasNextPage =
 		document.querySelector(".next_page") != null &&
 		!document.querySelector(".next_page")?.classList.contains("disabled");
@@ -107,35 +124,48 @@ function extractListsData(document: Document) {
 		document.querySelector(".previous_page") != null &&
 		!document.querySelector("previous_page")?.classList.contains("disabled");
 
+	const searchResult = Array.from(rows).map((element) => {
+		const title =
+			element.querySelector(".listTitle")?.textContent?.trim() || "";
+		const booksInList =
+			element.querySelector(".listFullDetails")?.textContent?.trim() || "";
+		const listUrl =
+			element.querySelector(".listTitle")?.getAttribute("href") || "";
+		const list = Array.from(element.querySelectorAll(".listImgs a")).map(
+			(bookElement) => {
+				return {
+					bookUrl: bookElement.getAttribute("href") || "",
+					bookCover: changeGoodreadsImageSize(
+						bookElement.querySelector("img")?.getAttribute("src") || "",
+						200,
+					),
+				};
+			},
+		);
+
+		return {
+			title,
+			list,
+			booksInList,
+			listUrl,
+		};
+	});
+
 	return {
+		seo: {
+			title: document.title,
+			description: `
+      Search results for ${searchQuery}: ${searchResult
+				// .slice(0, 3)
+				.map(({ title }) => `${title} `)
+				.join(", ")}
+        .substring(0, 153)
+        .trim()
+      }...`,
+		},
 		hasNextPage,
 		hasPreviousPage,
 		searchCount,
-		rows: Array.from(rows).map((element) => {
-			const title =
-				element.querySelector(".listTitle")?.textContent?.trim() || "";
-			const booksInList =
-				element.querySelector(".listFullDetails")?.textContent?.trim() || "";
-			const listUrl =
-				element.querySelector(".listTitle")?.getAttribute("href") || "";
-			const list = Array.from(element.querySelectorAll(".listImgs a")).map(
-				(bookElement) => {
-					return {
-						bookUrl: bookElement.getAttribute("href") || "",
-						bookCover: changeGoodreadsImageSize(
-							bookElement.querySelector("img")?.getAttribute("src") || "",
-							200,
-						),
-					};
-				},
-			);
-
-			return {
-				title,
-				list,
-				booksInList,
-				listUrl,
-			};
-		}),
+		rows: searchResult,
 	};
 }

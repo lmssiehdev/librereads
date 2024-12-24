@@ -1,0 +1,83 @@
+---
+import { fetchListDetails } from "../../../utils/scrapers/list";
+import MainLayout from "../../../layouts/Layout.astro";
+import Pagination from "../../../components/pagination.astro";
+const { id } = Astro.params;
+
+if (!id) {
+  return Astro.redirect("/404");
+}
+
+Astro.response.headers.set(
+  "Cache-Control",
+  "s-maxage=86400, stale-while-revalidate"
+);
+
+const page = Number(Astro.url.searchParams.get("page")) || 1;
+const result = await fetchListDetails(id, page);
+---
+
+<MainLayout metadata={result?.seo}>
+  {
+    result?.rows.length === 0 ? (
+      <>couldn't find list</>
+    ) : (
+      <div>
+        <h1 class="text-4xl my-10">
+          <span class="text-slate-600">List:</span>
+          {result?.title}
+        </h1>
+        <div class="flex flex-col gap-2">
+          {result?.rows.map(
+            ({ author, title, image, webUrl, ranking, info }) => {
+              return (
+                <div class="flex gap-3">
+                  <span class="ranking text-lg text-black/80">{ranking}.</span>
+                  <div class="h-[100px] w-[70px]">
+                    <picture>
+                      <img
+                        height={100}
+                        width={70}
+                        class="w-full h-full object-fill"
+                        src={image}
+                        alt={title}
+                      />
+                    </picture>
+                  </div>
+                  <div>
+                    <a href={webUrl} class="text-lg">
+                      {title}
+                    </a>
+                    <div>
+                      <span class="text-black/70">
+                        by:
+                        <a href={`${author.webUrl}`}>
+                          <span> {author.name}</span>
+                        </a>
+                      </span>
+                    </div>
+                    <span class="text-xs text-black/70"> {info} </span>
+                  </div>
+                </div>
+              );
+            }
+          )}
+        </div>
+        <div class="flex items-end my-2">
+          <Pagination
+            prevUrl={
+              result?.hasPreviousPage
+                ? `/list/show/${id}?page=${page - 1}`
+                : undefined
+            }
+            nextUrl={
+              result?.hasNextPage
+                ? `/list/show/${id}?page=${page + 1}`
+                : undefined
+            }
+          />
+        </div>
+      </div>
+    )
+  }
+</MainLayout>

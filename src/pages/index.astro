@@ -1,18 +1,21 @@
 ---
 export const prerender = true;
 import SearchInput from "../components/search-input.astro";
-import Layout from "../layouts/Layout.astro";
+import MainLayout from "../layouts/Layout.astro";
 ---
 
-<Layout>
-  <main class="min-h-screen">
+<MainLayout>
+  <main>
     <h2 class="text-center fluid-2xl sm:fluid-4xl my-12 leading-[1.2]">
       Goodreads, reimagined.
       <br />
       Private, minimal, simple.
     </h2>
     <div class="my-12 max-w-md mx-auto">
-      <SearchInput redirectUrl="/search/book" />
+      <SearchInput
+        redirectUrl="/search/book"
+        placeholder="The name of the wind..."
+      />
     </div>
   </main>
-</Layout>
+</MainLayout>

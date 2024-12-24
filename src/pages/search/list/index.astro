@@ -1,15 +1,13 @@
 ---
 export const prerender = false;
-type Params = {
-	id: string;
-};
 
+import Pagination from "../../../components/pagination.astro";
 import { type ListData, fetchSearchResult } from "../../../utils/query";
 import Layout from "../_layout.astro";
 
 Astro.response.headers.set(
-  "Cache-Control",
-  `s-maxage=86400, stale-while-revalidate`
+	"Cache-Control",
+	"s-maxage=86400, stale-while-revalidate",
 );
 
 const searchTerm = Astro.url.searchParams.get("q");
@@ -21,17 +19,19 @@ const result: ListData | undefined =
 		: undefined;
 ---
 
-<Layout>
+<Layout metadata={result?.seo!}>
   {
     searchTerm == null ? (
       <></>
     ) : (
       <>
-        <div>{result?.searchCount}</div>
-        <div class="mx-auto">
-          {result?.rows.map(({ title, booksInList, list }) => {
+          <div class="mt-6 mb-2">
+            {result?.searchCount}
+          </div>
+          <div >
+          {result?.rows.map(({ title, booksInList, list, listUrl }) => {
             return (
-              <div class="my-4 max-w-[500px] w-full">
+              <div class="my-4 max-w-[500px] w-full mx-auto">
                 <div class="flex gap-1 w-full">
                   {list.map(({ bookUrl, bookCover }) => {
                     return (
@@ -49,7 +49,7 @@ const result: ListData | undefined =
                   })}
                 </div>
                 <div class="my-1">
-                  <div>{title}</div>
+                  <a href={listUrl}>{title}</a>
                   <div class="text-black text-opacity-70 text-sm">
                     {booksInList}
                   </div>
@@ -58,23 +58,10 @@ const result: ListData | undefined =
             );
           })}
         </div>
-        <div class="ml-auto flex gap-2 items-center">
-          {result?.hasPreviousPage && (
-            <a
-              href={`/search/list?q=${searchTerm}&page=${page - 1}`}
-              class="py-1 px-2 hover:underline underline-offset-4 rounded"
-            >
-              Previous
-            </a>
-          )}
-          {result?.hasNextPage && (
-            <a
-              href={`/search/list?q=${searchTerm}&page=${page + 1}`}
-              class="py-1 px-2 hover:underline underline-offset-4 rounded "
-            >
-              Next
-            </a>
-          )}
+        <div class="flex items-end">
+        <Pagination
+        prevUrl={result?.hasPreviousPage ? `/search/list?q=${searchTerm}&page=${page - 1}` : undefined}
+        nextUrl={result?.hasNextPage ? `/search/list?q=${searchTerm}&page=${page + 1}` : undefined} />
         </div>
       </>
     )

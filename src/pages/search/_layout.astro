@@ -2,13 +2,20 @@
 export const prerender = false;
 import SearchInput from "../../components/search-input.astro";
 import MainLayout from "../../layouts/Layout.astro";
+import type { Metadata } from "../../types";
 import { cn } from "../../utils/misc";
+
+interface Props {
+	metadata: Metadata;
+}
+
+const { metadata } = Astro.props;
 
 const searchTerm = Astro.url.searchParams.get("q") || "";
 const onSearchBooksPage = Astro.url.pathname.includes("/search/book");
 ---
 
-<MainLayout>
+<MainLayout metadata={metadata}>
   <div class="my-2 flex gap-2 items-center">
     <a
       class={cn({

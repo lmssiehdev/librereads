@@ -1,0 +1,31 @@
+---
+interface Props {
+  prevUrl?: string;
+  nextUrl?: string;
+}
+
+const { prevUrl, nextUrl } = Astro.props;
+---
+
+<div class="ml-auto flex gap-2 items-center">
+  {
+    prevUrl && (
+      <a
+        href={prevUrl}
+        class="py-1 px-2 hover:underline underline-offset-4 rounded"
+      >
+        Previous
+      </a>
+    )
+  }
+  {
+    nextUrl && (
+      <a
+        href={nextUrl}
+        class="py-1 px-2 hover:underline underline-offset-4 rounded "
+      >
+        Next
+      </a>
+    )
+  }
+</div>
