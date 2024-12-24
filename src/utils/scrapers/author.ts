@@ -1,5 +1,5 @@
 import { JSDOM } from "jsdom";
-import { changeGoodreadsImageSize } from "../goodreads";
+import { changeGoodreadsImageSize, extractIdFromUrl } from "../goodreads";
 
 export async function fetchAuthorDetails(id: string) {
   try {
@@ -61,9 +61,9 @@ export async function fetchAuthorDetails(id: string) {
     ).map((node) => {
       return {
         bookTitle: node.querySelector(".bookTitle span")?.textContent || "",
-        bookId: node
-          .querySelector(".bookTitle")
-          ?.getAttribute("href") as string,
+        bookId: extractIdFromUrl(
+          node.querySelector(".bookTitle")?.getAttribute("href") || ""
+        ),
         bookCover: changeGoodreadsImageSize(
           node.querySelector("img.bookCover")?.getAttribute("src") as string,
           200
