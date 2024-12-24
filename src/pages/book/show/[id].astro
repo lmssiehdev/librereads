@@ -1,13 +1,13 @@
 ---
-import Star from "../../components/icons/star.astro";
-import Layout from "../../layouts/Layout.astro";
-import { queryClient } from "../../utils/graphql";
-import { cn } from "../../utils/misc";
+import Star from "../../../components/icons/star.astro";
+import Layout from "../../../layouts/Layout.astro";
+import { queryClient } from "../../../utils/graphql";
+import { cn } from "../../../utils/misc";
 import {
   type GetBookByLegacyIdSchema,
   getBookByLegacyId,
-} from "../../utils/query/getBookByLegacyId";
-import BookReviews from "./_components/BookReviews.astro";
+} from "../../../utils/query/getBookByLegacyId";
+import BookReviews from "../_components/BookReviews.astro";
 
 Astro.response.headers.set(
   "Cache-Control",
