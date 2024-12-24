@@ -2,13 +2,11 @@
 export const prerender = false;
 
 import Pagination from "../../../components/pagination.astro";
+import { setCache } from "../../../utils/misc";
 import { type ListData, fetchSearchResult } from "../../../utils/query";
 import Layout from "../_layout.astro";
 
-Astro.response.headers.set(
-	"Cache-Control",
-	"s-maxage=86400, stale-while-revalidate",
-);
+setCache(Astro.response.headers);
 
 const searchTerm = Astro.url.searchParams.get("q");
 const page = Number(Astro.url.searchParams.get("page")) || 1;

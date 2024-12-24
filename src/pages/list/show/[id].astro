@@ -2,16 +2,14 @@
 import { fetchListDetails } from "../../../utils/scrapers/list";
 import MainLayout from "../../../layouts/Layout.astro";
 import Pagination from "../../../components/pagination.astro";
+import { setCache } from "../../../utils/misc";
 const { id } = Astro.params;
 
 if (!id) {
   return Astro.redirect("/404");
 }
 
-Astro.response.headers.set(
-  "Cache-Control",
-  "s-maxage=86400, stale-while-revalidate"
-);
+setCache(Astro.response.headers);
 
 const page = Number(Astro.url.searchParams.get("page")) || 1;
 const result = await fetchListDetails(id, page);

@@ -1,6 +1,7 @@
 ---
 import Star from "../../../components/icons/star.astro";
 import Layout from "../../../layouts/Layout.astro";
+import { setCache } from "../../../utils/misc";
 import { fetchAuthorDetails } from "../../../utils/scrapers/author";
 
 const { id: authorId } = Astro.params;
@@ -12,10 +13,7 @@ if (!authorId) {
 
 const result = await fetchAuthorDetails(authorId);
 
-Astro.response.headers.set(
-  "Cache-Control",
-  "s-maxage=86400, stale-while-revalidate"
-);
+setCache(Astro.response.headers);
 
 // biome-ignore lint/style/noNonNullAssertion: <explanation>
 const { author, books, series, seo } = result!;
