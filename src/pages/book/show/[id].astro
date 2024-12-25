@@ -22,9 +22,18 @@ if (!bookInfo) {
 
 const authorId = bookInfo?.getBookByLegacyId?.primaryContributorEdge?.node?.id;
 
+const hasSeries = bookInfo.getBookByLegacyId.bookSeries.length > 0;
+const seriesData = hasSeries
+  ? {
+      title: bookInfo.getBookByLegacyId.bookSeries[0].series.title,
+      id: bookInfo.getBookByLegacyId.bookSeries[0].series.id,
+      url: bookInfo.getBookByLegacyId.bookSeries[0].series.webUrl,
+    }
+  : undefined;
+
 const result = await fetchBookRelatedData({
   bookId: bookInfo.getBookByLegacyId.id,
-  seriesId: bookInfo.getBookByLegacyId.bookSeries[0].series.id,
+  seriesId: seriesData?.id || "",
   authorId: authorId,
 });
 
@@ -36,15 +45,6 @@ const authorName =
 const authorLegacyId =
   bookInfo?.getBookByLegacyId?.primaryContributorEdge?.node?.legacyId;
 const data = bookInfo.getBookByLegacyId;
-
-const hasSeries = bookInfo.getBookByLegacyId.bookSeries.length > 0;
-const seriesData = hasSeries
-  ? {
-      title: bookInfo.getBookByLegacyId.bookSeries[0].series.title,
-      id: bookInfo.getBookByLegacyId.bookSeries[0].series.id,
-      url: bookInfo.getBookByLegacyId.bookSeries[0].series.webUrl,
-    }
-  : undefined;
 
 const metadata = {
   title: `${data.title} by ${authorName}`,
