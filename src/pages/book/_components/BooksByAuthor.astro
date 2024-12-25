@@ -1,6 +1,5 @@
 ---
 import BookCard from "../../../components/book-card.astro";
-import Star from "../../../components/icons/star.astro";
 import { type GetWorksByContributor } from "../../../utils/query/getWorksByContributor";
 
 interface Props {
@@ -52,7 +51,7 @@ const workByTheAuthorData = data?.edges;
     }
   </div>
   <div>
-    <a class="underline underline-offset-4" href="/author/">
+    <a class="underline underline-offset-4" href={`/author/show/${author.id}`}>
       All books by this author
     </a>
   </div>
