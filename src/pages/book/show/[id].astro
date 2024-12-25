@@ -1,41 +1,50 @@
 ---
 import Star from "../../../components/icons/star.astro";
 import Layout from "../../../layouts/Layout.astro";
-import { queryClient } from "../../../utils/graphql";
-import { cn } from "../../../utils/misc";
 import {
-  type GetBookByLegacyIdSchema,
-  getBookByLegacyId,
-} from "../../../utils/query/getBookByLegacyId";
+  fetchBookDataByLegacyId,
+  fetchBookRelatedData,
+} from "../../../utils/graphql";
+import { cn, setCache } from "../../../utils/misc";
+import BookLists from "../_components/BookLists.astro";
 import BookReviews from "../_components/BookReviews.astro";
-import { setCache } from "../../../utils/misc";
+import BookSerie from "../_components/BookSerie.astro";
+import BooksByAuthor from "../_components/BooksByAuthor.astro";
+import SimilarBooks from "../_components/SimilarBooks.astro";
 
 const { id } = Astro.params;
 
-const bookInfo = await queryClient<GetBookByLegacyIdSchema>(getBookByLegacyId, {
-  legacyBookId: id?.split("-")[0],
-});
+const bookInfo = await fetchBookDataByLegacyId(id as string);
 
 if (!bookInfo) {
   return Astro.redirect("/404");
 }
+
+const authorId = bookInfo?.getBookByLegacyId?.primaryContributorEdge?.node?.id;
+
+const result = await fetchBookRelatedData({
+  bookId: bookInfo.getBookByLegacyId.id,
+  seriesId: bookInfo.getBookByLegacyId.bookSeries[0].series.id,
+  authorId: authorId,
+});
 
 setCache(Astro.response.headers);
 
 const goodreadsGraphqlId = bookInfo?.getBookByLegacyId?.id;
 const authorName =
   bookInfo.getBookByLegacyId.primaryContributorEdge?.node?.name;
-const authorId = bookInfo?.getBookByLegacyId?.primaryContributorEdge?.node?.id;
+const authorLegacyId =
+  bookInfo?.getBookByLegacyId?.primaryContributorEdge?.node?.legacyId;
 const data = bookInfo.getBookByLegacyId;
 
 const hasSeries = bookInfo.getBookByLegacyId.bookSeries.length > 0;
-const seriesPayload = hasSeries
+const seriesData = hasSeries
   ? {
-      seriesTitle: bookInfo.getBookByLegacyId.bookSeries[0].series.title,
-      seriesId: bookInfo.getBookByLegacyId.bookSeries[0].series.id,
-      seriesWebUrl: bookInfo.getBookByLegacyId.bookSeries[0].series.webUrl,
+      title: bookInfo.getBookByLegacyId.bookSeries[0].series.title,
+      id: bookInfo.getBookByLegacyId.bookSeries[0].series.id,
+      url: bookInfo.getBookByLegacyId.bookSeries[0].series.webUrl,
     }
-  : null;
+  : undefined;
 
 const metadata = {
   title: `${data.title} by ${authorName}`,
@@ -58,7 +67,7 @@ const metadata = {
           {
             hasSeries && (
               <>
-                #{bookInfo.getBookByLegacyId.bookSeries[0].userPosition}
+                #{bookInfo.getBookByLegacyId.bookSeries[0].userPosition}{" "}
                 {bookInfo.getBookByLegacyId.bookSeries[0].series.title}
               </>
             )
@@ -102,19 +111,15 @@ const metadata = {
           </span>
         </div>
       </div>
+      <div class="line-clamp-4" set:html={data.descriptionStripped} />
       <div class="my-2">
         Genres:
         {
           data.bookGenres.map(({ genre }) => {
-            return (
-              <a href="genre.webUrl" class="underline mx-1">
-                {genre.name}
-              </a>
-            );
+            return <span class="underline mx-1">{genre.name}</span>;
           })
         }
       </div>
-      <div class="line-clamp-4" set:html={data.descriptionStripped} />
       <div class="text-slate-500">
         {data.details.numPages} Pages
       </div>
@@ -126,18 +131,23 @@ const metadata = {
       </div>
     </div>
   </div>
-
-  <!-- 
-  <div>
-    <SimilarBooks bookId={id} />
+  <div class="my-5">
+    <SimilarBooks data={result?.getSimilarBooks!} />
   </div>
   <div class="my-5">
-    <BooksByAuthor authorId={authorId} authorName={authorName} />
+    <BooksByAuthor
+      data={result?.getWorksByContributor!}
+      author={{ name: authorName, id: authorLegacyId.toString() }}
+    />
   </div>
   <div class="my-5">
-    {seriesPayload && <BookSerie payload={seriesPayload} />}
+    {
+      seriesData && (
+        <BookSerie data={result?.getWorksForSeries!} series={seriesData} />
+      )
+    }
   </div>
   <div class="my-5">
-    <BookLists bookId={id} />
-  </div> -->
+    <BookLists bookId={id!} data={result?.getBookListsOfBook!} />
+  </div>
 </Layout>

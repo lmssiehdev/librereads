@@ -11,8 +11,8 @@ const searchTerm = Astro.url.searchParams.get("q");
 const page = Number(Astro.url.searchParams.get("page")) || 1;
 const result = (
 	searchTerm !== null
-		// biome-ignore lint/style/noNonNullAssertion: <explanation>
-		? await fetchSearchResult<BookData>(searchTerm, "books", page)!
+		? // biome-ignore lint/style/noNonNullAssertion: <explanation>
+			await fetchSearchResult<BookData>(searchTerm, "books", page)!
 		: undefined
 ) as BookData | undefined;
 ---

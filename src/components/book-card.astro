@@ -3,17 +3,29 @@ import { cn } from "../utils/misc";
 import Star from "./icons/star.astro";
 
 interface Props {
-	payload: {
-		imageUrl: string;
-		authorName: string;
-		averageRating: number;
-		title: string;
-	};
-	class?: string;
+  payload: {
+    imageUrl: string;
+    authorName: string;
+    averageRating: number;
+    title: string;
+    webUrl: string;
+    bookId: string | number;
+    authorId: string;
+    seriesPlacement?: string;
+  };
+  class?: string;
 }
 
 const { payload, class: className = "" } = Astro.props;
-const { imageUrl, title, authorName, averageRating } = payload;
+const {
+  imageUrl,
+  title,
+  authorName,
+  averageRating,
+  bookId,
+  authorId,
+  seriesPlacement = null,
+} = payload;
 ---
 
 <div>
@@ -21,8 +33,16 @@ const { imageUrl, title, authorName, averageRating } = payload;
     <img src={imageUrl} alt={title} class="w-full h-full object-fill" />
   </div>
   <div class="my-2">
-    <div>{title}</div>
-    <div class="text-sm text-black text-opacity-70">{authorName}</div>
+    {
+      seriesPlacement && (
+        <div class="text-black opacity-50">#{seriesPlacement}</div>
+      )
+    }
+    <a href={`/book/show/${bookId}`}>{title}</a>
+    <a
+      href={`/author/show/${authorId}`}
+      class="text-sm text-black text-opacity-70 block">{authorName}</a
+    >
     <div class="flex gap-1 items-center">
       <Star class="size-3.5 text-yellow-400" />
       <div class="text-sm">{averageRating}</div>

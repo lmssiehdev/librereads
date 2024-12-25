@@ -163,142 +163,142 @@ export const getBookByLegacyId = `
 `;
 
 export const getBookByLegacyIdSchema = z.object({
-	getBookByLegacyId: z.object({
-		__typename: z.string(),
-		title: z.string(),
-		titleComplete: z.string(),
-		id: z.string(),
-		legacyId: z.number(),
-		webUrl: z.string(),
-		description: z.string(),
-		descriptionStripped: z.string(),
-		primaryContributorEdge: z.object({
-			__typename: z.string(),
-			node: z.object({
-				__typename: z.string(),
-				id: z.string(),
-				legacyId: z.number(),
-				name: z.string(),
-				description: z.string(),
-				isGrAuthor: z.boolean(),
-				works: z.object({ __typename: z.string(), totalCount: z.number() }),
-				profileImageUrl: z.string(),
-				webUrl: z.string(),
-				user: z.object({
-					__typename: z.string(),
-					id: z.number(),
-					followersCount: z.number(),
-				}),
-			}),
-			role: z.string(),
-		}),
-		secondaryContributorEdges: z.array(z.unknown()),
-		imageUrl: z.string(),
-		bookSeries: z.array(
-			z.object({
-				__typename: z.string(),
-				userPosition: z.string(),
-				series: z.object({
-					__typename: z.string(),
-					id: z.string(),
-					title: z.string(),
-					webUrl: z.string(),
-				}),
-			}),
-		),
-		bookGenres: z.array(
-			z.object({
-				__typename: z.string(),
-				genre: z.object({
-					__typename: z.string(),
-					name: z.string(),
-					webUrl: z.string(),
-				}),
-			}),
-		),
-		details: z.object({
-			__typename: z.string(),
-			asin: z.string(),
-			format: z.string(),
-			numPages: z.number(),
-			publicationTime: z.number(),
-			publisher: z.string(),
-			isbn: z.string(),
-			isbn13: z.string(),
-			language: z.object({ __typename: z.string(), name: z.string() }),
-		}),
-		work: z.object({
-			__typename: z.string(),
-			id: z.string(),
-			legacyId: z.number(),
-			bestBook: z.object({
-				__typename: z.string(),
-				id: z.string(),
-				legacyId: z.number(),
-				webUrl: z.string(),
-			}),
-			choiceAwards: z.array(z.unknown()),
-			details: z.object({
-				__typename: z.string(),
-				webUrl: z.string(),
-				shelvesUrl: z.string(),
-				publicationTime: z.number(),
-				originalTitle: z.string(),
-				awardsWon: z.array(
-					z.union([
-						z.object({
-							__typename: z.string(),
-							name: z.string(),
-							webUrl: z.string(),
-							awardedAt: z.number(),
-							category: z.string(),
-							designation: z.string(),
-						}),
-						z.object({
-							__typename: z.string(),
-							name: z.string(),
-							webUrl: z.string(),
-							awardedAt: z.number(),
-							category: z.null(),
-							designation: z.string(),
-						}),
-					]),
-				),
-				places: z.array(z.unknown()),
-				characters: z.array(
-					z.object({
-						__typename: z.string(),
-						name: z.string(),
-						webUrl: z.string(),
-					}),
-				),
-			}),
-			stats: z.object({
-				__typename: z.string(),
-				averageRating: z.number(),
-				ratingsCount: z.number(),
-				ratingsCountDist: z.array(z.number()),
-				textReviewsCount: z.number(),
-			}),
-			quotes: z.object({
-				__typename: z.string(),
-				webUrl: z.string(),
-				totalCount: z.number(),
-			}),
-			questions: z.object({
-				__typename: z.string(),
-				totalCount: z.number(),
-				webUrl: z.string(),
-			}),
-			topics: z.object({
-				__typename: z.string(),
-				webUrl: z.string(),
-				totalCount: z.number(),
-			}),
-			viewerShelvingsUrl: z.string(),
-		}),
-		reviewEditUrl: z.string(),
-	}),
+  getBookByLegacyId: z.object({
+    __typename: z.string(),
+    title: z.string(),
+    titleComplete: z.string(),
+    id: z.string(),
+    legacyId: z.number(),
+    webUrl: z.string(),
+    description: z.string(),
+    descriptionStripped: z.string(),
+    primaryContributorEdge: z.object({
+      __typename: z.string(),
+      node: z.object({
+        __typename: z.string(),
+        id: z.string(),
+        legacyId: z.number(),
+        name: z.string(),
+        description: z.string(),
+        isGrAuthor: z.boolean(),
+        works: z.object({ __typename: z.string(), totalCount: z.number() }),
+        profileImageUrl: z.string(),
+        webUrl: z.string(),
+        user: z.object({
+          __typename: z.string(),
+          id: z.number(),
+          followersCount: z.number(),
+        }),
+      }),
+      role: z.string(),
+    }),
+    secondaryContributorEdges: z.array(z.unknown()),
+    imageUrl: z.string(),
+    bookSeries: z.array(
+      z.object({
+        __typename: z.string(),
+        userPosition: z.string(),
+        series: z.object({
+          __typename: z.string(),
+          id: z.string(),
+          title: z.string(),
+          webUrl: z.string(),
+        }),
+      })
+    ),
+    bookGenres: z.array(
+      z.object({
+        __typename: z.string(),
+        genre: z.object({
+          __typename: z.string(),
+          name: z.string(),
+          webUrl: z.string(),
+        }),
+      })
+    ),
+    details: z.object({
+      __typename: z.string(),
+      asin: z.string(),
+      format: z.string(),
+      numPages: z.number(),
+      publicationTime: z.number(),
+      publisher: z.string(),
+      isbn: z.string(),
+      isbn13: z.string(),
+      language: z.object({ __typename: z.string(), name: z.string() }),
+    }),
+    work: z.object({
+      __typename: z.string(),
+      id: z.string(),
+      legacyId: z.number(),
+      bestBook: z.object({
+        __typename: z.string(),
+        id: z.string(),
+        legacyId: z.number(),
+        webUrl: z.string(),
+      }),
+      choiceAwards: z.array(z.unknown()),
+      details: z.object({
+        __typename: z.string(),
+        webUrl: z.string(),
+        shelvesUrl: z.string(),
+        publicationTime: z.number(),
+        originalTitle: z.string(),
+        awardsWon: z.array(
+          z.union([
+            z.object({
+              __typename: z.string(),
+              name: z.string(),
+              webUrl: z.string(),
+              awardedAt: z.number(),
+              category: z.string(),
+              designation: z.string(),
+            }),
+            z.object({
+              __typename: z.string(),
+              name: z.string(),
+              webUrl: z.string(),
+              awardedAt: z.number(),
+              category: z.null(),
+              designation: z.string(),
+            }),
+          ])
+        ),
+        places: z.array(z.unknown()),
+        characters: z.array(
+          z.object({
+            __typename: z.string(),
+            name: z.string(),
+            webUrl: z.string(),
+          })
+        ),
+      }),
+      stats: z.object({
+        __typename: z.string(),
+        averageRating: z.number(),
+        ratingsCount: z.number(),
+        ratingsCountDist: z.array(z.number()),
+        textReviewsCount: z.number(),
+      }),
+      quotes: z.object({
+        __typename: z.string(),
+        webUrl: z.string(),
+        totalCount: z.number(),
+      }),
+      questions: z.object({
+        __typename: z.string(),
+        totalCount: z.number(),
+        webUrl: z.string(),
+      }),
+      topics: z.object({
+        __typename: z.string(),
+        webUrl: z.string(),
+        totalCount: z.number(),
+      }),
+      viewerShelvingsUrl: z.string(),
+    }),
+    reviewEditUrl: z.string(),
+  }),
 });
 
 export type GetBookByLegacyIdSchema = Zod.infer<typeof getBookByLegacyIdSchema>;

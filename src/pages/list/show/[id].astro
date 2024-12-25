@@ -1,8 +1,9 @@
 ---
-import { fetchListDetails } from "../../../utils/scrapers/list";
-import MainLayout from "../../../layouts/Layout.astro";
 import Pagination from "../../../components/pagination.astro";
+import MainLayout from "../../../layouts/Layout.astro";
+import { changeGoodreadsImageSize } from "../../../utils/goodreads";
 import { setCache } from "../../../utils/misc";
+import { fetchListDetails } from "../../../utils/scrapers/list";
 const { id } = Astro.params;
 
 if (!id) {
@@ -21,10 +22,10 @@ const result = await fetchListDetails(id, page);
       <>couldn't find list</>
     ) : (
       <div>
-        <h1 class="text-4xl my-10">
-          <span class="text-slate-600">List:</span>
-          {result?.title}
-        </h1>
+        <div class="my-10">
+          <h1 class="text-4xl mb-2">{result?.title}</h1>
+          <p set:html={result?.description} />
+        </div>
         <div class="flex flex-col gap-2">
           {result?.rows.map(
             ({ author, title, image, webUrl, ranking, info }) => {
@@ -32,15 +33,13 @@ const result = await fetchListDetails(id, page);
                 <div class="flex gap-3">
                   <span class="ranking text-lg text-black/80">{ranking}.</span>
                   <div class="h-[100px] w-[70px]">
-                    <picture>
-                      <img
-                        height={100}
-                        width={70}
-                        class="w-full h-full object-fill"
-                        src={image}
-                        alt={title}
-                      />
-                    </picture>
+                    <img
+                      height={100}
+                      width={70}
+                      class="w-full h-full object-fill"
+                      src={changeGoodreadsImageSize(image, 100)}
+                      alt={title}
+                    />
                   </div>
                   <div>
                     <a href={webUrl} class="text-lg">

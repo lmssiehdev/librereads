@@ -1,127 +1,14 @@
 ---
 import BookCard from "../../../components/book-card.astro";
-import { queryClient } from "../../../utils/graphql";
-import {
-	type GetSimilarBooksSchema,
-	getSimilarBooks,
-} from "../../../utils/query/getSimilarBook";
+import { type GetSimilarBooksSchema } from "../../../utils/query/getSimilarBook";
 
 interface Props {
-	bookId: string;
+  data: GetSimilarBooksSchema["getSimilarBooks"];
 }
 
-const { bookId } = Astro.props;
+const { data } = Astro.props;
 
-// const result = await queryClient<GetSimilarBooksSchema>(getSimilarBooks, {
-//   id: bookId,
-//   limit: 4,
-// });
-
-const result = {
-	getSimilarBooks: {
-		webUrl:
-			"https://www.goodreads.com/book/similar/2502879-the-name-of-the-wind",
-		edges: [
-			{
-				node: {
-					legacyId: 68428,
-					title: "Mistborn: The Final Empire",
-					imageUrl:
-						"https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1617768316i/68428.jpg",
-					webUrl: "https://www.goodreads.com/book/show/68428.Mistborn",
-					primaryContributorEdge: {
-						node: { name: "Brandon Sanderson", __typename: "Contributor" },
-						__typename: "BookContributorEdge",
-					},
-					work: {
-						stats: {
-							averageRating: 4.48,
-							ratingsCount: 783919,
-							__typename: "BookOrWorkStats",
-						},
-						__typename: "Work",
-					},
-					__typename: "Book",
-				},
-				__typename: "SimilarBooksEdge",
-			},
-			{
-				node: {
-					legacyId: 7235533,
-					title: "The Way of Kings",
-					imageUrl:
-						"https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1659905828i/7235533.jpg",
-					webUrl:
-						"https://www.goodreads.com/book/show/7235533-the-way-of-kings",
-					primaryContributorEdge: {
-						node: { name: "Brandon Sanderson", __typename: "Contributor" },
-						__typename: "BookContributorEdge",
-					},
-					work: {
-						stats: {
-							averageRating: 4.66,
-							ratingsCount: 556371,
-							__typename: "BookOrWorkStats",
-						},
-						__typename: "Work",
-					},
-					__typename: "Book",
-				},
-				__typename: "SimilarBooksEdge",
-			},
-			{
-				node: {
-					legacyId: 13496,
-					title: "A Game of Thrones",
-					imageUrl:
-						"https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1562726234i/13496.jpg",
-					webUrl: "https://www.goodreads.com/book/show/13496.A_Game_of_Thrones",
-					primaryContributorEdge: {
-						node: { name: "George R.R. Martin", __typename: "Contributor" },
-						__typename: "BookContributorEdge",
-					},
-					work: {
-						stats: {
-							averageRating: 4.44,
-							ratingsCount: 2586052,
-							__typename: "BookOrWorkStats",
-						},
-						__typename: "Work",
-					},
-					__typename: "Book",
-				},
-				__typename: "SimilarBooksEdge",
-			},
-			{
-				node: {
-					legacyId: 17332218,
-					title: "Words of Radiance",
-					imageUrl:
-						"https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1728768241i/17332218.jpg",
-					webUrl:
-						"https://www.goodreads.com/book/show/17332218-words-of-radiance",
-					primaryContributorEdge: {
-						node: { name: "Brandon Sanderson", __typename: "Contributor" },
-						__typename: "BookContributorEdge",
-					},
-					work: {
-						stats: {
-							averageRating: 4.76,
-							ratingsCount: 399120,
-							__typename: "BookOrWorkStats",
-						},
-						__typename: "Work",
-					},
-					__typename: "Book",
-				},
-				__typename: "SimilarBooksEdge",
-			},
-		],
-		__typename: "SimilarBooksConnection",
-	},
-};
-
-const similarBookData = result?.getSimilarBooks.edges;
+const similarBookData = data?.edges;
 ---
 
 <div>
@@ -129,12 +16,16 @@ const similarBookData = result?.getSimilarBooks.edges;
   <div class="grid grid-cols-4 gap-4">
     {
       similarBookData.map(({ node }) => {
-        const { imageUrl, title } = node;
-        const authorName = node.primaryContributorEdge.node.name;
+        const { imageUrl, title, webUrl, legacyId: bookId } = node;
+        const { name: authorName, legacyId: authorId } =
+          node.primaryContributorEdge.node;
         const averageRating = node.work.stats.averageRating;
         return (
           <BookCard
             payload={{
+              webUrl,
+              bookId,
+              authorId,
               authorName,
               averageRating,
               imageUrl,
@@ -146,10 +37,7 @@ const similarBookData = result?.getSimilarBooks.edges;
     }
   </div>
   <div>
-    <a
-      href={result?.getSimilarBooks.webUrl}
-      class="underline underline-offset-4"
-    >
+    <a href={data?.webUrl} class="underline underline-offset-4">
       All similar books
     </a>
   </div>
