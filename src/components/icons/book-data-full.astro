@@ -1,0 +1,49 @@
+---
+import Star from "./star.astro";
+
+interface Props {
+  payload: {
+    legacyId: string;
+    title: string;
+    imageUrl: string;
+    author: {
+      name: string;
+      legacyId: string;
+    };
+    stats: {
+      averageRating: number;
+      ratingsCount: number;
+    };
+  };
+}
+
+const {
+  legacyId: bookId,
+  title,
+  imageUrl,
+  author,
+  stats: { averageRating, ratingsCount },
+} = Astro.props.payload;
+const averageRatingStr = `${averageRating} avg. rating · ${ratingsCount} Ratings`;
+---
+
+<div class="flex gap-2 my-4 [&>div]:my-0">
+  <div class="flex-1 h-[150px] max-w-[100px] w-full overflow-hidden rounded">
+    <img src={imageUrl} alt={title} class="w-full h-full object-fill" />
+  </div>
+  <div class="my-2">
+    <a href={`/book/show/${bookId}`} class="text-xl">
+      {title}
+    </a>
+    <a
+      href={`/author/show/${author.legacyId}`}
+      class="text-black text-opacity-70 block"
+    >
+      {author.name}
+    </a>
+    <div class="flex gap-1 items-center">
+      <Star class="size-3.5 text-yellow-400" />
+      <div class="text-sm text-black/70">{averageRatingStr}</div>
+    </div>
+  </div>
+</div>

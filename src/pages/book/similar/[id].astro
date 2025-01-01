@@ -1,0 +1,82 @@
+---
+import BookCard from "../../../components/book-card.astro";
+import BookDataFull from "../../../components/icons/book-data-full.astro";
+import Star from "../../../components/icons/star.astro";
+import MainLayout from "../../../layouts/Layout.astro";
+import {
+  fetchBookDataByLegacyId,
+  fetchSimilarBooks,
+} from "../../../utils/graphql";
+
+const id = "kca://book/amzn1.gr.book.v1.iUoduJh08Drcwhc9Kt94qg";
+
+interface Props {
+  bookId: string;
+}
+
+const { id: bookId } = Astro.params;
+
+if (!bookId) {
+  return Astro.redirect("/404");
+}
+
+const bookInforesult = await fetchBookDataByLegacyId(bookId);
+// biome-ignore lint/style/noNonNullAssertion: <explanation>
+const bookInfoData = bookInforesult?.getBookByLegacyId!;
+const similarBookResult = await fetchSimilarBooks(id);
+const similarBookData = similarBookResult?.getSimilarBooks?.edges;
+
+const seo = {
+  title: `Readers who enjoyed ${bookInfoData.titleComplete}`,
+  description: `Find books like The Name of the Wind ${bookInfoData.titleComplete} recommended by book lovers`,
+};
+
+// TODO: add description, maybe.
+---
+
+<MainLayout metadata={seo}>
+  <div>
+    <h2 class="text-xl mb-4">Readers who enjoyed</h2>
+    <BookDataFull
+      payload={{
+        author: {
+          name: bookInfoData.primaryContributorEdge.node.name,
+          legacyId:
+            bookInfoData.primaryContributorEdge.node.legacyId.toString(),
+        },
+        title: bookInfoData.title,
+        imageUrl: bookInfoData.imageUrl,
+        legacyId: bookInfoData.legacyId.toString(),
+        stats: {
+          averageRating: bookInfoData.work.stats.averageRating,
+          ratingsCount: bookInfoData.work.stats.ratingsCount,
+        },
+      }}
+    />
+  </div>
+  <div>
+    <h2 class="text-xl mb-4">also enjoyed</h2>
+    {
+      similarBookData?.map(({ node }) => {
+        const stats = node.work.stats;
+        return (
+          <BookDataFull
+            payload={{
+              author: {
+                name: node.primaryContributorEdge.node.name,
+                legacyId: node.primaryContributorEdge.node.legacyId,
+              },
+              title: node.title,
+              imageUrl: node.imageUrl,
+              legacyId: node.legacyId.toString(),
+              stats: {
+                averageRating: stats.averageRating,
+                ratingsCount: stats.ratingsCount,
+              },
+            }}
+          />
+        );
+      })
+    }
+  </div>
+</MainLayout>

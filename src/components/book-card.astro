@@ -14,9 +14,10 @@ interface Props {
     seriesPlacement?: string;
   };
   class?: string;
+  imageClass?: string;
 }
 
-const { payload, class: className = "" } = Astro.props;
+const { payload, class: className = "", imageClass = "" } = Astro.props;
 const {
   imageUrl,
   title,
@@ -28,8 +29,13 @@ const {
 } = payload;
 ---
 
-<div>
-  <div class="flex-1 h-[250px] max-w-[200px] w-full overflow-hidden rounded">
+<div class={className}>
+  <div
+    class={cn(
+      "flex-1 h-[250px] max-w-[200px] w-full overflow-hidden rounded",
+      imageClass
+    )}
+  >
     <img src={imageUrl} alt={title} class="w-full h-full object-fill" />
   </div>
   <div class="my-2">

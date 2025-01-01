@@ -1,0 +1,60 @@
+---
+import BookDataFull from "../../components/icons/book-data-full.astro";
+import Star from "../../components/icons/star.astro";
+import MainLayout from "../../layouts/Layout.astro";
+import { setCache } from "../../utils/misc";
+import { fetchAllBooksInSeries } from "../../utils/scrapers/series";
+
+const { id: seriesId } = Astro.params;
+
+if (!seriesId) {
+  Astro.redirect("/");
+  return;
+}
+
+const result = await fetchAllBooksInSeries("45262-the-kingkiller-chronicle")!;
+const seo = result?.seo;
+setCache(Astro.response.headers);
+
+// TODO:
+// [] Find More Books
+// [] Find More Series
+---
+
+<MainLayout metadata={seo}>
+  <div class="mb-4">
+    <h1 class="text-xl">{result?.seriesTitle}</h1>
+    <span class="text-black/70">{result?.seriesSubtitle}</span>
+  </div>
+
+  <div>
+    {
+      result?.listData.map((data) => {
+        if (!data || !data.series) {
+          return null;
+        }
+        const { seriesHeader, series } = data;
+        return (
+          <div>
+            <h2 class="mb-1 mt-2">{seriesHeader}</h2>
+            <BookDataFull
+              payload={{
+                title: series.title,
+                legacyId: series.bookId,
+                imageUrl: series.imageUrl,
+                author: {
+                  name: series.author.name,
+                  legacyId: series.author.id.toString(),
+                },
+                stats: {
+                  averageRating: series.avgRating,
+                  ratingsCount: series.ratingsCount,
+                },
+              }}
+            />
+          </div>
+        );
+      })
+    }
+  </div>
+</MainLayout>

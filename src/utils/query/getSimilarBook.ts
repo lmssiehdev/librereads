@@ -16,6 +16,7 @@ export const getSimilarBooks = `
           title
           imageUrl
           webUrl
+          description
           primaryContributorEdge {
             node {
               name
@@ -54,6 +55,7 @@ export const getSimilarBooksSchema = z.object({
           title: z.string(),
           imageUrl: z.string(),
           webUrl: z.string(),
+          description: z.string(),
           primaryContributorEdge: z.object({
             __typename: z.string(),
             node: z.object({

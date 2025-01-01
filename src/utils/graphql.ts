@@ -3,30 +3,64 @@ import {
   type GetBookByLegacyIdSchema,
 } from "./query/getBookByLegacyId";
 import type { GetBookListsOfBook } from "./query/getBookListsOfBook";
-import type { GetSimilarBooksSchema } from "./query/getSimilarBook";
+import {
+  getSimilarBooks,
+  type GetSimilarBooksSchema,
+} from "./query/getSimilarBook";
 import type { GetWorksByContributor } from "./query/getWorksByContributor";
 import type { GetWorkForSeries } from "./query/getWorksForSeries";
+
+async function fetchQuery({
+  query,
+  variables,
+}: {
+  query: string;
+  variables: Record<string, unknown>;
+}) {
+  return fetch(
+    "https://kxbwmqov6jgg3daaamb744ycu4.appsync-api.us-east-1.amazonaws.com/graphql",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Api-Key": "da2-xpgsdydkbregjhpr6ejzqdhuwy",
+      },
+      body: JSON.stringify({
+        query,
+        variables,
+      }),
+    }
+  );
+}
+
+export async function fetchSimilarBooks(
+  id: string
+): Promise<GetSimilarBooksSchema | undefined> {
+  try {
+    const response = await fetchQuery({
+      query: getSimilarBooks,
+      variables: {
+        id,
+        limit: 20,
+      },
+    });
+    const { data } = await response.json();
+    return data;
+  } catch (err) {
+    console.error("failed to parse response", err);
+  }
+}
 
 export async function fetchBookDataByLegacyId(
   legacyBookId: string
 ): Promise<GetBookByLegacyIdSchema | undefined> {
   try {
-    const response = await fetch(
-      "https://kxbwmqov6jgg3daaamb744ycu4.appsync-api.us-east-1.amazonaws.com/graphql",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Api-Key": "da2-xpgsdydkbregjhpr6ejzqdhuwy",
-        },
-        body: JSON.stringify({
-          query: getBookByLegacyId,
-          variables: {
-            legacyBookId,
-          },
-        }),
-      }
-    );
+    const response = await fetchQuery({
+      query: getBookByLegacyId,
+      variables: {
+        legacyBookId,
+      },
+    });
     const { data } = await response.json();
     return data;
   } catch (err) {
