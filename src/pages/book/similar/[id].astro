@@ -7,6 +7,7 @@ import {
   fetchBookDataByLegacyId,
   fetchSimilarBooks,
 } from "../../../utils/graphql";
+import { setCache } from "../../../utils/misc";
 
 const id = "kca://book/amzn1.gr.book.v1.iUoduJh08Drcwhc9Kt94qg";
 
@@ -19,6 +20,8 @@ const { id: bookId } = Astro.params;
 if (!bookId) {
   return Astro.redirect("/404");
 }
+
+setCache(Astro.response.headers);
 
 const bookInforesult = await fetchBookDataByLegacyId(bookId);
 // biome-ignore lint/style/noNonNullAssertion: <explanation>

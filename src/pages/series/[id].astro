@@ -14,6 +14,7 @@ if (!seriesId) {
 
 const result = await fetchAllBooksInSeries("45262-the-kingkiller-chronicle")!;
 const seo = result?.seo;
+
 setCache(Astro.response.headers);
 
 // TODO:

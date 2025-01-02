@@ -1,6 +1,7 @@
 ---
 import BookCard from "../../../components/book-card.astro";
 import Star from "../../../components/icons/star.astro";
+import { extractIdFromUrl, extractSeriesId } from "../../../utils/goodreads";
 import type { GetWorkForSeries } from "../../../utils/query/getWorksForSeries";
 
 interface Props {
@@ -54,7 +55,10 @@ const seriesData = data?.edges;
     }
   </div>
   <div>
-    <a class="underline underline-offset-4" href={series.url}>
+    <a
+      class="underline underline-offset-4"
+      href={`/series/${extractSeriesId(series.url)}`}
+    >
       All books in this series
     </a>
   </div>

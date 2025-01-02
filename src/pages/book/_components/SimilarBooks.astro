@@ -3,10 +3,11 @@ import BookCard from "../../../components/book-card.astro";
 import { type GetSimilarBooksSchema } from "../../../utils/query/getSimilarBook";
 
 interface Props {
+  bookId: string;
   data: GetSimilarBooksSchema["getSimilarBooks"];
 }
 
-const { data } = Astro.props;
+const { data, bookId } = Astro.props;
 
 const similarBookData = data?.edges;
 ---
@@ -37,7 +38,7 @@ const similarBookData = data?.edges;
     }
   </div>
   <div>
-    <a href={data?.webUrl} class="underline underline-offset-4">
+    <a href={`/book/similar/${bookId}`} class="underline underline-offset-4">
       All similar books
     </a>
   </div>

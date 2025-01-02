@@ -48,7 +48,7 @@ const data = bookInfo.getBookByLegacyId;
 
 const metadata = {
   title: `${data.title} by ${authorName}`,
-  description: `${data.descriptionStripped.substring(0, 153).trim()}...`,
+  description: `${data.descriptionStripped?.substring(0, 153).trim()}...`,
 };
 ---
 
@@ -132,7 +132,7 @@ const metadata = {
     </div>
   </div>
   <div class="my-5">
-    <SimilarBooks data={result?.getSimilarBooks!} />
+    <SimilarBooks data={result?.getSimilarBooks!} bookId={id!} />
   </div>
   <div class="my-5">
     <BooksByAuthor

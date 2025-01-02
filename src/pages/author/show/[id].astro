@@ -68,7 +68,7 @@ const { author, books, series, seo } = result!;
         }
       </div>
     </div>
-    <div class="my-14">
+{ series.length != 0 &&   <div class="my-14">
       <h2 class="text-xl mb-4">{`${author.name}'s series`}</h2>
       {
         series.map(
@@ -106,7 +106,7 @@ const { author, books, series, seo } = result!;
           }
         )
       }
-    </div>
+    </div>}
   </div>
   )
 }
