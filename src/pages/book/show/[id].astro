@@ -2,6 +2,7 @@
 import AmazonLinks from "../../../components/amazon-links.astro";
 import Star from "../../../components/icons/star.astro";
 import Layout from "../../../layouts/Layout.astro";
+import { sendAnalyticsEvent } from "../../../utils/analytics";
 import {
 	fetchBookDataByLegacyId,
 	fetchBookRelatedData,
@@ -19,6 +20,12 @@ const { id } = Astro.params;
 const bookInfo = await fetchBookDataByLegacyId(id as string);
 
 if (!bookInfo) {
+	sendAnalyticsEvent({
+		event: "failed_to_fetch_book_by_legacy_id",
+		properties: {
+			book_id: id as string,
+		},
+	});
 	return Astro.redirect("/404");
 }
 
@@ -69,6 +76,12 @@ function getBookData(bookInfo: GetBookByLegacyIdSchema["getBookByLegacyId"]) {
 const cleanBookData = getBookData(bookInfo.getBookByLegacyId);
 
 if (!cleanBookData) {
+	sendAnalyticsEvent({
+		event: "failed_to_get_clean_book_data",
+		properties: {
+			book_id: id as string,
+		},
+	});
 	return Astro.redirect("/404");
 }
 

@@ -1,35 +1,54 @@
 ---
 import BookDataFull from "../../../components/book-data-full.astro";
 import MainLayout from "../../../layouts/Layout.astro";
+import { sendAnalyticsEvent } from "../../../utils/analytics";
 import {
-  fetchBookDataByLegacyId,
-  fetchSimilarBooks,
+	fetchBookDataByLegacyId,
+	fetchSimilarBooks,
 } from "../../../utils/graphql";
 import { setCache } from "../../../utils/misc";
 
 const id = "kca://book/amzn1.gr.book.v1.iUoduJh08Drcwhc9Kt94qg";
 
 interface Props {
-  bookId: string;
+	bookId: string;
 }
 
 const { id: bookId } = Astro.params;
 
-if (!bookId) {
-  return Astro.redirect("/404");
-}
-
 setCache(Astro.response.headers);
 
-const bookInforesult = await fetchBookDataByLegacyId(bookId);
-// biome-ignore lint/style/noNonNullAssertion: <explanation>
-const bookInfoData = bookInforesult?.getBookByLegacyId!;
+const bookInforesult = await fetchBookDataByLegacyId(bookId as string);
+
+if (!bookInforesult?.getBookByLegacyId) {
+	sendAnalyticsEvent({
+		event: "failed_to_fetch_book_by_legacy_id",
+		properties: {
+			book_id: bookId as string,
+		},
+	});
+	return Astro.redirect("/404");
+}
+
+const bookInfoData = bookInforesult?.getBookByLegacyId;
 const similarBookResult = await fetchSimilarBooks(id);
+
+if (!similarBookResult?.getSimilarBooks) {
+	sendAnalyticsEvent({
+		event: "failed_to_fetch_similar_books",
+		properties: {
+			id,
+			book_id: bookId as string,
+		},
+	});
+	return Astro.redirect("/404");
+}
+
 const similarBookData = similarBookResult?.getSimilarBooks?.edges;
 
 const seo = {
-  title: `Readers who enjoyed ${bookInfoData.titleComplete}`,
-  description: `Find books like The Name of the Wind ${bookInfoData.titleComplete} recommended by book lovers`,
+	title: `Readers who enjoyed ${bookInfoData.titleComplete}`,
+	description: `Find books like The Name of the Wind ${bookInfoData.titleComplete} recommended by book lovers`,
 };
 
 // TODO: add description, maybe.

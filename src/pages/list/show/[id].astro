@@ -1,6 +1,7 @@
 ---
 import Pagination from "../../../components/pagination.astro";
 import MainLayout from "../../../layouts/Layout.astro";
+import { sendAnalyticsEvent } from "../../../utils/analytics";
 import {
 	changeGoodreadsImageSize,
 	extractIdFromUrl,
@@ -9,14 +10,19 @@ import { setCache } from "../../../utils/misc";
 import { fetchListDetails } from "../../../utils/scrapers/list";
 const { id } = Astro.params;
 
-if (!id) {
-	return Astro.redirect("/404");
-}
-
 setCache(Astro.response.headers);
 
 const page = Number(Astro.url.searchParams.get("page")) || 1;
-const result = await fetchListDetails(id, page);
+const result = await fetchListDetails(id as string, page);
+
+if (!result?.rows) {
+	sendAnalyticsEvent({
+		event: "failed_to_fetch_list_details",
+		properties: {
+			id: id as string,
+		},
+	});
+}
 ---
 
 <MainLayout metadata={result?.seo}>
