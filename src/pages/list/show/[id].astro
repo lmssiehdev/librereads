@@ -1,7 +1,10 @@
 ---
 import Pagination from "../../../components/pagination.astro";
 import MainLayout from "../../../layouts/Layout.astro";
-import { changeGoodreadsImageSize } from "../../../utils/goodreads";
+import {
+  changeGoodreadsImageSize,
+  extractIdFromUrl,
+} from "../../../utils/goodreads";
 import { setCache } from "../../../utils/misc";
 import { fetchListDetails } from "../../../utils/scrapers/list";
 const { id } = Astro.params;
@@ -24,7 +27,7 @@ const result = await fetchListDetails(id, page);
       <div>
         <div class="my-10">
           <h1 class="text-4xl mb-2">{result?.title}</h1>
-          <p set:html={result?.description} />
+          {/* <p set:html={result?.description} /> */}
         </div>
         <div class="flex flex-col gap-2">
           {result?.rows.map(
@@ -42,7 +45,10 @@ const result = await fetchListDetails(id, page);
                     />
                   </div>
                   <div>
-                    <a href={webUrl} class="text-lg">
+                    <a
+                      href={`/book/show/${extractIdFromUrl(webUrl)!}/`}
+                      class="text-lg"
+                    >
                       {title}
                     </a>
                     <div>
