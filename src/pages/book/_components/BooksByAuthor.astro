@@ -1,5 +1,6 @@
 ---
 import BookCard from "../../../components/book-card.astro";
+import LinkWithArrow from "../../../components/ui/link-with-arrow.astro";
 import { type GetWorksByContributor } from "../../../utils/query/getWorksByContributor";
 
 interface Props {
@@ -16,10 +17,10 @@ const workByTheAuthorData = data?.edges;
 ---
 
 <div>
-  <h3 class="text-lg mb-4">
+  <h3 class="text-xl mb-4">
     Other books by <a href={`/author/show/${author.id}`}>{author.name}</a>
   </h3>
-  <div class="grid grid-cols-4 gap-4">
+  <div class="grid grid-cols-3 sm:grid-cols-4 gap-4">
     {
       workByTheAuthorData.splice(0, 8).map((work) => {
         const {
@@ -36,6 +37,7 @@ const workByTheAuthorData = data?.edges;
           primaryContributorEdge.node;
         return (
           <BookCard
+            class="[&:nth-child(4)]:hidden sm:[&:nth-child(4)]:block"
             payload={{
               authorId,
               authorName,
@@ -50,9 +52,7 @@ const workByTheAuthorData = data?.edges;
       })
     }
   </div>
-  <div>
-    <a class="underline underline-offset-4" href={`/author/show/${author.id}`}>
-      All books by this author
-    </a>
-  </div>
+  <LinkWithArrow url={`/author/show/${author.id}`}>
+    All books by this author
+  </LinkWithArrow>
 </div>

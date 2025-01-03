@@ -1,5 +1,6 @@
 ---
 import BookCard from "../../../components/book-card.astro";
+import LinkWithArrow from "../../../components/ui/link-with-arrow.astro";
 import { type GetSimilarBooksSchema } from "../../../utils/query/getSimilarBook";
 
 interface Props {
@@ -13,8 +14,8 @@ const similarBookData = data?.edges;
 ---
 
 <div>
-  <h3 class="text-lg mb-4">Readers also enjoyed</h3>
-  <div class="grid grid-cols-4 gap-4">
+  <h3 class="text-xl mb-4">Readers also enjoyed</h3>
+  <div class="grid grid-cols-3 sm:grid-cols-4 gap-4">
     {
       similarBookData.map(({ node }) => {
         const { imageUrl, title, webUrl, legacyId: bookId } = node;
@@ -23,6 +24,7 @@ const similarBookData = data?.edges;
         const averageRating = node.work.stats.averageRating;
         return (
           <BookCard
+            class="[&:nth-child(4)]:hidden sm:[&:nth-child(4)]:block"
             payload={{
               webUrl,
               bookId,
@@ -37,9 +39,7 @@ const similarBookData = data?.edges;
       })
     }
   </div>
-  <div>
-    <a href={`/book/similar/${bookId}`} class="underline underline-offset-4">
-      All similar books
-    </a>
-  </div>
+  <LinkWithArrow url={`/book/similar/${bookId}`}>
+    All similar books
+  </LinkWithArrow>
 </div>

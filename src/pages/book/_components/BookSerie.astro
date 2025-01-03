@@ -1,7 +1,7 @@
 ---
 import BookCard from "../../../components/book-card.astro";
-import Star from "../../../components/icons/star.astro";
-import { extractIdFromUrl, extractSeriesId } from "../../../utils/goodreads";
+import LinkWithArrow from "../../../components/ui/link-with-arrow.astro";
+import { extractSeriesId } from "../../../utils/goodreads";
 import type { GetWorkForSeries } from "../../../utils/query/getWorksForSeries";
 
 interface Props {
@@ -21,7 +21,7 @@ const seriesData = data?.edges;
   <div class="text-lg mb-4">
     {series.title} Series
   </div>
-  <div class="grid grid-cols-4 gap-4">
+  <div class="grid grid-cols-3 sm:grid-cols-4 [&:nth-child(4)]:hidden gap-4">
     {
       seriesData.map((work) => {
         const {
@@ -39,6 +39,7 @@ const seriesData = data?.edges;
           primaryContributorEdge.node;
         return (
           <BookCard
+            class="[&:nth-child(4)]:hidden sm:[&:nth-child(4)]:block"
             payload={{
               seriesPlacement,
               authorId,
@@ -54,12 +55,7 @@ const seriesData = data?.edges;
       })
     }
   </div>
-  <div>
-    <a
-      class="underline underline-offset-4"
-      href={`/series/${extractSeriesId(series.url)}`}
-    >
-      All books in this series
-    </a>
-  </div>
+  <LinkWithArrow url={`/series/${extractSeriesId(series.url)}`}>
+    All books in this series
+  </LinkWithArrow>
 </div>

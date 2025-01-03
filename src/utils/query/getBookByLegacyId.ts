@@ -182,6 +182,19 @@ export const getBookByLegacyId = `
 export const getBookByLegacyIdSchema = z.object({
   getBookByLegacyId: z.object({
     __typename: z.string(),
+    links: z.object({
+      primaryAffiliateLink: z.object({
+        _typename: z.string(),
+        name: z.string(),
+        url: z.string(),
+      }),
+      secondaryAffiliateLinks: z.array(
+        z.object({ _typename: z.string(), name: z.string(), url: z.string() })
+      ),
+      serieseriesLinksLink: z.array(
+        z.object({ _typename: z.string(), name: z.string(), url: z.string() })
+      ),
+    }),
     title: z.string(),
     titleComplete: z.string(),
     id: z.string(),

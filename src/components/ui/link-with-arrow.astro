@@ -1,0 +1,15 @@
+---
+import CaretRight from "../icons/caret-right.astro";
+interface Props {
+  url: string;
+}
+
+const { url } = Astro.props;
+---
+
+<div class="border-b-2 border-black border-spacing-3 w-fit">
+  <a class="flex items-center" href={url} target="_blank">
+    <slot />
+    <CaretRight class="size-4" />
+  </a>
+</div>
