@@ -1,24 +1,22 @@
 ---
-import BookCard from "../../../components/book-card.astro";
-import BookDataFull from "../../../components/icons/book-data-full.astro";
-import Star from "../../../components/icons/star.astro";
+import BookDataFull from "../../../components/book-data-full.astro";
 import MainLayout from "../../../layouts/Layout.astro";
 import {
-	fetchBookDataByLegacyId,
-	fetchSimilarBooks,
+  fetchBookDataByLegacyId,
+  fetchSimilarBooks,
 } from "../../../utils/graphql";
 import { setCache } from "../../../utils/misc";
 
 const id = "kca://book/amzn1.gr.book.v1.iUoduJh08Drcwhc9Kt94qg";
 
 interface Props {
-	bookId: string;
+  bookId: string;
 }
 
 const { id: bookId } = Astro.params;
 
 if (!bookId) {
-	return Astro.redirect("/404");
+  return Astro.redirect("/404");
 }
 
 setCache(Astro.response.headers);
@@ -30,8 +28,8 @@ const similarBookResult = await fetchSimilarBooks(id);
 const similarBookData = similarBookResult?.getSimilarBooks?.edges;
 
 const seo = {
-	title: `Readers who enjoyed ${bookInfoData.titleComplete}`,
-	description: `Find books like The Name of the Wind ${bookInfoData.titleComplete} recommended by book lovers`,
+  title: `Readers who enjoyed ${bookInfoData.titleComplete}`,
+  description: `Find books like The Name of the Wind ${bookInfoData.titleComplete} recommended by book lovers`,
 };
 
 // TODO: add description, maybe.

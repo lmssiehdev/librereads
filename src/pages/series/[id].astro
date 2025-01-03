@@ -1,6 +1,5 @@
 ---
-import BookDataFull from "../../components/icons/book-data-full.astro";
-import Star from "../../components/icons/star.astro";
+import BookDataFull from "../../components/book-data-full.astro";
 import MainLayout from "../../layouts/Layout.astro";
 import { setCache } from "../../utils/misc";
 import { fetchAllBooksInSeries } from "../../utils/scrapers/series";
@@ -8,8 +7,8 @@ import { fetchAllBooksInSeries } from "../../utils/scrapers/series";
 const { id: seriesId } = Astro.params;
 
 if (!seriesId) {
-	Astro.redirect("/");
-	return;
+  Astro.redirect("/");
+  return;
 }
 
 const result = await fetchAllBooksInSeries("45262-the-kingkiller-chronicle")!;
