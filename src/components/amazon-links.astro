@@ -1,20 +1,20 @@
 ---
-import type { GetBookByLegacyIdSchema } from "../utils/query/getBookByLegacyId";
 import { extractAsin, getCleanAmazonUrl } from "../utils/goodreads";
+import type { GetBookByLegacyIdSchema } from "../utils/query/getBookByLegacyId";
 import ArrowUpRight from "./icons/arrow-up-right.astro";
 
 interface Props {
-  data: GetBookByLegacyIdSchema["getBookByLegacyId"]["links"];
+	data: GetBookByLegacyIdSchema["getBookByLegacyId"]["links"];
 }
 
 const { data } = Astro.props;
 
 const acceptedProviders = ["Amazon", "Audible", "Amazon Series"];
 const links = Object.values(data)
-  .flat()
-  .filter(
-    ({ name, url }) => acceptedProviders.includes(name) && extractAsin(url)
-  );
+	.flat()
+	.filter(
+		({ name, url }) => acceptedProviders.includes(name) && extractAsin(url),
+	);
 const { name, url } = links[0];
 const cleanUrl = getCleanAmazonUrl(url);
 // TODO: add more links

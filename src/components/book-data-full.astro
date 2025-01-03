@@ -2,27 +2,27 @@
 import Star from "./icons/star.astro";
 
 interface Props {
-  payload: {
-    legacyId: string;
-    title: string;
-    imageUrl: string;
-    author: {
-      name: string;
-      legacyId: string;
-    };
-    stats: {
-      averageRating: number;
-      ratingsCount: number;
-    };
-  };
+	payload: {
+		legacyId: string;
+		title: string;
+		imageUrl: string;
+		author: {
+			name: string;
+			legacyId: string;
+		};
+		stats: {
+			averageRating: number;
+			ratingsCount: number;
+		};
+	};
 }
 
 const {
-  legacyId: bookId,
-  title,
-  imageUrl,
-  author,
-  stats: { averageRating, ratingsCount },
+	legacyId: bookId,
+	title,
+	imageUrl,
+	author,
+	stats: { averageRating, ratingsCount },
 } = Astro.props.payload;
 const averageRatingStr = `${averageRating} avg. rating · ${ratingsCount} Ratings`;
 ---

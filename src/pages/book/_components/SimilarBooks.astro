@@ -4,8 +4,8 @@ import LinkWithArrow from "../../../components/ui/link-with-arrow.astro";
 import { type GetSimilarBooksSchema } from "../../../utils/query/getSimilarBook";
 
 interface Props {
-  bookId: string;
-  data: GetSimilarBooksSchema["getSimilarBooks"];
+	bookId: string;
+	data: GetSimilarBooksSchema["getSimilarBooks"];
 }
 
 const { data, bookId } = Astro.props;

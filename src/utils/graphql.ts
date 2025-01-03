@@ -1,101 +1,101 @@
 import {
-  getBookByLegacyId,
-  type GetBookByLegacyIdSchema,
+	type GetBookByLegacyIdSchema,
+	getBookByLegacyId,
 } from "./query/getBookByLegacyId";
 import type { GetBookListsOfBook } from "./query/getBookListsOfBook";
 import {
-  getSimilarBooks,
-  type GetSimilarBooksSchema,
+	type GetSimilarBooksSchema,
+	getSimilarBooks,
 } from "./query/getSimilarBook";
 import type { GetWorksByContributor } from "./query/getWorksByContributor";
 import type { GetWorkForSeries } from "./query/getWorksForSeries";
 
 async function fetchQuery({
-  query,
-  variables,
+	query,
+	variables,
 }: {
-  query: string;
-  variables: Record<string, unknown>;
+	query: string;
+	variables: Record<string, unknown>;
 }) {
-  return fetch(
-    "https://kxbwmqov6jgg3daaamb744ycu4.appsync-api.us-east-1.amazonaws.com/graphql",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-Api-Key": "da2-xpgsdydkbregjhpr6ejzqdhuwy",
-      },
-      body: JSON.stringify({
-        query,
-        variables,
-      }),
-    }
-  );
+	return fetch(
+		"https://kxbwmqov6jgg3daaamb744ycu4.appsync-api.us-east-1.amazonaws.com/graphql",
+		{
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				"X-Api-Key": "da2-xpgsdydkbregjhpr6ejzqdhuwy",
+			},
+			body: JSON.stringify({
+				query,
+				variables,
+			}),
+		},
+	);
 }
 
 export async function fetchSimilarBooks(
-  id: string
+	id: string,
 ): Promise<GetSimilarBooksSchema | undefined> {
-  try {
-    const response = await fetchQuery({
-      query: getSimilarBooks,
-      variables: {
-        id,
-        limit: 20,
-      },
-    });
-    const { data } = await response.json();
-    return data;
-  } catch (err) {
-    console.error("failed to parse response", err);
-  }
+	try {
+		const response = await fetchQuery({
+			query: getSimilarBooks,
+			variables: {
+				id,
+				limit: 20,
+			},
+		});
+		const { data } = await response.json();
+		return data;
+	} catch (err) {
+		console.error("failed to parse response", err);
+	}
 }
 
 export async function fetchBookDataByLegacyId(
-  legacyBookId: string
+	legacyBookId: string,
 ): Promise<GetBookByLegacyIdSchema | undefined> {
-  try {
-    const response = await fetchQuery({
-      query: getBookByLegacyId,
-      variables: {
-        legacyBookId,
-      },
-    });
-    const { data } = await response.json();
-    return data;
-  } catch (err) {
-    console.error("failed to parse response", err);
-  }
+	try {
+		const response = await fetchQuery({
+			query: getBookByLegacyId,
+			variables: {
+				legacyBookId,
+			},
+		});
+		const { data } = await response.json();
+		return data;
+	} catch (err) {
+		console.error("failed to parse response", err);
+	}
 }
 
 export async function fetchBookRelatedData({
-  authorId,
-  bookId,
-  seriesId,
+	authorId,
+	bookId,
+	seriesId,
 }: {
-  bookId: string;
-  seriesId: string;
-  authorId: string;
+	bookId: string;
+	seriesId: string;
+	authorId: string;
 }): Promise<
-  | {
-      getBookListsOfBook: GetBookListsOfBook["getBookListsOfBook"];
-      getWorksByContributor: GetWorksByContributor["getWorksByContributor"];
-      getSimilarBooks: GetSimilarBooksSchema["getSimilarBooks"];
-      getWorksForSeries: GetWorkForSeries["getWorksForSeries"];
-    }
-  | undefined
+	| {
+			getBookListsOfBook: GetBookListsOfBook["getBookListsOfBook"];
+			getWorksByContributor: GetWorksByContributor["getWorksByContributor"];
+			getSimilarBooks: GetSimilarBooksSchema["getSimilarBooks"];
+			getWorksForSeries: GetWorkForSeries["getWorksForSeries"];
+	  }
+	| undefined
 > {
-  try {
-    const response = await fetch(
-      "https://kxbwmqov6jgg3daaamb744ycu4.appsync-api.us-east-1.amazonaws.com/graphql",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Api-Key": "da2-xpgsdydkbregjhpr6ejzqdhuwy",
-        },
-        body: JSON.stringify({
-          query: `
+	try {
+		const response = await fetch(
+			"https://kxbwmqov6jgg3daaamb744ycu4.appsync-api.us-east-1.amazonaws.com/graphql",
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					"X-Api-Key": "da2-xpgsdydkbregjhpr6ejzqdhuwy",
+				},
+				body: JSON.stringify({
+					query: `
             query GetBooks($similarBookId: ID!, $similarBookLimit: Int!, $getWorksForSeriesInput: GetWorksForSeriesInput!, $pagination: PaginationInput, $getWorksByContributorInput: GetWorksByContributorInput!, $WorksByContributorPagination: PaginationInput, $bookListId: ID!, $listsOfBookLimit: Int!) {
               getBookListsOfBook(id: $bookListId, paginationInput: { limit: $listsOfBookLimit }) {
                 edges {
@@ -197,31 +197,31 @@ export async function fetchBookRelatedData({
                 }
               }
             }`,
-          variables: {
-            similarBookId: bookId,
-            bookListId: bookId,
-            getWorksForSeriesInput: {
-              id: seriesId,
-              isPrimary: true,
-            },
-            getWorksByContributorInput: {
-              id: authorId,
-            },
-            similarBookLimit: 4,
-            pagination: {
-              limit: 4,
-            },
-            WorksByContributorPagination: {
-              limit: 4,
-            },
-            listsOfBookLimit: 4,
-          },
-        }),
-      }
-    );
-    const { data } = await response.json();
-    return data;
-  } catch (err) {
-    console.error("failed to parse response", err);
-  }
+					variables: {
+						similarBookId: bookId,
+						bookListId: bookId,
+						getWorksForSeriesInput: {
+							id: seriesId,
+							isPrimary: true,
+						},
+						getWorksByContributorInput: {
+							id: authorId,
+						},
+						similarBookLimit: 4,
+						pagination: {
+							limit: 4,
+						},
+						WorksByContributorPagination: {
+							limit: 4,
+						},
+						listsOfBookLimit: 4,
+					},
+				}),
+			},
+		);
+		const { data } = await response.json();
+		return data;
+	} catch (err) {
+		console.error("failed to parse response", err);
+	}
 }

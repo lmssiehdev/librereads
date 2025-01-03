@@ -5,11 +5,11 @@ import { extractSeriesId } from "../../../utils/goodreads";
 import type { GetWorkForSeries } from "../../../utils/query/getWorksForSeries";
 
 interface Props {
-  data: GetWorkForSeries["getWorksForSeries"];
-  series: {
-    url: string;
-    title: string;
-  };
+	data: GetWorkForSeries["getWorksForSeries"];
+	series: {
+		url: string;
+		title: string;
+	};
 }
 
 const { data, series } = Astro.props;

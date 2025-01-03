@@ -43,39 +43,39 @@ export const getSimilarBooks = `
 `;
 
 export const getSimilarBooksSchema = z.object({
-  getSimilarBooks: z.object({
-    __typename: z.string(),
-    webUrl: z.string(),
-    edges: z.array(
-      z.object({
-        __typename: z.string(),
-        node: z.object({
-          __typename: z.string(),
-          legacyId: z.number(),
-          title: z.string(),
-          imageUrl: z.string(),
-          webUrl: z.string(),
-          description: z.string(),
-          primaryContributorEdge: z.object({
-            __typename: z.string(),
-            node: z.object({
-              __typename: z.string(),
-              name: z.string(),
-              legacyId: z.string(),
-            }),
-          }),
-          work: z.object({
-            __typename: z.string(),
-            stats: z.object({
-              __typename: z.string(),
-              averageRating: z.number(),
-              ratingsCount: z.number(),
-            }),
-          }),
-        }),
-      })
-    ),
-  }),
+	getSimilarBooks: z.object({
+		__typename: z.string(),
+		webUrl: z.string(),
+		edges: z.array(
+			z.object({
+				__typename: z.string(),
+				node: z.object({
+					__typename: z.string(),
+					legacyId: z.number(),
+					title: z.string(),
+					imageUrl: z.string(),
+					webUrl: z.string(),
+					description: z.string(),
+					primaryContributorEdge: z.object({
+						__typename: z.string(),
+						node: z.object({
+							__typename: z.string(),
+							name: z.string(),
+							legacyId: z.string(),
+						}),
+					}),
+					work: z.object({
+						__typename: z.string(),
+						stats: z.object({
+							__typename: z.string(),
+							averageRating: z.number(),
+							ratingsCount: z.number(),
+						}),
+					}),
+				}),
+			}),
+		),
+	}),
 });
 
 export type GetSimilarBooksSchema = z.infer<typeof getSimilarBooksSchema>;

@@ -3,8 +3,8 @@ import AmazonLinks from "../../../components/amazon-links.astro";
 import Star from "../../../components/icons/star.astro";
 import Layout from "../../../layouts/Layout.astro";
 import {
-  fetchBookDataByLegacyId,
-  fetchBookRelatedData,
+	fetchBookDataByLegacyId,
+	fetchBookRelatedData,
 } from "../../../utils/graphql";
 import { cn, setCache } from "../../../utils/misc";
 import type { GetBookByLegacyIdSchema } from "../../../utils/query/getBookByLegacyId";
@@ -19,66 +19,66 @@ const { id } = Astro.params;
 const bookInfo = await fetchBookDataByLegacyId(id as string);
 
 if (!bookInfo) {
-  return Astro.redirect("/404");
+	return Astro.redirect("/404");
 }
 
 function getBookData(bookInfo: GetBookByLegacyIdSchema["getBookByLegacyId"]) {
-  if (!bookInfo) return;
+	if (!bookInfo) return;
 
-  const hasSeries = bookInfo.bookSeries.length > 0;
-  const seriesData = hasSeries
-    ? {
-        title: bookInfo.bookSeries[0].series.title,
-        id: bookInfo.bookSeries[0].series.id,
-        url: bookInfo.bookSeries[0].series.webUrl,
-      }
-    : undefined;
+	const hasSeries = bookInfo.bookSeries.length > 0;
+	const seriesData = hasSeries
+		? {
+				title: bookInfo.bookSeries[0].series.title,
+				id: bookInfo.bookSeries[0].series.id,
+				url: bookInfo.bookSeries[0].series.webUrl,
+			}
+		: undefined;
 
-  const goodreadsGraphqlId = bookInfo?.id;
-  const stats = bookInfo.work.stats;
-  const {
-    name: authorName,
-    id: authorId,
-    legacyId: authorLegacyId,
-  } = bookInfo.primaryContributorEdge.node;
+	const goodreadsGraphqlId = bookInfo?.id;
+	const stats = bookInfo.work.stats;
+	const {
+		name: authorName,
+		id: authorId,
+		legacyId: authorLegacyId,
+	} = bookInfo.primaryContributorEdge.node;
 
-  return {
-    hasSeries,
-    goodreadsGraphqlId,
-    author: {
-      id: authorId,
-      name: authorName,
-      legacyId: authorLegacyId,
-    },
-    rating: {
-      averageRating: stats.averageRating,
-      ratingsCount: stats.ratingsCount,
-      textReviewsCount: stats.textReviewsCount,
-      ratingsCountDist: stats.ratingsCountDist,
-    },
-    series: seriesData,
-    metadata: {
-      title: `${bookInfo.title} by ${authorName}`,
-      description: `${bookInfo.descriptionStripped
-        ?.substring(0, 153)
-        .trim()}...`,
-    },
-  } as const;
+	return {
+		hasSeries,
+		goodreadsGraphqlId,
+		author: {
+			id: authorId,
+			name: authorName,
+			legacyId: authorLegacyId,
+		},
+		rating: {
+			averageRating: stats.averageRating,
+			ratingsCount: stats.ratingsCount,
+			textReviewsCount: stats.textReviewsCount,
+			ratingsCountDist: stats.ratingsCountDist,
+		},
+		series: seriesData,
+		metadata: {
+			title: `${bookInfo.title} by ${authorName}`,
+			description: `${bookInfo.descriptionStripped
+				?.substring(0, 153)
+				.trim()}...`,
+		},
+	} as const;
 }
 
 const cleanBookData = getBookData(bookInfo.getBookByLegacyId);
 
 if (!cleanBookData) {
-  return Astro.redirect("/404");
+	return Astro.redirect("/404");
 }
 
 const { goodreadsGraphqlId, author, series, metadata, hasSeries } =
-  cleanBookData;
+	cleanBookData;
 
 const result = await fetchBookRelatedData({
-  bookId: bookInfo.getBookByLegacyId.id,
-  seriesId: series?.id || "",
-  authorId: author.id,
+	bookId: bookInfo.getBookByLegacyId.id,
+	seriesId: series?.id || "",
+	authorId: author.id,
 });
 
 setCache(Astro.response.headers);

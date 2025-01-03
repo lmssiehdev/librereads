@@ -4,11 +4,11 @@ import LinkWithArrow from "../../../components/ui/link-with-arrow.astro";
 import { type GetWorksByContributor } from "../../../utils/query/getWorksByContributor";
 
 interface Props {
-  data: GetWorksByContributor["getWorksByContributor"];
-  author: {
-    name: string;
-    id: string;
-  };
+	data: GetWorksByContributor["getWorksByContributor"];
+	author: {
+		name: string;
+		id: string;
+	};
 }
 
 const { data, author } = Astro.props;
