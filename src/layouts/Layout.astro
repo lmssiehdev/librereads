@@ -1,8 +1,9 @@
 ---
+import Github from "../components/icons/github.astro";
 import type { Metadata } from "../types";
 
 interface Props {
-	metadata?: Metadata;
+  metadata?: Metadata;
 }
 
 const { metadata = { title: "LibreReads", description: "" } } = Astro.props;
@@ -48,9 +49,12 @@ const { title, description } = metadata;
       <div class="flex justify-between">
         <span>Built with ❤️</span>
         <a
-          class="hover:underline underline-offset-4"
-          href="https://github.com/lmssiehdev/librereads-astro">source code</a
+          class="underline underline-offset-4"
+          href="https://github.com/lmssiehdev/librereads-astro"
+          target="_blank"
         >
+          Star on GitHub ↗
+        </a>
       </div>
     </footer>
   </body>
