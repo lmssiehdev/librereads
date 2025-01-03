@@ -92,6 +92,23 @@ export const getBookByLegacyId = `
   }
   query getBookByLegacyId($legacyBookId: Int!) {
     getBookByLegacyId(legacyId: $legacyBookId) {
+      links {
+          primaryAffiliateLink {
+            __typename
+              name
+              url
+          }
+          secondaryAffiliateLinks {
+              __typename
+              name
+              url
+          }
+          seriesLink {
+              __typename
+              name
+              url
+          }
+      }
       title
       titleComplete
       id
