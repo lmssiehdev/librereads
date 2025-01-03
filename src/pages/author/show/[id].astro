@@ -30,8 +30,10 @@ const { author, books, series, seo } = result!;
     ) : (
   <div>
     <div class="flex flex-col md:flex-row gap-10 my-10">
-      <div>
-        <img src={author.image} alt={`${author.name} profile picture`} />
+      <div class="h-[250px] max-w-[175px] overflow-hidden rounded ">
+        <img src={author.image} alt={`${author.name} profile picture`}
+        class="w-full h-full object-fill"
+ />
       </div>
       <div class="flex-1">
         <h1 class="text-3xl mb-5">{author.name}</h1>
