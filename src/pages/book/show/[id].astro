@@ -1,4 +1,5 @@
 ---
+import AmazonLinks from "../../../components/amazon-links.astro";
 import Star from "../../../components/icons/star.astro";
 import Layout from "../../../layouts/Layout.astro";
 import {
@@ -6,6 +7,7 @@ import {
   fetchBookRelatedData,
 } from "../../../utils/graphql";
 import { cn, setCache } from "../../../utils/misc";
+import type { GetBookByLegacyIdSchema } from "../../../utils/query/getBookByLegacyId";
 import BookLists from "../_components/BookLists.astro";
 import BookReviews from "../_components/BookReviews.astro";
 import BookSerie from "../_components/BookSerie.astro";
@@ -20,46 +22,79 @@ if (!bookInfo) {
   return Astro.redirect("/404");
 }
 
-const authorId = bookInfo?.getBookByLegacyId?.primaryContributorEdge?.node?.id;
+function getBookData(bookInfo: GetBookByLegacyIdSchema["getBookByLegacyId"]) {
+  if (!bookInfo) return;
 
-const hasSeries = bookInfo.getBookByLegacyId.bookSeries.length > 0;
-const seriesData = hasSeries
-  ? {
-      title: bookInfo.getBookByLegacyId.bookSeries[0].series.title,
-      id: bookInfo.getBookByLegacyId.bookSeries[0].series.id,
-      url: bookInfo.getBookByLegacyId.bookSeries[0].series.webUrl,
-    }
-  : undefined;
+  const hasSeries = bookInfo.bookSeries.length > 0;
+  const seriesData = hasSeries
+    ? {
+        title: bookInfo.bookSeries[0].series.title,
+        id: bookInfo.bookSeries[0].series.id,
+        url: bookInfo.bookSeries[0].series.webUrl,
+      }
+    : undefined;
+
+  const goodreadsGraphqlId = bookInfo?.id;
+  const stats = bookInfo.work.stats;
+  const {
+    name: authorName,
+    id: authorId,
+    legacyId: authorLegacyId,
+  } = bookInfo.primaryContributorEdge.node;
+
+  return {
+    hasSeries,
+    goodreadsGraphqlId,
+    author: {
+      id: authorId,
+      name: authorName,
+      legacyId: authorLegacyId,
+    },
+    rating: {
+      averageRating: stats.averageRating,
+      ratingsCount: stats.ratingsCount,
+      textReviewsCount: stats.textReviewsCount,
+      ratingsCountDist: stats.ratingsCountDist,
+    },
+    series: seriesData,
+    metadata: {
+      title: `${bookInfo.title} by ${authorName}`,
+      description: `${bookInfo.descriptionStripped
+        ?.substring(0, 153)
+        .trim()}...`,
+    },
+  } as const;
+}
+
+const cleanBookData = getBookData(bookInfo.getBookByLegacyId);
+
+if (!cleanBookData) {
+  return Astro.redirect("/404");
+}
+
+const { goodreadsGraphqlId, author, series, metadata, hasSeries } =
+  cleanBookData;
 
 const result = await fetchBookRelatedData({
   bookId: bookInfo.getBookByLegacyId.id,
-  seriesId: seriesData?.id || "",
-  authorId: authorId,
+  seriesId: series?.id || "",
+  authorId: author.id,
 });
 
 setCache(Astro.response.headers);
 
-const goodreadsGraphqlId = bookInfo?.getBookByLegacyId?.id;
-const authorName =
-  bookInfo.getBookByLegacyId.primaryContributorEdge?.node?.name;
-const authorLegacyId =
-  bookInfo?.getBookByLegacyId?.primaryContributorEdge?.node?.legacyId;
 const data = bookInfo.getBookByLegacyId;
-
-const metadata = {
-  title: `${data.title} by ${authorName}`,
-  description: `${data.descriptionStripped?.substring(0, 153).trim()}...`,
-};
 ---
 
 <Layout metadata={metadata}>
-  <div class="flex gap-4">
-    <div class="flex-1 h-[250px] max-w-[175px] w-full overflow-hidden rounded">
-      <img
-        src={data.imageUrl}
-        alt={data.title}
-        class="w-full h-full object-fill"
-      />
+  <div class="flex flex-col sm:flex-row gap-4">
+    <div class="flex-1 h-[250px] max-w-[175px] mx-auto">
+      <div class="w-full overflow-hidden rounded mb-2">
+        <img
+          src={data.imageUrl}
+          alt={data.title}
+          class="w-full h-full object-fill"
+        />
       </div>
       <AmazonLinks data={data.links} />
     </div>
@@ -69,8 +104,8 @@ const metadata = {
           {
             hasSeries && (
               <>
-                #{bookInfo.getBookByLegacyId.bookSeries[0].userPosition}{" "}
-                {bookInfo.getBookByLegacyId.bookSeries[0].series.title}
+                #{data.bookSeries[0].userPosition}{" "}
+                {data.bookSeries[0].series.title}
               </>
             )
           }
@@ -78,10 +113,10 @@ const metadata = {
         <h1>{data.title}</h1>
       </div>
       <a
-        href=`/author/show/${data.primaryContributorEdge.node.legacyId}`
+        href=`/author/show/${author.legacyId}`
         class="text-black text-opacity-70"
       >
-        {authorName}
+        {author.name}
       </a>
       <div class="my-1">
         <div class="flex gap-1.5 mb-1">
@@ -101,15 +136,15 @@ const metadata = {
             }
           </div>
           <span class="text-xl">
-            {data.work.stats.averageRating}
+            {cleanBookData.rating.averageRating}
           </span>
         </div>
         <div class="text-sm text-black text-opacity-70">
           <span>
-            {data.work.stats.ratingsCount.toLocaleString("en-US")} ratings
+            {cleanBookData.rating.ratingsCount.toLocaleString("en-US")} ratings
           </span>
           <span>
-            {data.work.stats.textReviewsCount.toLocaleString("en-US")} reviews
+            {cleanBookData.rating.textReviewsCount.toLocaleString("en-US")} reviews
           </span>
         </div>
       </div>
@@ -133,23 +168,16 @@ const metadata = {
       </div>
     </div>
   </div>
-  <div class="my-5">
+  <div class="my-14">
     <SimilarBooks data={result?.getSimilarBooks!} bookId={id!} />
   </div>
-  <div class="my-5">
-    <BooksByAuthor
-      data={result?.getWorksByContributor!}
-      author={{ name: authorName, id: authorLegacyId.toString() }}
-    />
+  <div class="my-14">
+    <BooksByAuthor data={result?.getWorksByContributor!} author={author} />
   </div>
-  <div class="my-5">
-    {
-      seriesData && (
-        <BookSerie data={result?.getWorksForSeries!} series={seriesData} />
-      )
-    }
+  <div class="my-14">
+    {series && <BookSerie data={result?.getWorksForSeries!} series={series} />}
   </div>
-  <div class="my-5">
+  <div class="my-14">
     <BookLists bookId={id!} data={result?.getBookListsOfBook!} />
   </div>
 </Layout>
