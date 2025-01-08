@@ -1,10 +1,10 @@
 ---
 import LinkWithArrow from "../../../components/ui/link-with-arrow.astro";
 import { type GetBookListsOfBook } from "../../../utils/query/getBookListsOfBook";
-
+import { changeGoodreadsImageSize } from "../../../utils/goodreads";
 interface Props {
-	bookId: string;
-	data: GetBookListsOfBook["getBookListsOfBook"];
+  bookId: string;
+  data: GetBookListsOfBook["getBookListsOfBook"];
 }
 
 const { data, bookId } = Astro.props;
@@ -27,7 +27,7 @@ const listData = data?.edges;
                 return (
                   <div class="flex-1z h-[200px] max-w-[130px] w-full">
                     <img
-                      src={imageUrl}
+                      src={changeGoodreadsImageSize(imageUrl, 200)}
                       alt={title}
                       class="w-full h-full object-cover"
                     />

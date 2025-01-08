@@ -1,31 +1,32 @@
 ---
 import { cn } from "../utils/misc";
+import { changeGoodreadsImageSize } from "../utils/goodreads";
 import Star from "./icons/star.astro";
 
 interface Props {
-	payload: {
-		imageUrl: string;
-		authorName: string;
-		averageRating: number;
-		title: string;
-		webUrl: string;
-		bookId: string | number;
-		authorId: string;
-		seriesPlacement?: string;
-	};
-	class?: string;
-	imageClass?: string;
+  payload: {
+    imageUrl: string;
+    authorName: string;
+    averageRating: number;
+    title: string;
+    webUrl: string;
+    bookId: string | number;
+    authorId: string;
+    seriesPlacement?: string;
+  };
+  class?: string;
+  imageClass?: string;
 }
 
 const { payload, class: className = "", imageClass = "" } = Astro.props;
 const {
-	imageUrl,
-	title,
-	authorName,
-	averageRating,
-	bookId,
-	authorId,
-	seriesPlacement = null,
+  imageUrl,
+  title,
+  authorName,
+  averageRating,
+  bookId,
+  authorId,
+  seriesPlacement = null,
 } = payload;
 ---
 
@@ -36,7 +37,11 @@ const {
       imageClass
     )}
   >
-    <img src={imageUrl} alt={title} class="w-full h-full object-fill" />
+    <img
+      src={changeGoodreadsImageSize(imageUrl, 250)}
+      alt={title}
+      class="w-full h-full object-fill"
+    />
   </div>
   <div class="my-2">
     {

@@ -4,6 +4,7 @@ import { setCache } from "../../../utils/misc";
 import { type BookData } from "../../../utils/query";
 import { fetchSearchResult } from "../../../utils/query";
 import Layout from "../_layout.astro";
+import { changeGoodreadsImageSize } from "../../../utils/goodreads";
 
 setCache(Astro.response.headers);
 
@@ -34,7 +35,9 @@ const result = (
           <div class="flex gap-4 my-1">
             <div class="h-[150px] max-w-[100px] w-full overflow-hidden rounded">
               <img
-                src={imageUrl}
+                src={
+                  changeGoodreadsImageSize(imageUrl || "", 150)
+                }
                 alt={title}
                 class="w-full h-full object-cover"
               />
