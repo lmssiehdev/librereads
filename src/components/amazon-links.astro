@@ -13,19 +13,24 @@ const acceptedProviders = ["Amazon", "Audible", "Amazon Series"];
 const links = Object.values(data)
   .flat()
   .filter(
-    ({ name, url }) => acceptedProviders.includes(name) && extractAsin(url)
+    (link) =>
+      link && acceptedProviders.includes(link.name) && extractAsin(link.url)
   );
-const { name, url } = links[0];
-const cleanUrl = getCleanAmazonUrl(url);
+const firstLink = links[0];
+const cleanUrl = getCleanAmazonUrl(firstLink?.url ?? "");
 // TODO: add more links
 ---
 
-<div>
-  <a
-    class="flex gap-1 items-center select-none justify-center rounded-sm border border-transparent focus:outline-none focus-visible:ring focus-visible:ring-opacity-75 hover:bg-[#655d52]/30 bg-[#655d52]/20 text-slate-700 focus-visible:ring-[#655d52] font-medium px-2 py-1"
-    href={cleanUrl}
-  >
-    {name}
-    <ArrowUpRight class="size-4" />
-  </a>
-</div>
+{
+  cleanUrl && (
+    <div>
+      <a
+        class="flex gap-1 items-center select-none justify-center rounded-sm border border-transparent focus:outline-none focus-visible:ring focus-visible:ring-opacity-75 hover:bg-[#655d52]/30 bg-[#655d52]/20 text-slate-700 focus-visible:ring-[#655d52] font-medium px-2 py-1"
+        href={cleanUrl}
+      >
+        {firstLink?.name}
+        <ArrowUpRight class="size-4" />
+      </a>
+    </div>
+  )
+}

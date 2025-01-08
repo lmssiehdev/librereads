@@ -73,6 +73,7 @@ export function extractAsin(url: string): string | null {
 }
 
 export function getCleanAmazonUrl(url: string) {
+  if (!url) return null;
   if (isSearchOrProduct(url)) {
     return cleanSearchUrl(url);
   }
