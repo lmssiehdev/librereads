@@ -44,15 +44,10 @@ const {
     />
   </div>
   <div class="my-2">
-    {
-      seriesPlacement && (
-        <div class="text-black opacity-50">#{seriesPlacement}</div>
-      )
-    }
+    {seriesPlacement && <div class="text-slate-700">#{seriesPlacement}</div>}
     <a href={`/book/show/${bookId}`}>{title}</a>
-    <a
-      href={`/author/show/${authorId}`}
-      class="text-sm text-black text-opacity-70 block">{authorName}</a
+    <a href={`/author/show/${authorId}`} class="text-sm text-slate-700 block"
+      >{authorName}</a
     >
     <div class="flex gap-1 items-center">
       <Star class="size-3.5 text-yellow-400" />

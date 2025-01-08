@@ -4,17 +4,17 @@ import type { GetBookByLegacyIdSchema } from "../utils/query/getBookByLegacyId";
 import ArrowUpRight from "./icons/arrow-up-right.astro";
 
 interface Props {
-	data: GetBookByLegacyIdSchema["getBookByLegacyId"]["links"];
+  data: GetBookByLegacyIdSchema["getBookByLegacyId"]["links"];
 }
 
 const { data } = Astro.props;
 
 const acceptedProviders = ["Amazon", "Audible", "Amazon Series"];
 const links = Object.values(data)
-	.flat()
-	.filter(
-		({ name, url }) => acceptedProviders.includes(name) && extractAsin(url),
-	);
+  .flat()
+  .filter(
+    ({ name, url }) => acceptedProviders.includes(name) && extractAsin(url)
+  );
 const { name, url } = links[0];
 const cleanUrl = getCleanAmazonUrl(url);
 // TODO: add more links
@@ -22,7 +22,7 @@ const cleanUrl = getCleanAmazonUrl(url);
 
 <div>
   <a
-    class="flex gap-1 items-center select-none justify-center rounded-sm border border-transparent focus:outline-none focus-visible:ring focus-visible:ring-opacity-75 hover:bg-[#655d52]/30 bg-[#655d52]/20 text-[#655d52] focus-visible:ring-[#655d52] font-medium px-2 py-1"
+    class="flex gap-1 items-center select-none justify-center rounded-sm border border-transparent focus:outline-none focus-visible:ring focus-visible:ring-opacity-75 hover:bg-[#655d52]/30 bg-[#655d52]/20 text-slate-700 focus-visible:ring-[#655d52] font-medium px-2 py-1"
     href={cleanUrl}
   >
     {name}

@@ -114,7 +114,7 @@ const data = bookInfo.getBookByLegacyId;
     </div>
     <div class="flex-1">
       <div class="text-3xl">
-        <div class="text-sm text-black text-opacity-70">
+        <div class="text-sm text-slate-700">
           {
             hasSeries && (
               <>
@@ -126,10 +126,7 @@ const data = bookInfo.getBookByLegacyId;
         </div>
         <h1>{data.title}</h1>
       </div>
-      <a
-        href=`/author/show/${author.legacyId}`
-        class="text-black text-opacity-70"
-      >
+      <a href=`/author/show/${author.legacyId}`>
         {author.name}
       </a>
       <div class="my-1">
@@ -153,7 +150,7 @@ const data = bookInfo.getBookByLegacyId;
             {cleanBookData.rating.averageRating}
           </span>
         </div>
-        <div class="text-sm text-black text-opacity-70">
+        <div class="text-sm text-slate-700">
           <span>
             {cleanBookData.rating.ratingsCount.toLocaleString("en-US")} ratings
           </span>
@@ -171,7 +168,7 @@ const data = bookInfo.getBookByLegacyId;
           })
         }
       </div>
-      <div class="text-slate-500">
+      <div class="text-slate-700">
         {data.details.numPages} Pages
       </div>
       <div class="my-8">

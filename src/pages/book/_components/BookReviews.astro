@@ -81,13 +81,13 @@ const percentages = calculatePercentages(ratingsCountDist);
             <div class="flex-1">
               <div class="">
                 <div>{name}</div>
-                <span class="text-sm text-black text-opacity-70">
+                <span class="text-sm text-slate-700">
                   {textReviewsCount} reviews
                 </span>
               </div>
               <div class="flex justify-between">
                 <div>{rating}</div>
-                <span class="text-sm text-black text-opacity-70">
+                <span class="text-sm text-slate-700">
                   {new Date(lastRevisionAt).toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "long",
