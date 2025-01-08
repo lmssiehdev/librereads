@@ -5,11 +5,11 @@ import { extractSeriesId } from "../../../utils/goodreads";
 import type { GetWorkForSeries } from "../../../utils/query/getWorksForSeries";
 
 interface Props {
-	data: GetWorkForSeries["getWorksForSeries"];
-	series: {
-		url: string;
-		title: string;
-	};
+  data: GetWorkForSeries["getWorksForSeries"];
+  series: {
+    url: string;
+    title: string;
+  };
 }
 
 const { data, series } = Astro.props;
@@ -18,9 +18,9 @@ const seriesData = data?.edges;
 ---
 
 <div>
-  <div class="text-lg mb-4">
+  <h3 class="text-lg mb-4">
     {series.title} Series
-  </div>
+  </h3>
   <div class="grid grid-cols-3 sm:grid-cols-4 [&:nth-child(4)]:hidden gap-4">
     {
       seriesData.map((work) => {
