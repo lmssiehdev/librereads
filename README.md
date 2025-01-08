@@ -1,48 +1,37 @@
-# Astro Starter Kit: Basics
+## Librereads
 
-```sh
-npm create astro@latest -- --template basics
-```
+A free & open source Goodreads front-end.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+Inspired by projects like [nitter](https://github.com/zedeus/nitter), [libremdb](https://github.com/zyachel/libremdb) and many others.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+|                                                                                                                                                            |                                                                                                                                                         |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <img src="https://raw.githubusercontent.com/lmssiehdev/librereads/main/public/img/preview_desktop.png" title="screenshot (desktop screen)" width="1200" /> | <img src="https://raw.githubusercontent.com/lmssiehdev/librereads/main/public/img/preview_mobile.png" title="screenshot (mobile screen)" width="400" /> |
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+---
+### **Instances**
 
-## 🚀 Project Structure
+| Instance URL                                                     | Country | Provider | Notes                                      |
+| ---------------------------------------------------------------- | :-----: | -------- | ------------------------------------------ |
+| [https://librereads.vercel.app/](https://librereads.vercel.app/) |  :us:   | Vercel   | Run by [me](https://github.com/lmssiehdev) |
 
-Inside of your Astro project, you'll see the following folders and files:
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+---
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+### **Similar projects**
 
-## 🧞 Commands
+- [BiblioReads](https://github.com/nesaku/BiblioReads/)  
+  BiblioReads is an Alternative Private Goodreads Front-End.
 
-All commands are run from the root of the project, from a terminal:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+---
 
-## 👀 Want to learn more?
+### **License**
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Licensed under the [GNU AGPLv3](https://www.gnu.org/licenses/agpl-3.0.en.html). Please see [LICENSE.txt](./LICENSE.txt) for more information.
+
+---
+
+### **Disclaimer**
+
+Librereads does not host any content. All content on Librereads is sourced from Goodreads. Librereads is not affiliated with Goodreads. Goodreads is a trademark of Amazon Technologies, Inc.
