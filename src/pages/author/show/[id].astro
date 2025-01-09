@@ -76,18 +76,16 @@ const { author, books, series, seo } = result!;
         series.map(
           ({
             title,
-            webUrl,
             rating,
             numberOfBooksInSeries,
             covers,
-            author,
+            seriesId,
           }) => {
             return (
               <div class="my-4 flex justify-between">
                 <div class="flex-1">
                   <div>
-                    <span>{title}</span>
-                    {/* <a href={webUrl}>{title}</a> */}
+                    <a href={`/series/${seriesId}`}>{title}</a>
                     <span>{numberOfBooksInSeries}</span>
                   </div>
                   {/* <div class="text-sm text-black/70">
