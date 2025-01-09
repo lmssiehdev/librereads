@@ -4,18 +4,22 @@ A free & open source Goodreads front-end.
 
 Inspired by projects like [nitter](https://github.com/zedeus/nitter), [libremdb](https://github.com/zyachel/libremdb) and many others.
 
-|                                                                                                                                                            |                                                                                                                                                         |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <img src="https://raw.githubusercontent.com/lmssiehdev/librereads/main/public/img/preview_desktop.png" title="screenshot (desktop screen)" width="1200" /> | <img src="https://raw.githubusercontent.com/lmssiehdev/librereads/main/public/img/preview_mobile.png" title="screenshot (mobile screen)" width="400" /> |
+|                                                                                                                                                                           |                                                                                                                                                                        |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <img src="https://raw.githubusercontent.com/lmssiehdev/librereads/refs/heads/main/screenshots/librereads_desktop.png" title="screenshot (desktop screen)" width="1200" /> | <img src="https://raw.githubusercontent.com/lmssiehdev/librereads/refs/heads/main/screenshots/librereads_mobile.png" title="screenshot (mobile screen)" width="400" /> |
 
 ---
 
 ### **Features**
 
 **Zero Ads & Tracking**: No advertisements, tracking cookies, or data collection  
-**JavaScript-Free Browsing**: Pages load without any JavaScript  
-**Self-Hostable**: Easy to deploy your own instance  
+
+**JavaScript-Free Browsing**: Pages load without any JavaScript
+
+**Self-Hostable**: Easy to deploy your own instance
+
 **Clean Design**: Modern, responsive interface that works on all devices  
+
 **Lightweight**: The Name of the Wind book page loads with ~21 HTTP requests / 532 KB vs. Goodreads' ~251 requests / 41 MB  
 
 ---
@@ -47,8 +51,6 @@ pnpm run dev
 ```
 
 **ⓘ If you want to use the API directly or run any kind of automation. Please host the project on your own server.**
-
----
 
 
 ---
