@@ -14,7 +14,7 @@ export function sendAnalyticsEvent(payload: {
     },
     body: JSON.stringify({
       api_key,
-      distinct_id: "goodread_bots_reloaded",
+      distinct_id: "librereads",
       ...payload,
     }),
   });
