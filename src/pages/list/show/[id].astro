@@ -3,8 +3,8 @@ import Pagination from "../../../components/pagination.astro";
 import MainLayout from "../../../layouts/Layout.astro";
 import { sendAnalyticsEvent } from "../../../utils/analytics";
 import {
-	changeGoodreadsImageSize,
-	extractIdFromUrl,
+  changeGoodreadsImageSize,
+  extractIdFromUrl,
 } from "../../../utils/goodreads";
 import { setCache } from "../../../utils/misc";
 import { fetchListDetails } from "../../../utils/scrapers/list";
@@ -16,12 +16,12 @@ const page = Number(Astro.url.searchParams.get("page")) || 1;
 const result = await fetchListDetails(id as string, page);
 
 if (!result?.rows) {
-	sendAnalyticsEvent({
-		event: "failed_to_fetch_list_details",
-		properties: {
-			id: id as string,
-		},
-	});
+  sendAnalyticsEvent({
+    event: "failed_to_fetch_list_details",
+    properties: {
+      id: id as string,
+    },
+  });
 }
 ---
 
@@ -60,9 +60,7 @@ if (!result?.rows) {
                     <div>
                       <span class="text-black/70">
                         by:
-                        <a href={`${author.webUrl}`}>
-                          <span> {author.name}</span>
-                        </a>
+                        <a href={`/author/show/${author.id}`}>{author.name}</a>
                       </span>
                     </div>
                     <span class="text-xs text-black/70"> {info} </span>
