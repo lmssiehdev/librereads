@@ -1,6 +1,29 @@
-// resize-goodread-image.test.ts
 import { describe, it, expect } from "vitest";
-import { changeGoodreadsImageSize } from "../goodreads";
+import { changeGoodreadsImageSize, extractGoodreadsSeriesId } from "./index";
+
+describe("extractGoodreadsSeriesId", () => {
+  it("extracts series ID from the full URL", () => {
+    expect(
+      extractGoodreadsSeriesId(
+        "https://goodreads.com/series/40910-the-mistborn-saga"
+      )
+    ).toBe("40910");
+  });
+
+  it("extracts series ID from the path name with id and name", () => {
+    expect(extractGoodreadsSeriesId("/series/40910-the-mistborn-saga")).toBe(
+      "40910"
+    );
+  });
+
+  it("extracts series ID from the path name with just id", () => {
+    expect(extractGoodreadsSeriesId("/series/40910")).toBe("40910");
+  });
+
+  it("returns empty string for invalid URL", () => {
+    expect(extractGoodreadsSeriesId("invalid")).toBe("");
+  });
+});
 
 describe("changeGoodreadsImageSize", () => {
   it("should update existing _SX size parameter", () => {

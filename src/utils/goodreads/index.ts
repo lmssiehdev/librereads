@@ -1,5 +1,14 @@
-export const AUTHOR_IMAGE_FALLBACK =
-  "https://s.gr-assets.com/assets/nophoto/user/u_200x266-e183445fd1a1b5cc7075bb1cf7043306.png";
+/**
+ * Extracts series ID from Goodreads URL
+ * @param {string} url - Goodreads series URL
+ * @returns {string} Series ID
+ * @example
+ * extractGoodreadsSeriesId("goodreads.com/series/123456-book-name") // "123456"
+ */
+export function extractGoodreadsSeriesId(url: string): string {
+  const match = url.match(/\/series\/([a-zA-Z0-9]+)/);
+  return match?.[1] ?? "";
+}
 
 /**
  * Changes the size of a Goodreads image URL by modifying the image size parameter.
@@ -19,14 +28,4 @@ export function changeGoodreadsImageSize(imageUrl: string, size: number) {
 
   // If no size parameter exists, add _SX
   return imageUrl.replace(/\.jpg$/, `._SX${size}_.jpg`);
-}
-
-export function extractIdFromUrl(url: string): number | null {
-  const match = url.match(/\/(book|author)\/show\/(\d+)/);
-  return match ? Number.parseInt(match[2], 10) : null;
-}
-
-export function extractSeriesId(url: string): string | null {
-  const match = url.match(/(\d+)/);
-  return match ? match[1] : null;
 }
