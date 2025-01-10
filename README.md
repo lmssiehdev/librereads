@@ -1,4 +1,4 @@
-## Librereads
+## Librereads [https://librereads.vercel.app](https://librereads.vercel.app)
 
 A free & open source Goodreads front-end.
 
